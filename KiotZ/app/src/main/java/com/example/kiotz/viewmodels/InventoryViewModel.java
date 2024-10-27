@@ -100,7 +100,10 @@ public class InventoryViewModel<T extends IIdentifiable> {
 
     // Method to set the quantity of a specific item
     public CompletableFuture<Void> setQuantity(T item, int quantity) {
-        return inventory.updateQuantityAsync(item.getID(), quantity);
+        return inventory.updateQuantityAsync(item.getID(), quantity)
+                .thenAccept(v -> {
+                    getTotalQuantity(); // This will update totalQuantity LiveData
+                });
     }
 }
 
