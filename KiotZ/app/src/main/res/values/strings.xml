@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">KiotZ</string>
+    <string name="register"><b><i>Register now!</i></b></string>
 </resources>
