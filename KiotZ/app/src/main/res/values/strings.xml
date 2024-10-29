@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">KiotZ</string>
     <string name="register"><b><i>Register now!</i></b></string>
+    <string name="signin"><b><i>Sign in!</i></b></string>
 </resources>
