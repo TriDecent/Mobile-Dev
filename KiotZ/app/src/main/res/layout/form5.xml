@@ -43,18 +43,20 @@
             android:id="@+id/SearchItemF5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="80dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/oval"
             android:hint="Enter Item Name"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.82"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbarF5"
             tools:ignore="TouchTargetSizeCheck" />
 
         <ListView
+            android:id="@+id/listView"
             android:layout_width="409dp"
             android:layout_height="661dp"
             android:layout_marginStart="32dp"
@@ -64,7 +66,20 @@
             android:dividerHeight="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/SearchItemF5" />
+            app:layout_constraintTop_toBottomOf="@+id/SearchItemF5">
+
+        </ListView>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="@+id/SearchItemF5"
+            app:layout_constraintEnd_toEndOf="@+id/SearchItemF5"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/SearchItemF5"
+            app:srcCompat="@drawable/search" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
