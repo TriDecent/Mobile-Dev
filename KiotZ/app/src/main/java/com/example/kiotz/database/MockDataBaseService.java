@@ -38,7 +38,7 @@ public class MockDataBaseService<T extends IIdentifiable> implements IDataBaseSe
     }
 
     @Override
-    public CompletableFuture<Void> removeAsync(int id) {
+    public CompletableFuture<Void> removeByIdAsync(int id) {
         if (!database.containsKey(id)) {
             throw new NoSuchElementException("Item not found.");
         }
@@ -48,7 +48,7 @@ public class MockDataBaseService<T extends IIdentifiable> implements IDataBaseSe
     }
 
     @Override
-    public CompletableFuture<T> getAsync(int id) {
+    public CompletableFuture<T> getByIdAsync(int id) {
         T item = database.get(id);
         if (item == null) {
             throw new NoSuchElementException("Item not found.");
@@ -62,7 +62,7 @@ public class MockDataBaseService<T extends IIdentifiable> implements IDataBaseSe
     }
 
     @Override
-    public CompletableFuture<Integer> getQuantityAsync(int id) {
+    public CompletableFuture<Integer> getQuantityByIdAsync(int id) {
         Integer quantity = quantities.get(id);
         if (quantity == null) {
             throw new NoSuchElementException("Item not found.");
@@ -71,7 +71,7 @@ public class MockDataBaseService<T extends IIdentifiable> implements IDataBaseSe
     }
 
     @Override
-    public CompletableFuture<Void> updateQuantityAsync(int id, int newQuantity) {
+    public CompletableFuture<Void> updateQuantityByIdAsync(int id, int newQuantity) {
         if (!database.containsKey(id)) {
             throw new NoSuchElementException("Item not found.");
         }

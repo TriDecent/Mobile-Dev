@@ -23,7 +23,7 @@ public class Inventory<T extends IIdentifiable> implements IInventory<T> {
     public CompletableFuture<Integer> getTotalQuantityAsync() {
         return repository.getAllAsync().thenCompose(items -> {
             List<CompletableFuture<Integer>> quantities = items.stream()
-                    .map(item -> repository.getQuantityAsync(item.getID()))
+                    .map(item -> repository.getQuantityByIdAsync(item.getID()))
                     .collect(Collectors.toList());
 
             // Wait for all quantities to be fetched and then sum them up
@@ -36,19 +36,19 @@ public class Inventory<T extends IIdentifiable> implements IInventory<T> {
 
     @Override
     public CompletableFuture<Void> updateItemQuantityAsync(T item, int newQuantity) {
-        return repository.updateQuantityAsync(item.getID(), newQuantity);
+        return repository.updateQuantityByIdAsync(item.getID(), newQuantity);
     }
 
     @Override
     public CompletableFuture<Void> incrementQuantityAsync(T item, int amount) {
-        return repository.getQuantityAsync(item.getID())
-                .thenCompose(currentQuantity -> repository.updateQuantityAsync(item.getID(), currentQuantity + amount));
+        return repository.getQuantityByIdAsync(item.getID())
+                .thenCompose(currentQuantity -> repository.updateQuantityByIdAsync(item.getID(), currentQuantity + amount));
     }
 
     @Override
     public CompletableFuture<Void> decrementQuantityAsync(T item, int amount) {
-        return repository.getQuantityAsync(item.getID())
-                .thenCompose(currentQuantity -> repository.updateQuantityAsync(item.getID(), Math.max(0, currentQuantity - amount)));
+        return repository.getQuantityByIdAsync(item.getID())
+                .thenCompose(currentQuantity -> repository.updateQuantityByIdAsync(item.getID(), Math.max(0, currentQuantity - amount)));
     }
 
     @Override
@@ -57,13 +57,13 @@ public class Inventory<T extends IIdentifiable> implements IInventory<T> {
     }
 
     @Override
-    public CompletableFuture<Void> removeAsync(int id) {
-        return repository.removeAsync(id);
+    public CompletableFuture<Void> removeByIdAsync(int id) {
+        return repository.removeByIdAsync(id);
     }
 
     @Override
-    public CompletableFuture<T> getAsync(int id) {
-        return repository.getAsync(id);
+    public CompletableFuture<T> getByIdAsync(int id) {
+        return repository.getByIdAsync(id);
     }
 
     @Override
@@ -72,12 +72,12 @@ public class Inventory<T extends IIdentifiable> implements IInventory<T> {
     }
 
     @Override
-    public CompletableFuture<Integer> getQuantityAsync(int id) {
-        return repository.getQuantityAsync(id);
+    public CompletableFuture<Integer> getQuantityByIdAsync(int id) {
+        return repository.getQuantityByIdAsync(id);
     }
 
     @Override
-    public CompletableFuture<Void> updateQuantityAsync(int id, int newQuantity) {
-        return repository.updateQuantityAsync(id, newQuantity);
+    public CompletableFuture<Void> updateQuantityByIdAsync(int id, int newQuantity) {
+        return repository.updateQuantityByIdAsync(id, newQuantity);
     }
 }

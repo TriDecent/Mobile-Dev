@@ -79,13 +79,13 @@ public class InventoryViewModel<T extends IIdentifiable> {
 
     // Method to remove an item from the inventory by ID
     public CompletableFuture<Void> removeItem(int id) {
-        return inventory.removeAsync(id)
+        return inventory.removeByIdAsync(id)
                 .thenAccept(v -> getTotalItemsAsync()); // Refresh total items after remove
     }
 
     // Method to get an item from the inventory by ID
     public CompletableFuture<T> getItem(int id) {
-        return inventory.getAsync(id);
+        return inventory.getByIdAsync(id);
     }
 
     // Method to get all items from the inventory
@@ -95,12 +95,12 @@ public class InventoryViewModel<T extends IIdentifiable> {
 
     // Method to get the quantity of a specific item
     public CompletableFuture<Integer> getQuantity(T item) {
-        return inventory.getQuantityAsync(item.getID());
+        return inventory.getQuantityByIdAsync(item.getID());
     }
 
     // Method to set the quantity of a specific item
     public CompletableFuture<Void> setQuantity(T item, int quantity) {
-        return inventory.updateQuantityAsync(item.getID(), quantity)
+        return inventory.updateQuantityByIdAsync(item.getID(), quantity)
                 .thenAccept(v -> {
                     getTotalQuantity(); // This will update totalQuantity LiveData
                 });

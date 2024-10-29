@@ -6,14 +6,14 @@ import java.util.concurrent.CompletableFuture;
 public interface IDataBaseService<T> {
     CompletableFuture<Void> addAsync(T t);
 
-    CompletableFuture<Void> removeAsync(int id);
+    CompletableFuture<Void> removeByIdAsync(int id);
 
-    CompletableFuture<T> getAsync(int id);
+    CompletableFuture<T> getByIdAsync(int id);
 
     CompletableFuture<List<T>> getAllAsync();
 
-    CompletableFuture<Integer> getQuantityAsync(int id);
+    CompletableFuture<Integer> getQuantityByIdAsync(int id);
 
-    CompletableFuture<Void> updateQuantityAsync(int id, int newQuantity);
+    CompletableFuture<Void> updateQuantityByIdAsync(int id, int newQuantity);
 }
 
