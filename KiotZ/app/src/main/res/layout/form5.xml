@@ -5,6 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/staffNameF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nguyen Ngo Hai Nam"
+        android:textSize="20dp"
+        tools:layout_editor_absoluteX="90dp"
+        tools:layout_editor_absoluteY="16dp" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="411dp"
@@ -71,7 +80,7 @@
         </ListView>
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/searchimagebutton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             app:layout_constraintBottom_toBottomOf="@+id/SearchItemF5"
@@ -80,6 +89,36 @@
             app:layout_constraintStart_toStartOf="@+id/SearchItemF5"
             app:srcCompat="@drawable/search" />
 
+        <ImageView
+            android:id="@+id/staffimageview"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbarF5"
+            app:layout_constraintStart_toStartOf="@+id/toolbarF5"
+            app:layout_constraintTop_toTopOf="@id/toolbarF5"
+            app:srcCompat="@drawable/usericon" />
+
+        <TextView
+            android:id="@+id/StaffNameF5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:text="Nguyen Ngo Hai Nam"
+            android:textSize="20dp"
+            app:layout_constraintStart_toEndOf="@+id/staffimageview"
+            app:layout_constraintTop_toTopOf="@+id/toolbarF5" />
+
+        <TextView
+            android:id="@+id/StaffRoleF5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="16dp"
+            android:text="Staff"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbarF5"
+            app:layout_constraintStart_toEndOf="@+id/staffimageview" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarF6"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:background="@color/md_theme_inversePrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/staffimageviewF6"
+        android:layout_width="81dp"
+        android:layout_height="76dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarF6"
+        app:layout_constraintStart_toStartOf="@id/toolbarF6"
+        app:layout_constraintTop_toTopOf="@id/toolbarF6"
+        app:srcCompat="@drawable/usericon" />
+
+    <TextView
+        android:id="@+id/staffnameF6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:text="Nguyen Ngo Hai Nam"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/staffimageviewF6"
+        app:layout_constraintTop_toTopOf="@+id/toolbarF6" />
+
+    <TextView
+        android:id="@+id/staffnameF6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Staff"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarF6"
+        app:layout_constraintStart_toEndOf="@+id/staffimageviewF6" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
