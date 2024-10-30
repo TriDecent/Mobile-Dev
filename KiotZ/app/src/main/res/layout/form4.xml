@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+    <View
+        android:id="@+id/rectangle_2"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/rectangle_form4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    
+    <ImageView
+        android:id="@+id/avatar_iv_form4"
+        android:layout_width="57dp"
+        android:layout_height="58dp"
+        android:src="@drawable/generic_avatar_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="21dp"
+        android:layout_marginStart="7dp"
+        >
+
+    </ImageView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="11dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="Nguyễn Ngô Hải Nam"
+        android:textColor="@color/md_theme_scrim"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Manager"
+        android:textColor="@color/md_theme_scrim"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="74dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="60dp"
+        >
+
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textColor="@color/md_theme_scrim"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:text="Create your product"
+        android:textSize="20sp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="114dp"
+        android:lineSpacingExtra="-8sp"
+        android:gravity="center_horizontal|center_vertical"
+        >
+
+    </TextView>
+    
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/scan_img_siv"
+        android:layout_width="371dp"
+        android:layout_height="135dp"
+        android:background="@color/md_theme_surfaceContainer"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="156dp"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/RoundedSquare"
+        >
+<!--        TODO: them source vao-->
+<!--        android:src=""-->
+    </com.google.android.material.imageview.ShapeableImageView>
+
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Upload Image"
+    app:layout_constraintTop_toBottomOf="@id/scan_img_siv"
+    app:layout_constraintLeft_toLeftOf="parent"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="10dp">
+
+</Button>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
