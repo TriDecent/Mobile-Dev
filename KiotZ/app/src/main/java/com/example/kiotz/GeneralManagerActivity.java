@@ -22,6 +22,8 @@ public class GeneralManagerActivity extends AppCompatActivity {
 
     private final Map<Integer, Fragment> fragmentCache = new HashMap<>();
     private BottomNavigationView bottomNavigationView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

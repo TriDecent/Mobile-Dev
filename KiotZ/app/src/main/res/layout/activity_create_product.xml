@@ -1,73 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!-- Auto layout, variables, and unit scale are not yet supported -->
-    <View
-        android:id="@+id/rectangle_2"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="-10dp"
-        android:background="@drawable/rectangle_form4"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-    
-    <ImageView
-        android:id="@+id/avatar_iv_form4"
-        android:layout_width="57dp"
-        android:layout_height="58dp"
-        android:src="@drawable/generic_avatar_icon"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="21dp"
-        android:layout_marginStart="7dp"
-        >
+    tools:context=".CreateProductActivity">
 
-    </ImageView>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/status"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="74dp"
-        android:layout_marginTop="11dp"
-        android:fontFamily="sans-serif"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="Nguyễn Ngô Hải Nam"
-        android:textColor="@color/md_theme_scrim"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@drawable/bginfor"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </TextView>
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="7dp"
+            android:src="@drawable/avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="Nguyễn Ngô Hải Nam"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/imgAvatar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvRole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="Manager"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tvUserName"
+            app:layout_constraintTop_toBottomOf="@id/tvUserName" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
+        android:id="@+id/tvHeadingCreateProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Manager"
-        android:textColor="@color/md_theme_scrim"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="74dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="60dp"
-        >
-
-    </TextView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/status"
         app:layout_constraintLeft_toLeftOf="parent"
         android:textColor="@color/md_theme_scrim"
         android:fontFamily="sans-serif"
@@ -77,40 +66,41 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="15dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="114dp"
+        android:layout_marginTop="35dp"
         android:lineSpacingExtra="-8sp"
         android:gravity="center_horizontal|center_vertical"
         >
 
     </TextView>
-    
+
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/scan_img_siv"
-        android:layout_width="371dp"
-        android:layout_height="135dp"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
         android:background="@color/md_theme_surfaceContainer"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvHeadingCreateProduct"
         android:layout_alignParentStart="true"
         android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="156dp"
+        android:layout_marginTop="15dp"
         android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:shapeAppearanceOverlay="@style/RoundedSquare"
         >
-<!--        TODO: them source vao-->
-<!--        android:src=""-->
+     
     </com.google.android.material.imageview.ShapeableImageView>
 
     <Button
-    android:id="@+id/buttonUploadImg"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Upload Image"
-    app:layout_constraintTop_toBottomOf="@id/scan_img_siv"
-    app:layout_constraintLeft_toLeftOf="parent"
-    android:layout_marginStart="15dp"
-    android:layout_marginTop="10dp">
+        android:id="@+id/buttonUploadImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload Image"
+        app:layout_constraintTop_toBottomOf="@id/scan_img_siv"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp">
     </Button>
 
     <Button
@@ -135,15 +125,15 @@
         android:layout_height="20dp"
         android:layout_alignParentStart="true"
         android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="371dp"
+        app:layout_constraintTop_toBottomOf="@id/buttonUploadImg"
         android:text="ID of product"
         android:textSize="14sp"
         android:letterSpacing="0.01"
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal|center_vertical"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         />
 
@@ -253,14 +243,13 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="25dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="371dp"
         android:text="Quantity:"
         android:textSize="14sp"
         android:letterSpacing="0.01"
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal|center_vertical"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/id_of_product_tv_form4"
         app:layout_constraintLeft_toLeftOf="@id/id_of_product_tv_form4"
         android:layout_marginStart="130dp"
         app:layout_constraintRight_toRightOf="parent"
@@ -351,6 +340,5 @@
 
         >
     </Button>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
