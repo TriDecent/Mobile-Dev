@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/overview"
+        android:icon="@drawable/overview"
+        android:title="Overview" />
+    <item
+        android:id="@+id/sale"
+        android:icon="@drawable/sale"
+        android:title="Sale" />
+    <item
+        android:id="@+id/employee"
+        android:icon="@drawable/employee"
+        android:title="Employee" />
+    <item
+        android:id="@+id/statistic"
+        android:icon="@drawable/statistic"
+        android:title="Statistic" />
+    <item
+        android:id="@+id/setting"
+        android:icon="@drawable/setting"
+        android:title="Setting" />
+
+</menu>

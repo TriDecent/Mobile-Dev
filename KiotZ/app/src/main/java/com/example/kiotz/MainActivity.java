@@ -1,7 +1,10 @@
 package com.example.kiotz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -17,12 +20,14 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
+
+    Button button;
     private static final String TAG = "InventoryViewModelTest";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edittext_material_ui);
+        setContentView(R.layout.activity_main);
 
         List<Product> products = Arrays.asList(
                 new Product(1, "Laptop", "Electronics", 999.99, "Piece", "/path/to/qr1"),
@@ -98,5 +103,14 @@ public class MainActivity extends AppCompatActivity {
         } catch (ExecutionException | InterruptedException e) {
             Log.e(TAG, "Error executing async task", e);
         }
+
+        button=findViewById(R.id.buttonTrans);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(v.getContext(), GeneralManagerActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }

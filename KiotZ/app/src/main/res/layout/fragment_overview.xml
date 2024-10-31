@@ -1,0 +1,883 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".OverviewFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <!--        Layout1-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/bginfor"
+            android:padding="5dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="7dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/avatar"
+                />
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nguyễn Ngô Hải Nam"
+                app:layout_constraintStart_toEndOf="@id/imgAvatar"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="20dp"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:id="@+id/tvRole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Manager"
+                app:layout_constraintStart_toStartOf="@id/tvUserName"
+                app:layout_constraintTop_toBottomOf="@id/tvUserName"
+                android:layout_marginTop="7dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/tvHello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Good morning!"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="17sp"
+            android:layout_marginTop="25dp"
+            android:textStyle="bold|italic"
+            />
+
+        <!--        Layout2-->
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:background="@drawable/bgstatus"
+                android:padding="5dp"
+
+
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvDayMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="Thursday, 24/10/2024"
+                    android:layout_marginStart="5dp"
+                    android:textStyle="italic"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/imgRevenue"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/revenue"
+                    app:layout_constraintTop_toBottomOf="@id/tvDayMonth"
+                    app:layout_constraintStart_toStartOf="@id/tvDayMonth"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tvRevenue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Revenue"
+                    app:layout_constraintStart_toEndOf="@id/imgRevenue"
+                    app:layout_constraintTop_toTopOf="@id/imgRevenue"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+
+
+                    />
+
+                <TextView
+                    android:id="@+id/tvRevenueValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    app:layout_constraintTop_toBottomOf="@id/tvRevenue"
+                    app:layout_constraintStart_toStartOf="@id/tvRevenue"
+                    android:layout_marginTop="8dp"
+                    />
+
+                <View
+                    android:id="@+id/vertical_line1"
+                    android:layout_width="1dp"
+                    android:layout_height="60dp"
+                    android:background="#000000"
+                    app:layout_constraintTop_toTopOf="@id/imgRevenue"
+                    app:layout_constraintStart_toEndOf="@id/tvRevenue"
+                    android:layout_marginStart="25dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/imgOrder"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:layout_constraintStart_toEndOf="@id/vertical_line1"
+                    app:layout_constraintTop_toTopOf="@id/imgRevenue"
+                    android:src="@drawable/order"
+                    android:layout_marginStart="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tvOrder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Order"
+                    app:layout_constraintStart_toEndOf="@id/imgOrder"
+                    app:layout_constraintTop_toTopOf="@id/imgOrder"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tvOrderValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tvOrder"
+                    app:layout_constraintStart_toStartOf="@id/tvOrder"
+                    android:text="0"
+                    android:layout_marginTop="8dp"
+                    />
+
+                <View
+                    android:id="@+id/vertical_line2"
+                    android:layout_width="1dp"
+                    android:layout_height="60dp"
+                    android:background="#000000"
+                    android:layout_marginStart="25dp"
+                    app:layout_constraintStart_toEndOf="@id/tvOrder"
+                    app:layout_constraintTop_toTopOf="@id/vertical_line1"
+                    />
+
+                <ImageView
+                    android:id="@+id/imgProfit"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:layout_constraintTop_toTopOf="@id/imgOrder"
+                    app:layout_constraintStart_toEndOf="@id/vertical_line2"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/profit"
+
+                    />
+                <TextView
+                    android:id="@+id/tvProfit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profit"
+                    app:layout_constraintStart_toEndOf="@id/imgProfit"
+                    app:layout_constraintTop_toTopOf="@id/imgProfit"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+
+                    />
+
+                <TextView
+                    android:id="@+id/tvProfitValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    app:layout_constraintTop_toBottomOf="@id/tvProfit"
+                    app:layout_constraintStart_toStartOf="@id/tvProfit"
+                    android:layout_marginTop="8dp"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </HorizontalScrollView>
+
+
+
+
+        <View
+            android:id="@+id/horizontal_line"
+            android:layout_width="280dp"
+            android:layout_height="1dp"
+            android:background="#000000"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center_horizontal"
+            />
+
+
+
+        <TextView
+            android:id="@+id/tvManage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Manage your system"
+            android:textSize="17sp"
+            android:textStyle="bold|italic"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            />
+
+        <!--        Layout3-->
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <HorizontalScrollView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <GridLayout
+                    android:id="@+id/gridLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:columnCount="2"
+                    android:rowCount="2">
+
+
+                    <!--             Row 0 Column 0-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="0"
+                        android:layout_rowWeight="1"
+                        android:layout_column="0"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bgstatus"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:id="@+id/tv1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Manage products"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.cardview.widget.CardView
+
+                            android:id="@+id/cardViewAddProduct"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            app:cardCornerRadius="7dp"
+                            app:layout_constraintBottom_toTopOf="@id/cardViewModifyInventory"
+                            app:layout_constraintStart_toStartOf="@id/tv1"
+                            app:layout_constraintTop_toBottomOf="@id/tv1"
+
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:id="@+id/imgAddProduct"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:src="@drawable/addproduct" />
+
+                                <TextView
+                                    android:id="@+id/tvAddProduct"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textAlignment="center"
+                                    android:text="Add product"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardViewViewInventory"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            app:cardCornerRadius="7dp"
+                            app:layout_constraintBottom_toBottomOf="@id/cardViewAddProduct"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/cardViewAddProduct"
+                            app:layout_constraintTop_toTopOf="@id/cardViewAddProduct"
+
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:id="@+id/imgViewInventory"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:src="@drawable/viewinventory" />
+
+                                <TextView
+                                    android:id="@+id/tvViewInventory"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textAlignment="center"
+                                    android:text="View inventory"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+
+                        <androidx.cardview.widget.CardView
+
+                            android:id="@+id/cardViewModifyInventory"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            app:cardCornerRadius="7dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/cardViewAddProduct"
+                            app:layout_constraintTop_toBottomOf="@id/cardViewAddProduct">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:id="@+id/imgModifyInventory"
+                                    android:layout_width="35dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:src="@drawable/modifyinventory" />
+
+                                <TextView
+                                    android:id="@+id/tvModifyInventory"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textAlignment="center"
+                                    android:text="Modify inventory"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--             Row 0 Column 1-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="0"
+                        android:layout_rowWeight="1"
+                        android:layout_column="1"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bgstatus"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:id="@+id/tv2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Manage employee"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardViewCreateAccount"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            app:cardCornerRadius="7dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv2"
+
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:id="@+id/imgCreateAccount"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:src="@drawable/createaccount" />
+
+                                <TextView
+                                    android:id="@+id/tvCreateAccount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textAlignment="center"
+                                    android:text="Create account"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardViewAccount"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            app:cardCornerRadius="7dp"
+                            app:layout_constraintBottom_toBottomOf="@id/cardViewCreateAccount"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/cardViewCreateAccount"
+                            app:layout_constraintTop_toTopOf="@id/cardViewCreateAccount"
+
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:id="@+id/imgViewAccount"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:src="@drawable/viewaccount" />
+
+                                <TextView
+                                    android:id="@+id/tvViewAccount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textAlignment="center"
+                                    android:text="View account"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardViewModifyAccount"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            app:cardCornerRadius="7dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/cardViewCreateAccount"
+                            app:layout_constraintTop_toBottomOf="@id/cardViewCreateAccount"
+
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:id="@+id/imgModifyAccount"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:src="@drawable/modifyaccount" />
+
+                                <TextView
+                                    android:id="@+id/tvModifyAccount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textAlignment="center"
+
+                                    android:text="Modify account"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--             Row 1 Column 0-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_rowWeight="1"
+                        android:layout_column="0"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bgstatus"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:id="@+id/tv3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Today analysis"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.cardview.widget.CardView
+
+                            android:id="@+id/cardViewSaleProduct"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            app:cardCornerRadius="7dp"
+                            app:layout_constraintStart_toStartOf="@id/tv3"
+                            app:layout_constraintTop_toBottomOf="@id/tv3"
+
+
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:id="@+id/imgSaleProduct"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:src="@drawable/productsale" />
+
+                                <TextView
+                                    android:id="@+id/tvSaleProduct"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textAlignment="center"
+                                    android:text="Products sold"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+
+                        <androidx.cardview.widget.CardView
+
+                            android:id="@+id/cardViewInvoice"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            app:cardCornerRadius="7dp"
+                            app:layout_constraintTop_toTopOf="@id/cardViewSaleProduct"
+                            app:layout_constraintStart_toEndOf="@id/cardViewSaleProduct"
+                            app:layout_constraintEnd_toEndOf="parent"
+
+
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:id="@+id/imgInvoice"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:src="@drawable/invoice" />
+
+                                <TextView
+                                    android:id="@+id/tvInvoice"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="Invoices"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+
+                        <androidx.cardview.widget.CardView
+
+                            android:id="@+id/cardViewTimeStatistic"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            app:cardCornerRadius="7dp"
+                            app:layout_constraintTop_toBottomOf="@id/cardViewSaleProduct"
+                            app:layout_constraintStart_toStartOf="@id/cardViewSaleProduct"
+                            app:layout_constraintBottom_toBottomOf="parent"
+
+
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:id="@+id/imgTimeStatistic"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:src="@drawable/producttime" />
+
+                                <TextView
+                                    android:id="@+id/tvTimeStatistic"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="Times"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_rowWeight="1"
+                        android:layout_column="1"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bgstatus"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:id="@+id/tv4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Report"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <androidx.cardview.widget.CardView
+
+                            android:id="@+id/cardViewDay"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            app:cardCornerRadius="7dp"
+                            app:layout_constraintStart_toStartOf="@id/tv4"
+                            app:layout_constraintTop_toBottomOf="@id/tv4"
+
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:id="@+id/imgDay"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:src="@drawable/day" />
+
+                                <TextView
+                                    android:id="@+id/tvDay"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textAlignment="center"
+                                    android:text="Days"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+
+                        <androidx.cardview.widget.CardView
+
+                            android:id="@+id/cardViewWeek"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            app:cardCornerRadius="7dp"
+                            app:layout_constraintTop_toTopOf="@id/cardViewDay"
+                            app:layout_constraintStart_toEndOf="@id/cardViewDay"
+                            app:layout_constraintEnd_toEndOf="parent"
+
+
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:id="@+id/imgWeek"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:src="@drawable/week" />
+
+                                <TextView
+                                    android:id="@+id/tvWeek"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="Weeks"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+
+                            android:id="@+id/cardViewMonth"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            app:cardCornerRadius="7dp"
+                            app:layout_constraintTop_toBottomOf="@id/cardViewDay"
+                            app:layout_constraintStart_toStartOf="@id/cardViewDay"
+                            app:layout_constraintBottom_toBottomOf="parent"
+
+
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:id="@+id/imgMonth"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:src="@drawable/month" />
+
+                                <TextView
+                                    android:id="@+id/tvMonth"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="Months"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </GridLayout>
+
+
+            </HorizontalScrollView>
+
+
+
+        </ScrollView>
+
+
+    </LinearLayout>
+
+</FrameLayout>
