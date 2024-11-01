@@ -19,8 +19,13 @@ public class Repository<T extends IIdentifiable> implements IRepository<T> {
     }
 
     @Override
-    public CompletableFuture<Void> removeByIdAsync(int id) {
-        return databaseService.removeByIdAsync(id);
+    public CompletableFuture<Void> removeAsync(T item) {
+        return databaseService.removeAsync(item);
+    }
+
+    @Override
+    public CompletableFuture<Void> updateAsync(T currentItem, T newItem) {
+        return databaseService.updateAsync(currentItem, newItem);
     }
 
     @Override
@@ -33,13 +38,4 @@ public class Repository<T extends IIdentifiable> implements IRepository<T> {
         return databaseService.getAllAsync();
     }
 
-    @Override
-    public CompletableFuture<Integer> getQuantityByIdAsync(int id) {
-        return databaseService.getQuantityByIdAsync(id);
-    }
-
-    @Override
-    public CompletableFuture<Void> updateQuantityByIdAsync(int id, int newQuantity) {
-        return databaseService.updateQuantityByIdAsync(id, newQuantity);
-    }
 }
