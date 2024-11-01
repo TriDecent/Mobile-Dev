@@ -1,7 +1,9 @@
 package com.example.kiotz.models;
 
 public interface IIdentifiable {
-    int getID();
+    int ID();
+
+    IIdentifiable withId(int id);
 }
 
 
