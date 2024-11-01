@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -35,7 +34,7 @@ public class GeneralManagerActivity extends AppCompatActivity {
             return insets;
         });
 
-        bottomNavigationView=findViewById(R.id.nav_view);
+        bottomNavigationView = findViewById(R.id.nav_view);
         replaceFragmentv2(R.id.overview);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -54,10 +53,6 @@ public class GeneralManagerActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-
-
-
     }
 
     private void replaceFragmentv2(int itemId) {
@@ -65,7 +60,7 @@ public class GeneralManagerActivity extends AppCompatActivity {
         if (fragment == null) {
             fragment = createFragmentById(itemId);
             fragmentCache.put(itemId, fragment);
-            Toast.makeText(this,"Create new",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Create new", Toast.LENGTH_SHORT).show();
         }
 
         getSupportFragmentManager()
@@ -73,6 +68,7 @@ public class GeneralManagerActivity extends AppCompatActivity {
                 .replace(R.id.frameLayour, fragment)
                 .commit();
     }
+
     private Fragment createFragmentById(int itemId) {
         if (itemId == R.id.overview) {
             return new OverviewFragment();
@@ -81,6 +77,5 @@ public class GeneralManagerActivity extends AppCompatActivity {
         } else {
             return new OverviewFragment();
         }
-
     }
 }
