@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/SaleEmployee"
+        android:icon="@drawable/ic_sell"
+        android:title="Sale" />
+    <item
+        android:id="@+id/ReceiptsEmployee"
+        android:icon="@drawable/ic_receipt"
+        android:title="Receipts" />
+    <item
+        android:id="@+id/ProductsEmployee"
+        android:icon="@drawable/ic_product"
+        android:title="Products" />
+    <item
+        android:id="@+id/SettingEmployee"
+        android:icon="@drawable/ic_settings"
+        android:title="Setting" />
+</menu>

@@ -93,19 +93,19 @@
         android:layout_marginBottom="110dp"
         android:layout_marginTop="15dp"
         app:boxBackgroundColor="@color/md_theme_secondaryContainer"
-        app:endIconMode="clear_text"
         app:helperText="Please enter password"
         app:layout_constraintTop_toBottomOf="@id/login_username_ti"
-
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:prefixTextColor="@color/md_theme_scrim"
+        app:endIconMode="password_toggle"
         app:startIconDrawable="@drawable/password_icon">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:inputType="textPassword"
             />
     </com.google.android.material.textfield.TextInputLayout>
 
