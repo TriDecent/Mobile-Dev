@@ -4,16 +4,14 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public interface IDataBaseService<T> {
-    CompletableFuture<Void> addAsync(T t);
+    CompletableFuture<Void> addAsync(T item);
 
-    CompletableFuture<Void> removeByIdAsync(int id);
+    CompletableFuture<Void> removeAsync(T item);
 
     CompletableFuture<T> getByIdAsync(int id);
 
     CompletableFuture<List<T>> getAllAsync();
 
-    CompletableFuture<Integer> getQuantityByIdAsync(int id);
-
-    CompletableFuture<Void> updateQuantityByIdAsync(int id, int newQuantity);
+    CompletableFuture<Void> updateAsync(T currentItem, T newItem);
 }
 

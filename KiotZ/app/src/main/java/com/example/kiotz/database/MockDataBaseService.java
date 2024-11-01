@@ -13,72 +13,58 @@ import java.util.concurrent.ConcurrentHashMap;
 // Checking will be implemented in the database service
 
 public class MockDataBaseService<T extends IIdentifiable> implements IDataBaseService<T> {
-    private final Map<Integer, T> database = new ConcurrentHashMap<>();
-    private final Map<Integer, Integer> quantities = new ConcurrentHashMap<>();
+    private final Map<Integer, T> data = new ConcurrentHashMap<>();
+    private final Random random = new Random();
 
     public MockDataBaseService(List<T> items) {
-        Random random = new Random();
-        for (T item : items) {
-            if (database.containsKey(item.getID())) {
-                throw new IllegalArgumentException("Item already exists.");
-            }
-            database.put(item.getID(), item);
-            quantities.put(item.getID(), random.nextInt(100));
+        for (var item : items) {
+            data.put(item.ID(), item);
         }
     }
 
     @Override
     public CompletableFuture<Void> addAsync(T item) {
-        if (database.containsKey(item.getID())) {
-            throw new IllegalArgumentException("Item already exists.");
-        }
-        database.put(item.getID(), item);
-        quantities.put(item.getID(), 0);
-        return CompletableFuture.completedFuture(null);
+        return CompletableFuture.runAsync(() -> {
+            int id = random.nextInt();
+            while (data.containsKey(id)) {
+                id = random.nextInt();
+            }
+            data.put(id, (T) item.withId(id));
+        });
     }
 
     @Override
-    public CompletableFuture<Void> removeByIdAsync(int id) {
-        if (!database.containsKey(id)) {
-            throw new NoSuchElementException("Item not found.");
-        }
-        database.remove(id);
-        quantities.remove(id);
-        return CompletableFuture.completedFuture(null);
+    public CompletableFuture<Void> removeAsync(T item) {
+        return CompletableFuture.runAsync(() -> {
+            if (!data.containsValue(item)) {
+                throw new NoSuchElementException("Item not found");
+            }
+            data.remove(item.ID());
+        });
     }
 
     @Override
     public CompletableFuture<T> getByIdAsync(int id) {
-        T item = database.get(id);
-        if (item == null) {
-            throw new NoSuchElementException("Item not found.");
-        }
-        return CompletableFuture.completedFuture(item);
+        return CompletableFuture.supplyAsync(() -> {
+            if (!data.containsKey(id)) {
+                throw new NoSuchElementException("Item not found");
+            }
+            return data.get(id);
+        });
     }
 
     @Override
     public CompletableFuture<List<T>> getAllAsync() {
-        return CompletableFuture.completedFuture(new ArrayList<>(database.values()));
+        return CompletableFuture.supplyAsync(() -> new ArrayList<>(data.values()));
     }
 
     @Override
-    public CompletableFuture<Integer> getQuantityByIdAsync(int id) {
-        Integer quantity = quantities.get(id);
-        if (quantity == null) {
-            throw new NoSuchElementException("Item not found.");
-        }
-        return CompletableFuture.completedFuture(quantity);
-    }
-
-    @Override
-    public CompletableFuture<Void> updateQuantityByIdAsync(int id, int newQuantity) {
-        if (!database.containsKey(id)) {
-            throw new NoSuchElementException("Item not found.");
-        }
-        if (newQuantity < 0) {
-            throw new IllegalArgumentException("Quantity cannot be negative.");
-        }
-        quantities.put(id, newQuantity);
-        return CompletableFuture.completedFuture(null);
+    public CompletableFuture<Void> updateAsync(T currentItem, T newItem) {
+        return CompletableFuture.runAsync(() -> {
+            if (!data.containsValue(currentItem)) {
+                throw new NoSuchElementException("Item not found");
+            }
+            data.put(currentItem.ID(), newItem);
+        });
     }
 }
