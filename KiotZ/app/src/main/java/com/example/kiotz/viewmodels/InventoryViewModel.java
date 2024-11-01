@@ -6,105 +6,108 @@ import com.example.kiotz.inventory.IInventory;
 import com.example.kiotz.models.IIdentifiable;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class InventoryViewModel<T extends IIdentifiable> {
     private final IInventory<T> inventory;
 
-    // fields for observing data in the View
-    private final MutableLiveData<Integer> totalItems = new MutableLiveData<>();
-    private final MutableLiveData<Integer> totalQuantity = new MutableLiveData<>();
+    public final MutableLiveData<List<T>> items = new MutableLiveData<>();
+    public final MutableLiveData<T> addedItem = new MutableLiveData<>();
+    public final MutableLiveData<Integer> deletedPosition = new MutableLiveData<>();
+    public final MutableLiveData<Integer> updatedPosition = new MutableLiveData<>();
 
     public InventoryViewModel(IInventory<T> inventory) {
         this.inventory = inventory;
-        loadInitialData(); // Load initial values when ViewModel is created
+        loadItems(); // Load initial list of items
     }
 
-    private void loadInitialData() {
-        // Load total items and quantity asynchronously
-        getTotalItemsAsync().thenAccept(totalItems::setValue);
-        getTotalQuantity().thenAccept(totalQuantity::setValue);
+    public MutableLiveData<List<T>> getObservableItems() {
+        return items;
     }
 
-    // Public getters for LiveData
-    public MutableLiveData<Integer> getTotalItemsLiveData() {
-        loadInitialData();
-        return totalItems;
+    public MutableLiveData<T> getObservableAddedItem() {
+        return addedItem;
     }
 
-    public MutableLiveData<Integer> getTotalQuantityLiveData() {
-        loadInitialData();
-        return totalQuantity;
+    public MutableLiveData<Integer> getObservableDeletedItemPosition() {
+        return deletedPosition;
     }
 
-    // Method to get the total count of items
-    public CompletableFuture<Integer> getTotalItemsAsync() {
-        return inventory.getTotalItemsAsync().thenApply(count -> {
-            totalItems.postValue(count); // Update LiveData value
-            return count;
+    public MutableLiveData<Integer> getObservableUpdatedItemPosition() {
+        return updatedPosition;
+    }
+
+    // Load initial list of items
+    public void loadItems() {
+        inventory.getAllAsync().thenAccept(items::postValue);
+    }
+
+    public void add(T item) {
+        inventory.addAsync(item).thenRun(() -> {
+            addedItem.postValue(item);
+            addItemToList(item); // Add item to the observable list
         });
     }
 
-    // Method to get the total quantity of all items
-    public CompletableFuture<Integer> getTotalQuantity() {
-        return inventory.getTotalQuantityAsync().thenApply(quantity -> {
-            totalQuantity.postValue(quantity); // Update LiveData value
-            return quantity;
+    public void delete(T item) {
+        inventory.removeAsync(item).thenRun(() -> {
+            removeItemFromList(item); // Remove item from the observable list
         });
     }
 
-    // Method to update the quantity of a specific item
-    public CompletableFuture<Void> updateItemQuantity(T item, int newQuantity) {
-        return inventory.updateItemQuantityAsync(item, newQuantity)
-                .thenAccept(v -> getTotalQuantity()); // Refresh total quantity after update
+    public void update(T currentItem, T newItem) {
+        inventory.updateAsync(currentItem, newItem).thenRun(() -> {
+            updateItemInList(currentItem, newItem); // Update item in the observable list
+        });
     }
 
-    // Method to increment the quantity of a specific item by a specified amount
-    public CompletableFuture<Void> incrementQuantity(T item, int amount) {
-        return inventory.incrementQuantityAsync(item, amount)
-                .thenAccept(v -> getTotalQuantity()); // Refresh total quantity after increment
+    // Synchronous retrieval for UI compatibility
+    public List<T> getAll() {
+        try {
+            return inventory.getAllAsync().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return List.of();
+        }
     }
 
-    // Method to decrement the quantity of a specific item by a specified amount
-    public CompletableFuture<Void> decrementQuantity(T item, int amount) {
-        return inventory.decrementQuantityAsync(item, amount)
-                .thenAccept(v -> getTotalQuantity()); // Refresh total quantity after decrement
+    // Update items list by adding a new item
+    private void addItemToList(T item) {
+        List<T> currentList = items.getValue();
+        if (currentList != null) {
+            currentList.add(item);
+            items.setValue(currentList);
+        }
     }
 
-    // Method to add a new item to the inventory
-    public CompletableFuture<Void> addItem(T item) {
-        return inventory.addAsync(item)
-                .thenAccept(v -> getTotalItemsAsync()); // Refresh total items after add
+    // Update items list by removing an item
+    private void removeItemFromList(T item) {
+        List<T> currentList = items.getValue();
+        if (currentList != null) {
+            int position = currentList.indexOf(item);
+            if (position != -1) {
+                currentList.remove(position);
+                deletedPosition.setValue(position); // Notify observers of the deleted item's position
+                items.setValue(currentList);
+            }
+        }
     }
 
-    // Method to remove an item from the inventory by ID
-    public CompletableFuture<Void> removeItem(int id) {
-        return inventory.removeByIdAsync(id)
-                .thenAccept(v -> getTotalItemsAsync()); // Refresh total items after remove
-    }
-
-    // Method to get an item from the inventory by ID
-    public CompletableFuture<T> getItem(int id) {
-        return inventory.getByIdAsync(id);
-    }
-
-    // Method to get all items from the inventory
-    public CompletableFuture<List<T>> getAllItems() {
-        return inventory.getAllAsync();
-    }
-
-    // Method to get the quantity of a specific item
-    public CompletableFuture<Integer> getQuantity(T item) {
-        return inventory.getQuantityByIdAsync(item.getID());
-    }
-
-    // Method to set the quantity of a specific item
-    public CompletableFuture<Void> setQuantity(T item, int quantity) {
-        return inventory.updateQuantityByIdAsync(item.getID(), quantity)
-                .thenAccept(v -> {
-                    getTotalQuantity(); // This will update totalQuantity LiveData
-                });
+    // Update items list by modifying an existing item
+    private void updateItemInList(T currentItem, T newItem) {
+        List<T> currentList = items.getValue();
+        if (currentList != null) {
+            int position = currentList.indexOf(currentItem);
+            if (position != -1) {
+                currentList.set(position, newItem);
+                updatedPosition.setValue(position); // Notify observers of the updated item's position
+                items.setValue(currentList);
+            }
+        }
     }
 }
+
+
+
+
 
 
