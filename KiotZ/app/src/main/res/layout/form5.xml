@@ -22,7 +22,7 @@
             android:id="@+id/toolbarF5"
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:background="@color/md_theme_inversePrimary"
+            android:background="@color/md_theme_secondaryContainer"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,45 +41,65 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbarF5" />
 
-        <EditText
-            android:id="@+id/SearchItemF5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginEnd="20dp"
-            android:hint="Enter Item Name"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.82"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbarF5"
-            tools:ignore="TouchTargetSizeCheck" />
+<!--        <EditText-->
+<!--            android:id="@+id/search_item_et"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="80dp"-->
+<!--            android:layout_marginEnd="20dp"-->
+<!--            android:hint="Enter Item Name"-->
+<!--            android:minHeight="48dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.82"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/toolbarF5"-->
+<!--            tools:ignore="TouchTargetSizeCheck" />-->
+
+       <SearchView
+           android:id="@+id/search_item_sv_form5"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:queryHint="Enter Item Name"
+           app:layout_constraintTop_toBottomOf="@+id/toolbarF5"
+           android:layout_marginTop="80dp"
+           app:layout_constraintLeft_toLeftOf="parent"
+           app:layout_constraintRight_toRightOf="parent"
+           android:layout_marginStart="20dp"
+           android:layout_marginEnd="20dp"
+           android:background="@drawable/bg_search_rounded_form5"
+
+           >
+
+       </SearchView>
+
 
         <ListView
             android:id="@+id/listView"
-            android:layout_width="409dp"
-            android:layout_height="661dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="32dp"
-            android:background="@color/md_theme_inversePrimary"
+            android:background="@color/md_theme_surfaceVariant"
             android:dividerHeight="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/SearchItemF5">
+            app:layout_constraintTop_toBottomOf="@+id/search_item_sv_form5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
 
         </ListView>
 
-        <ImageView
-            android:id="@+id/searchimagebutton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:layout_constraintBottom_toBottomOf="@+id/SearchItemF5"
-            app:layout_constraintEnd_toEndOf="@+id/SearchItemF5"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/SearchItemF5"
-            app:srcCompat="@drawable/search" />
+<!--        <ImageView-->
+<!--            android:id="@+id/searchimagebutton"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/search_item_sv_form5"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/search_item_sv_form5"-->
+<!--            app:layout_constraintHorizontal_bias="1.0"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/search_item_sv_form5"-->
+<!--            app:srcCompat="@drawable/search" />-->
 
         <ImageView
             android:id="@+id/staffimageview"
@@ -108,7 +128,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginBottom="16dp"
             android:text="Staff"
-            android:textSize="15dp"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/toolbarF5"
             app:layout_constraintStart_toEndOf="@+id/staffimageview" />
 
