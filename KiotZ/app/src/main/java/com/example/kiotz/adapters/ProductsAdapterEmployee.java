@@ -17,11 +17,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.MyViewHolder> {
+public class ProductsAdapterEmployee extends RecyclerView.Adapter<ProductsAdapterEmployee.MyViewHolder> {
     private final Context context;
     private final List<Product> tempProductList; // Must change after implementing the database
 
-    public ProductsAdapter(Context context) {
+    public ProductsAdapterEmployee(Context context) {
         this.context = context;
 
         tempProductList = Arrays.asList(
@@ -40,14 +40,14 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.MyView
 
     @NonNull
     @Override
-    public ProductsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ProductsAdapterEmployee.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         var inflater = LayoutInflater.from(context);
         var view = inflater.inflate(R.layout.item_form7, parent, false);
-        return new ProductsAdapter.MyViewHolder(view);
+        return new ProductsAdapterEmployee.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductsAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ProductsAdapterEmployee.MyViewHolder holder, int position) {
         if (tempProductList == null) return;
 
         var currentStudent = tempProductList.get(position);

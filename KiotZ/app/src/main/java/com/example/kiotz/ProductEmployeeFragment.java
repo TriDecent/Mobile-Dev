@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.kiotz.adapters.ProductsAdapter;
+import com.example.kiotz.adapters.ProductsAdapterEmployee;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,7 +73,7 @@ public class ProductEmployeeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        ProductsAdapter productsAdapter=new ProductsAdapter(view.getContext());
+        ProductsAdapterEmployee productsAdapter=new ProductsAdapterEmployee(view.getContext());
         RecyclerView recyclerViewProduct=view.findViewById(R.id.recycleViewProductEmployee);
         recyclerViewProduct.setAdapter(productsAdapter);
         recyclerViewProduct.setLayoutManager(new LinearLayoutManager(view.getContext()));

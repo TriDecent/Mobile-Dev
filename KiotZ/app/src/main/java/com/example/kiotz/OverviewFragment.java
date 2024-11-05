@@ -80,5 +80,23 @@ public class OverviewFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+        CardView cardViewCreateAccount=view.findViewById(R.id.cardViewCreateAccount);
+        cardViewCreateAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(v.getContext(), CreateAccountActivity.class);
+                startActivity(i);
+            }
+        });
+
+        CardView cardViewViewInventory=view.findViewById(R.id.cardViewViewInventory);
+        cardViewViewInventory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(v.getContext(), ViewInventoryActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }
