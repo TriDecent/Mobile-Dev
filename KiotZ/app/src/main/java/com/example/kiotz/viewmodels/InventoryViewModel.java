@@ -66,6 +66,10 @@ public class InventoryViewModel<T extends IIdentifiable> {
         return inventory.getAllAsync();
     }
 
+    public CompletableFuture<T> getById(String id) {
+        return inventory.getByIdAsync(id);
+    }
+
     // Update items list by adding a new item
     private void addItemToList(T item) {
         List<T> currentList = items.getValue();
