@@ -83,25 +83,32 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            Account account = new Account(email, password, null);
+            Account account = new Account(email, password);
 
             authenticator.signIn(account, task -> {
                 pbSignIn.setVisibility(ProgressBar.GONE);
                 if (task.isSuccessful()) {
-                    String userId = authenticator.getCurrentUserId();
-                    Account loggedInAccount = new Account(email, password, userId);
-
                     Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
 
-                    if (email.equals("manager@gmail.com") && password.equals("123456")) {
-                        Intent i = new Intent(v.getContext(), GeneralManagerActivity.class);
-                        startActivity(i);
-                        finish();
-                    } else {
-                        Intent i = new Intent(v.getContext(), GeneralEmployeeActivity.class);
-                        startActivity(i);
-                        finish();
-                    }
+                    String userId = authenticator.getCurrentUserId();
+                    employeeViewModel.getById(userId).thenAccept(employee -> {
+                        if (employee != null) {
+                            Intent i;
+                            if (employee.IsAdmin()) {
+                                i = new Intent(this, GeneralManagerActivity.class);
+                            } else {
+                                i = new Intent(this, GeneralEmployeeActivity.class);
+                            }
+
+                            startActivity(i);
+                            finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Failed to retrieve employee.", Toast.LENGTH_SHORT).show();
+                        }
+                    }).exceptionally(ex -> {
+                        Toast.makeText(LoginActivity.this, "Error retrieving employee: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
+                        return null;
+                    });
                 } else {
                     Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                 }
