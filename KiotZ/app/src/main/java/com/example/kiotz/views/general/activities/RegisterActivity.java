@@ -16,7 +16,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.kiotz.R;
 import com.example.kiotz.authentication.Authenticator;
+import com.example.kiotz.database.FireBaseService;
+import com.example.kiotz.database.serializers.EmployeeSerializer;
+import com.example.kiotz.inventory.Inventory;
 import com.example.kiotz.models.Account;
+import com.example.kiotz.models.Employee;
+import com.example.kiotz.repositories.Repository;
+import com.example.kiotz.viewmodels.InventoryViewModel;
+import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -29,6 +36,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     ProgressBar pbSignUp;
     Authenticator authenticator;
+
+    Inventory<Employee> employeeInventory;
+    InventoryViewModel<Employee> employeeViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +58,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         pbSignUp = findViewById(R.id.pb_sign_up);
         authenticator = new Authenticator();
+
+        employeeInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new EmployeeSerializer())));
+        employeeViewModel = InventoryViewModelFactory.getInstance().getViewModel(employeeInventory, Employee.class);
 
         tvSignIn.setOnClickListener(v -> {
             Intent i = new Intent(v.getContext(), LoginActivity.class);
@@ -73,11 +86,13 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            Account account = new Account(email, password, null);
+            Account account = new Account(email, password);
 
             authenticator.register(account, task -> {
                 pbSignUp.setVisibility(ProgressBar.GONE);
                 if (task.isSuccessful()) {
+                    var employeeId = authenticator.getCurrentUserId();
+                    employeeViewModel.add(new Employee(employeeId, email, null, null, false));
                     Toast.makeText(this, "Account created.", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show();
