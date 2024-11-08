@@ -56,6 +56,32 @@ public class LoginActivity extends AppCompatActivity {
 
         authenticator = new Authenticator();
 
+        employeeInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new EmployeeSerializer())));
+        employeeViewModel = InventoryViewModelFactory.getInstance().getViewModel(employeeInventory, Employee.class);
+
+        var currentUser = authenticator.getCurrentUser();
+        if (currentUser != null) {
+            String userId = authenticator.getCurrentUserId();
+            employeeViewModel.getById(userId).thenAccept(employee -> {
+                if (employee != null) {
+                    Intent i;
+                    if (employee.IsAdmin()) {
+                        i = new Intent(this, GeneralManagerActivity.class);
+                    } else {
+                        i = new Intent(this, GeneralEmployeeActivity.class);
+                    }
+                    Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    startActivity(i);
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Failed to retrieve employee.", Toast.LENGTH_SHORT).show();
+                }
+            }).exceptionally(ex -> {
+                Toast.makeText(LoginActivity.this, "Error retrieving employee: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
+                return null;
+            });
+        }
+
         btnLogin = findViewById(R.id.buttonLogin);
         tvRegister = findViewById(R.id.tv_sign_in);
 
@@ -64,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
 
         pbSignIn = findViewById(R.id.pb_sign_in);
 
-        testInventoryViewModel();
+        //        testInventoryViewModel();
 
         btnLogin.setOnClickListener(v -> {
             pbSignIn.setVisibility(ProgressBar.VISIBLE);
@@ -124,9 +150,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void testInventoryViewModel() {
-        employeeInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new EmployeeSerializer())));
-        employeeViewModel = InventoryViewModelFactory.getInstance().getViewModel(employeeInventory, Employee.class);
-
         // Test getAll
         employeeViewModel.getAll().thenAccept(employees -> {
             for (var employee : employees) {
