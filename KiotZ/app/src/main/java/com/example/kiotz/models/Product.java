@@ -1,14 +1,14 @@
 package com.example.kiotz.models;
 
-public record Product(int ID, String Name, String Category, double Price, String Unit,
+public record Product(String ID, String Name, String Category, double Price, String Unit,
                       String QRCodePath) implements IIdentifiable {
     @Override
-    public int ID() {
+    public String ID() {
         return ID;
     }
 
     @Override
-    public IIdentifiable withId(int id) {
+    public IIdentifiable withId(String id) {
         return new Product(id, Name, Category, Price, Unit, QRCodePath);
     }
 }

@@ -1,13 +1,14 @@
 package com.example.kiotz.models;
 
-public record Account(String UserName, String Password, int EmployeeID) implements IIdentifiable {
+public record Account(String UserName, String Password,
+                      String EmployeeID) implements IIdentifiable {
     @Override
-    public int ID() {
+    public String ID() {
         return EmployeeID;
     }
 
     @Override
-    public IIdentifiable withId(int id) {
+    public IIdentifiable withId(String id) {
         return new Account(UserName, Password, id);
     }
 }
