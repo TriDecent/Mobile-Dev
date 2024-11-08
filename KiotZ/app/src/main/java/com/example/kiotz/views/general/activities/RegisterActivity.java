@@ -15,8 +15,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.kiotz.R;
+import com.example.kiotz.authentication.Authenticator;
+import com.example.kiotz.models.Account;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -27,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputEditText etPassword;
 
     ProgressBar pbSignUp;
-    FirebaseAuth mAuth;
+    Authenticator authenticator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.et_sign_up_password);
 
         pbSignUp = findViewById(R.id.pb_sign_up);
-        mAuth = FirebaseAuth.getInstance();
+        authenticator = new Authenticator();
 
         tvSignIn.setOnClickListener(v -> {
             Intent i = new Intent(v.getContext(), LoginActivity.class);
@@ -57,8 +58,8 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(v -> {
             pbSignUp.setVisibility(ProgressBar.VISIBLE);
 
-            var email = etEmail.getText().toString();
-            var password = etPassword.getText().toString();
+            String email = etEmail.getText().toString();
+            String password = etPassword.getText().toString();
 
             if (TextUtils.isEmpty(email)) {
                 etEmail.setError("Email is required");
@@ -72,20 +73,16 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(task -> {
-                        pbSignUp.setVisibility(ProgressBar.GONE);
-                        if (task.isSuccessful()) {
+            Account account = new Account(email, password, null);
 
-                            Toast.makeText(this, "Account created.",
-                                    Toast.LENGTH_SHORT).show();
-
-                        } else {
-                            Toast.makeText(this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            pbSignUp.setVisibility(ProgressBar.GONE);
-                        }
-                    });
+            authenticator.register(account, task -> {
+                pbSignUp.setVisibility(ProgressBar.GONE);
+                if (task.isSuccessful()) {
+                    Toast.makeText(this, "Account created.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 }
