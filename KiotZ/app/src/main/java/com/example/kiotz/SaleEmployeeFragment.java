@@ -1,14 +1,26 @@
 package com.example.kiotz;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ScrollView;
+import android.widget.Toast;
+
+import com.budiyev.android.codescanner.CodeScanner;
+import com.budiyev.android.codescanner.CodeScannerView;
+import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.zxing.Result;
+import android.Manifest;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,7 +38,15 @@ public class SaleEmployeeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    ScrollView scrollViewInvoice;
+    CodeScannerView scannerView;
+    CodeScanner mCodeScanner;
 
+    ImageView imageViewTurn;
+    private boolean isTurn=false;
+
+
+    private boolean isFirstTime=true;
 
 
     public SaleEmployeeFragment() {
@@ -58,6 +78,7 @@ public class SaleEmployeeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -71,12 +92,98 @@ public class SaleEmployeeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        ProductsAdapter productsAdapter=new ProductsAdapter(view.getContext());
-//        RecyclerView recyclerViewProduct=view.findViewById(R.id.recycleViewProductEmployee);
-//        recyclerViewProduct.setAdapter(productsAdapter);
-//        recyclerViewProduct.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
+        scrollViewInvoice= view.findViewById(R.id.scrollViewInvoice);
+        scrollViewInvoice.post(() -> scrollViewInvoice.scrollTo(0, 0));
+
+        imageViewTurn=view.findViewById(R.id.imageViewTurnOn);
+        scannerView = view.findViewById(R.id.scanner_view);
+
+        imageViewTurn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check if the camera permission is granted
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // Request the camera permission
+                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, 1);
+
+                } else {
+
+                    // If permission is already granted, start the preview
+                    initializeScanner();
+                }
+            }
+        });
 
 
     }
+
+    private void initializeScanner(){
+
+        if(isFirstTime){
+            isFirstTime=false;
+            return;
+        }
+        if(!isTurn){
+            if(mCodeScanner==null){
+                //mCodeScanner = new CodeScanner(requireContext(), scannerView);
+                mCodeScanner=new CodeScanner(requireActivity(), scannerView);
+                mCodeScanner.setDecodeCallback(new DecodeCallback() {
+                    @Override
+                    public void onDecoded(@NonNull Result result) {
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(requireContext(), result.getText(), Toast.LENGTH_SHORT).show();
+                                isTurn = false;
+                            }
+                        });
+                    }
+                });
+            }
+
+            mCodeScanner.startPreview();
+            isTurn=true;
+        }
+        else{
+            mCodeScanner.stopPreview();
+            isTurn=false;
+
+
+        }
+
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mCodeScanner == null) {
+            isTurn=false;
+            initializeScanner();
+        } else {
+            mCodeScanner.startPreview();
+        }
+
+
+    }
+
+    @Override
+    public void onPause() {
+       super.onPause();
+        if (mCodeScanner != null) {
+            mCodeScanner.releaseResources();
+            mCodeScanner = null;
+            Toast.makeText(requireContext(), "Camera released", Toast.LENGTH_SHORT).show();
+            isFirstTime=true;
+        }
+
+
+    }
+
+
+
 }

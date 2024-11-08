@@ -22,6 +22,9 @@
         app:frameVerticalBias="0.5"
         app:maskColor="#77000000"/>
 
+
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

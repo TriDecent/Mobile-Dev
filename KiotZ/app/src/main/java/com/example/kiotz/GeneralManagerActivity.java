@@ -60,7 +60,7 @@ public class GeneralManagerActivity extends AppCompatActivity {
         if (fragment == null) {
             fragment = createFragmentById(itemId);
             fragmentCache.put(itemId, fragment);
-            Toast.makeText(this, "Create new", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Create new", Toast.LENGTH_SHORT).show();
         }
 
         getSupportFragmentManager()

@@ -1,5 +1,6 @@
 package com.example.kiotz;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -10,16 +11,22 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.kiotz.adapters.IRecycleManagerDetail;
 import com.example.kiotz.adapters.ProductsAdapterManager;
 import com.example.kiotz.models.CustomProduct;
+import com.example.kiotz.models.DetailProduct;
 
 import java.util.ArrayList;
 
-public class ViewInventoryActivity extends AppCompatActivity {
+public class ViewInventoryActivity extends AppCompatActivity implements IRecycleManagerDetail {
 
     RecyclerView recyclerViewProduct;
     ProductsAdapterManager adapterManager;
     ArrayList<CustomProduct> products;
+
+    ArrayList<DetailProduct> dataDetail;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +38,9 @@ public class ViewInventoryActivity extends AppCompatActivity {
             return insets;
         });
 
+        createDataDetailTest();
         test();
+
 
 
 
@@ -41,15 +50,35 @@ public class ViewInventoryActivity extends AppCompatActivity {
         products=new ArrayList<>();
         products.add(new CustomProduct("MH001","Hao Hao noodles","Food",2500,3000,"package","path/QRCode",R.drawable.img_test1));
         products.add(new CustomProduct("MH002","Coca Cola","Beverage",9000,10000,"bottle","path/QRCode",R.drawable.img_test2));
-        products.add(new CustomProduct("MH003","Pesi","Beverage",9000,10000,"bottle","path/QRCode",R.drawable.img_test3));
-        products.add(new CustomProduct("MH004","Milo","milk",8000,10000,"bottle","path/QRCode",R.drawable.img_test4));
+        products.add(new CustomProduct("MH003","Pepsi","Beverage",9000,10000,"bottle","path/QRCode",R.drawable.img_test3));
+        products.add(new CustomProduct("MH004","Milo","Milk",8000,10000,"bottle","path/QRCode",R.drawable.img_test4));
+
+
 
 
         recyclerViewProduct=findViewById(R.id.recycleViewProductManager);
-        adapterManager=new ProductsAdapterManager(this,products);
+        adapterManager=new ProductsAdapterManager(this,products,this);
 
         recyclerViewProduct.setAdapter(adapterManager);
         recyclerViewProduct.setLayoutManager(new LinearLayoutManager(this));
+
+    }
+
+    @Override
+    public void onItemClick(int position) {
+       Intent intent=new Intent(ViewInventoryActivity.this,DetailProductActivity.class);
+       DetailProduct detailProduct=dataDetail.get(position);
+       intent.putExtra("data",detailProduct);
+       startActivity(intent);
+
+    }
+
+    private void createDataDetailTest(){
+        dataDetail=new ArrayList<>();
+        dataDetail.add(new DetailProduct("MH001","Hao Hao noodles",2500,3000,"Pack","Food",300,120,180,360000,-390000,R.drawable.img_test1,R.drawable.barcode));
+        dataDetail.add(new DetailProduct("NG001","Coca cola",9000,10000,"Bottle","Beverage",200,190,10,1900000,100000,R.drawable.img_test2,R.drawable.barcode));
+        dataDetail.add(new DetailProduct("NG002","Pepsi",9500,10000,"Bottle","Beverage",100,60,40,600000,-350000,R.drawable.img_test3,R.drawable.barcode));
+        dataDetail.add(new DetailProduct("MK001","Milo",8500,9000,"Bottle","Milk",180,150,30,1350000,-180000,R.drawable.img_test4,R.drawable.barcode));
 
     }
 }
