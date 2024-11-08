@@ -6,6 +6,7 @@ import com.example.kiotz.inventory.IInventory;
 import com.example.kiotz.models.IIdentifiable;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class InventoryViewModel<T extends IIdentifiable> {
     private final IInventory<T> inventory;
@@ -41,33 +42,28 @@ public class InventoryViewModel<T extends IIdentifiable> {
         inventory.getAllAsync().thenAccept(items::postValue);
     }
 
-    public void add(T item) {
-        inventory.addAsync(item).thenRun(() -> {
+    public CompletableFuture<Void> add(T item) {
+        return inventory.addAsync(item).thenRun(() -> {
             addedItem.postValue(item);
             addItemToList(item); // Add item to the observable list
         });
     }
 
-    public void delete(T item) {
-        inventory.removeAsync(item).thenRun(() -> {
+    public CompletableFuture<Void> delete(T item) {
+        return inventory.removeAsync(item).thenRun(() -> {
             removeItemFromList(item); // Remove item from the observable list
         });
     }
 
-    public void update(T currentItem, T newItem) {
-        inventory.updateAsync(currentItem, newItem).thenRun(() -> {
+    public CompletableFuture<Void> update(T currentItem, T newItem) {
+        return inventory.updateAsync(currentItem, newItem).thenRun(() -> {
             updateItemInList(currentItem, newItem); // Update item in the observable list
         });
     }
 
-    // Synchronous retrieval for UI compatibility
-    public List<T> getAll() {
-        try {
-            return inventory.getAllAsync().get();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return List.of();
-        }
+    // Asynchronous retrieval for UI compatibility
+    public CompletableFuture<List<T>> getAll() {
+        return inventory.getAllAsync();
     }
 
     // Update items list by adding a new item
