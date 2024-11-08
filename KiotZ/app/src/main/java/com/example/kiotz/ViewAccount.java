@@ -10,9 +10,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ViewAccount extends AppCompatActivity {
-
-
     RecyclerView recyclerViewEmployee;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +23,6 @@ public class ViewAccount extends AppCompatActivity {
             return insets;
         });
 
-        recyclerViewEmployee=findViewById(R.id.recycleViewInforEmployee);
-
+        recyclerViewEmployee = findViewById(R.id.recycleViewInforEmployee);
     }
 }
