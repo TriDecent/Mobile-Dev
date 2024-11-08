@@ -29,7 +29,7 @@ public class Repository<T extends IIdentifiable> implements IRepository<T> {
     }
 
     @Override
-    public CompletableFuture<T> getByIdAsync(int id) {
+    public CompletableFuture<T> getByIdAsync(String id) {
         return databaseService.getByIdAsync(id);
     }
 

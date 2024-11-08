@@ -19,7 +19,7 @@ public class Inventory<T extends IIdentifiable> implements IInventory<T> {
     }
 
     @Override
-    public CompletableFuture<T> getByIdAsync(int id) {
+    public CompletableFuture<T> getByIdAsync(String id) {
         return repository.getByIdAsync(id);
     }
 

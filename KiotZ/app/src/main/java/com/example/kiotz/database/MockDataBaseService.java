@@ -42,7 +42,7 @@ public class MockDataBaseService<T extends IIdentifiable> implements IDataBaseSe
     }
 
     @Override
-    public CompletableFuture<T> getByIdAsync(int id) {
+    public CompletableFuture<T> getByIdAsync(String id) {
         return CompletableFuture.supplyAsync(() -> {
             String idStr = String.valueOf(id);
             if (!data.containsKey(idStr)) {

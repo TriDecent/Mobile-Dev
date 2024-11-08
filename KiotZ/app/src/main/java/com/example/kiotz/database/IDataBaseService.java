@@ -8,7 +8,7 @@ public interface IDataBaseService<T> {
 
     CompletableFuture<Void> removeAsync(T item);
 
-    CompletableFuture<T> getByIdAsync(int id);
+    CompletableFuture<T> getByIdAsync(String id);
 
     CompletableFuture<List<T>> getAllAsync();
 
