@@ -22,11 +22,13 @@ import com.example.kiotz.inventory.Inventory;
 import com.example.kiotz.models.Account;
 import com.example.kiotz.models.Employee;
 import com.example.kiotz.repositories.Repository;
+import com.example.kiotz.utilities.EmailUtils;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import com.example.kiotz.views.employees.activities.GeneralEmployeeActivity;
 import com.example.kiotz.views.managers.activities.GeneralManagerActivity;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
     ProgressBar pbSignIn;
     Authenticator authenticator;
 
-    Inventory<Employee> employeeInventory;
     InventoryViewModel<Employee> employeeViewModel;
 
     @Override
@@ -56,30 +57,12 @@ public class LoginActivity extends AppCompatActivity {
 
         authenticator = new Authenticator();
 
-        employeeInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new EmployeeSerializer())));
+        Inventory<Employee> employeeInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new EmployeeSerializer())));
         employeeViewModel = InventoryViewModelFactory.getInstance().getViewModel(employeeInventory, Employee.class);
 
         var currentUser = authenticator.getCurrentUser();
         if (currentUser != null) {
-            String userId = authenticator.getCurrentUserId();
-            employeeViewModel.getById(userId).thenAccept(employee -> {
-                if (employee != null) {
-                    Intent i;
-                    if (employee.IsAdmin()) {
-                        i = new Intent(this, GeneralManagerActivity.class);
-                    } else {
-                        i = new Intent(this, GeneralEmployeeActivity.class);
-                    }
-                    Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    startActivity(i);
-                    finish();
-                } else {
-                    Toast.makeText(LoginActivity.this, "Failed to retrieve employee.", Toast.LENGTH_SHORT).show();
-                }
-            }).exceptionally(ex -> {
-                Toast.makeText(LoginActivity.this, "Error retrieving employee: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
-                return null;
-            });
+            performAutomaticLogin(currentUser);
         }
 
         btnLogin = findViewById(R.id.buttonLogin);
@@ -89,8 +72,6 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.et_sign_in_password);
 
         pbSignIn = findViewById(R.id.pb_sign_in);
-
-        //        testInventoryViewModel();
 
         btnLogin.setOnClickListener(v -> {
             pbSignIn.setVisibility(ProgressBar.VISIBLE);
@@ -116,26 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                 pbSignIn.setVisibility(ProgressBar.GONE);
                 if (task.isSuccessful()) {
                     Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
-
-                    String userId = authenticator.getCurrentUserId();
-                    employeeViewModel.getById(userId).thenAccept(employee -> {
-                        if (employee != null) {
-                            Intent i;
-                            if (employee.IsAdmin()) {
-                                i = new Intent(this, GeneralManagerActivity.class);
-                            } else {
-                                i = new Intent(this, GeneralEmployeeActivity.class);
-                            }
-
-                            startActivity(i);
-                            finish();
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Failed to retrieve employee.", Toast.LENGTH_SHORT).show();
-                        }
-                    }).exceptionally(ex -> {
-                        Toast.makeText(LoginActivity.this, "Error retrieving employee: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
-                        return null;
-                    });
+                    handleUserLogin(authenticator.getCurrentUserId());
                 } else {
                     Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                 }
@@ -146,6 +108,32 @@ public class LoginActivity extends AppCompatActivity {
             Intent i = new Intent(v.getContext(), RegisterActivity.class);
             startActivity(i);
             finish();
+        });
+    }
+
+    private void performAutomaticLogin(FirebaseUser user) {
+        handleUserLogin(user.getUid());
+    }
+
+    private void handleUserLogin(String userId) {
+        employeeViewModel.getById(userId).thenAccept(employee -> {
+            if (employee != null) {
+                Intent i;
+                if (employee.IsAdmin()) {
+                    i = new Intent(this, GeneralManagerActivity.class);
+                } else {
+                    i = new Intent(this, GeneralEmployeeActivity.class);
+                }
+                Toast.makeText(this, "Welcome Back " +
+                        EmailUtils.getUsernameFromEmail(employee.Email()), Toast.LENGTH_SHORT).show();
+                startActivity(i);
+                finish();
+            } else {
+                Toast.makeText(LoginActivity.this, "Failed to retrieve employee.", Toast.LENGTH_LONG).show();
+            }
+        }).exceptionally(ex -> {
+            Toast.makeText(LoginActivity.this, "Error retrieving employee: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
+            return null;
         });
     }
 
