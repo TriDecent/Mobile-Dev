@@ -1,4 +1,4 @@
-package com.example.kiotz;
+package com.example.kiotz.views.general.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,11 +14,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.kiotz.R;
 import com.example.kiotz.database.MockDataBaseService;
 import com.example.kiotz.inventory.Inventory;
 import com.example.kiotz.models.Product;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
+import com.example.kiotz.views.employees.activities.GeneralEmployeeActivity;
+import com.example.kiotz.views.managers.activities.GeneralManagerActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Arrays;

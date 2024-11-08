@@ -3,8 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SaleEmployeeFragment">
+=======
+    tools:context=".views.employees.fragments.SaleEmployeeFragment">
+>>>>>>> 7477e559f18a98671b15cb54a0f3574c9c7df78b
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

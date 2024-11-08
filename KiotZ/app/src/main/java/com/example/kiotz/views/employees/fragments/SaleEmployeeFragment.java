@@ -1,7 +1,8 @@
-package com.example.kiotz;
+package com.example.kiotz.views.employees.fragments;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+<<<<<<< HEAD:KiotZ/app/src/main/java/com/example/kiotz/SaleEmployeeFragment.java
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,6 +10,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+=======
+>>>>>>> 7477e559f18a98671b15cb54a0f3574c9c7df78b:KiotZ/app/src/main/java/com/example/kiotz/views/employees/fragments/SaleEmployeeFragment.java
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +19,19 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+<<<<<<< HEAD:KiotZ/app/src/main/java/com/example/kiotz/SaleEmployeeFragment.java
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.zxing.Result;
 import android.Manifest;
+=======
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.example.kiotz.R;
+>>>>>>> 7477e559f18a98671b15cb54a0f3574c9c7df78b:KiotZ/app/src/main/java/com/example/kiotz/views/employees/fragments/SaleEmployeeFragment.java
 
 /**
  * A simple {@link Fragment} subclass.

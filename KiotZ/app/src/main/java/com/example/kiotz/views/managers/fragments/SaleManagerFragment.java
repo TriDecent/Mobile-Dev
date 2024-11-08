@@ -1,25 +1,20 @@
-package com.example.kiotz;
+package com.example.kiotz.views.managers.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.kiotz.adapters.ProductsAdapterEmployee;
+import androidx.fragment.app.Fragment;
+
+import com.example.kiotz.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProductEmployeeFragment#newInstance} factory method to
+ * Use the {@link SaleManagerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProductEmployeeFragment extends Fragment {
+public class SaleManagerFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,7 +25,7 @@ public class ProductEmployeeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ProductEmployeeFragment() {
+    public SaleManagerFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +35,11 @@ public class ProductEmployeeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ProductEmployeeFragment.
+     * @return A new instance of fragment SaleManagerFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProductEmployeeFragment newInstance(String param1, String param2) {
-        ProductEmployeeFragment fragment = new ProductEmployeeFragment();
+    public static SaleManagerFragment newInstance(String param1, String param2) {
+        SaleManagerFragment fragment = new SaleManagerFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,17 +60,6 @@ public class ProductEmployeeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product_employee, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
-        ProductsAdapterEmployee productsAdapter=new ProductsAdapterEmployee(view.getContext());
-        RecyclerView recyclerViewProduct=view.findViewById(R.id.recycleViewProductEmployee);
-        recyclerViewProduct.setAdapter(productsAdapter);
-        recyclerViewProduct.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        return inflater.inflate(R.layout.fragment_sale_manager, container, false);
     }
 }
