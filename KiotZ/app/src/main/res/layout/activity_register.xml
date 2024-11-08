@@ -10,14 +10,11 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ellipse_1"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
+        android:src="@drawable/ellipse_1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </ImageView>
-
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
 
     <TextView
         android:id="@+id/register_titile_tv_form2"
@@ -49,32 +46,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_titile_tv_form2" />
 
-
-
-
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--        android:id="@+id/login_phone_ti_form2"-->
-<!--        android:layout_width="300dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="Phone number"-->
-<!--        android:textColorHint="@color/md_theme_onSurface"-->
-<!--        app:boxBackgroundColor="@color/md_theme_secondaryContainer"-->
-<!--        app:endIconMode="clear_text"-->
-<!--        app:helperText="Please enter your phone number"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/app_icon_lgform_iv_form2"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:prefixTextColor="@color/md_theme_scrim"-->
-<!--        app:startIconDrawable="@drawable/phone_icon">-->
-
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content" />-->
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
-
-
     <ImageView
         android:id="@+id/ellipse_2_lg_iv"
         android:layout_width="47dp"
@@ -86,48 +57,50 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/login_username_ti_form2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:hint="Username"
         android:textColorHint="@color/md_theme_onSurface"
         app:boxBackgroundColor="@color/md_theme_secondaryContainer"
         app:endIconMode="clear_text"
         app:helperText="Please enter username"
-        app:layout_constraintTop_toBottomOf="@id/app_icon_lgform_iv_form2"
-        android:layout_marginTop="20dp"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_icon_lgform_iv_form2"
         app:prefixTextColor="@color/md_theme_scrim"
         app:startIconDrawable="@drawable/user_icon">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_sign_up_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/login_email_ti_form2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:hint="Email"
         android:textColorHint="@color/md_theme_onSurface"
         app:boxBackgroundColor="@color/md_theme_secondaryContainer"
         app:endIconMode="clear_text"
         app:helperText="Please enter your email"
-        app:layout_constraintTop_toBottomOf="@id/login_username_ti_form2"
-        android:layout_marginTop="10dp"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_username_ti_form2"
         app:prefixTextColor="@color/md_theme_scrim"
         app:startIconDrawable="@drawable/email_icon">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_sign_up_email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="text|textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -135,111 +108,77 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="80dp"
         android:hint="Password"
         android:textColorHint="@color/md_theme_onSurface"
-        android:layout_marginBottom="80dp"
-        android:layout_marginTop="10dp"
         app:boxBackgroundColor="@color/md_theme_secondaryContainer"
         app:endIconMode="password_toggle"
         app:helperText="Please enter password"
-        app:layout_constraintTop_toBottomOf="@id/login_email_ti_form2"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_email_ti_form2"
         app:prefixTextColor="@color/md_theme_scrim"
         app:startIconDrawable="@drawable/password_icon">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_sign_up_password"
             android:layout_width="match_parent"
-            android:inputType="textPassword"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-<!--    <TextView-->
-<!--        android:id="@+id/not_registered_tv"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:layout_marginEnd="10dp"-->
-<!-- -->
-<!--        android:layout_marginLeft="40dp"-->
-<!--        android:layout_alignParentRight="true"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:text="Have an account?"-->
-<!--        android:textStyle="bold"-->
-<!--        android:textColor="@color/md_theme_scrim_highContrast"-->
-<!--        android:lineSpacingExtra="3sp"-->
-<!--        android:gravity="center_horizontal|center_vertical"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/login_password_ti_form2"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="@id/signIn_tv"-->
-<!--        />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/signIn_tv"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:paddingRight="20dp"-->
-<!--        android:layout_alignParentLeft="true"-->
-<!--        android:layout_alignParentRight="true"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:textColor="@color/md_theme_tertiary"-->
-<!--        android:text="@string/signin"-->
-<!--        android:lineSpacingExtra="3sp"-->
-<!--        android:gravity="center_horizontal|center_vertical"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/login_password_ti_form2"-->
-<!--        app:layout_constraintLeft_toLeftOf="@id/not_registered_tv"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        android:layout_marginStart="10dp"-->
-<!--        />-->
     <TextView
         android:id="@+id/not_registered_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:layout_alignParentBottom="true"
-        android:text="Have an account?"
-        android:textStyle="bold"
-        android:textColor="@color/md_theme_scrim_highContrast"
-        android:lineSpacingExtra="3sp"
-        app:layout_constraintTop_toBottomOf="@id/login_password_ti_form2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="90dp"
+        android:lineSpacingExtra="3sp"
+        android:text="Have an account?"
+        android:textColor="@color/md_theme_scrim_highContrast"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_password_ti_form2"
 
 
         />
 
     <TextView
-        android:id="@+id/tvRegister"
+        android:id="@+id/tv_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:textColor="@color/md_theme_tertiary"
-        android:text="Sign in!"
-        android:textStyle="italic|bold"
-        android:lineSpacingExtra="3sp"
-        android:gravity="center_horizontal|center_vertical"
-        app:layout_constraintTop_toTopOf="@id/not_registered_tv"
-        app:layout_constraintStart_toEndOf="@id/not_registered_tv"
         android:layout_marginStart="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:lineSpacingExtra="3sp"
+        android:text="Sign in!"
+        android:textColor="@color/md_theme_tertiary"
+        android:textStyle="italic|bold"
+        app:layout_constraintStart_toEndOf="@id/not_registered_tv"
+        app:layout_constraintTop_toTopOf="@id/not_registered_tv" />
 
-
-        />
+    <ProgressBar
+        android:id="@+id/pb_sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonRegister"
+        android:id="@+id/btn_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Register"
-        app:layout_constraintTop_toBottomOf="@id/not_registered_tv"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/not_registered_tv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

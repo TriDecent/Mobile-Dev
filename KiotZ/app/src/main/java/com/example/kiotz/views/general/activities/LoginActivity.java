@@ -4,9 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,18 +23,22 @@ import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.views.employees.activities.GeneralEmployeeActivity;
 import com.example.kiotz.views.managers.activities.GeneralManagerActivity;
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button buttonLogin;
+    Button btnLogin;
     TextView tvRegister;
 
-    TextInputLayout textInputLayoutUsername;
-    TextInputLayout textInputLayoutPassword;
+    TextInputEditText etEmail;
+    TextInputEditText etPassword;
+
+    ProgressBar pbSignIn;
+    FirebaseAuth mAuth;
 
     private static final String TAG = "InventoryViewModelTest";
 
@@ -94,45 +99,62 @@ public class LoginActivity extends AppCompatActivity {
         // Observe and log deleted items
         productViewModel.getObservableDeletedItemPosition().observe(this, position -> Log.d(TAG, "Deleted Product at position: " + position));
 
+        btnLogin = findViewById(R.id.buttonLogin);
+        tvRegister = findViewById(R.id.tv_sign_in);
 
-        buttonLogin = findViewById(R.id.buttonLogin);
-        tvRegister = findViewById(R.id.tvRegister);
+        etEmail = findViewById(R.id.et_sign_in_email);
+        etPassword = findViewById(R.id.et_sign_in_password);
 
-        textInputLayoutUsername = findViewById(R.id.login_username_ti);
-        textInputLayoutPassword = findViewById(R.id.login_password_ti);
+        pbSignIn = findViewById(R.id.pb_sign_in);
+        mAuth = FirebaseAuth.getInstance();
 
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //                Intent i=new Intent(v.getContext(), GeneralManagerActivity.class);
-                //                startActivity(i);
-                //                finish();
-                String username = textInputLayoutUsername.getEditText().getText().toString();
-                String password = textInputLayoutPassword.getEditText().getText().toString();
-                if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
-                    if (username.equals("manager") && password.equals("manager")) {
-                        Intent i = new Intent(v.getContext(), GeneralManagerActivity.class);
-                        startActivity(i);
-                        finish();
-                    } else if (username.equals("employee") && password.equals("employee")) {
-                        Intent i = new Intent(v.getContext(), GeneralEmployeeActivity.class);
-                        startActivity(i);
-                        finish();
-                    }
-                }
+        btnLogin.setOnClickListener(v -> {
+            pbSignIn.setVisibility(ProgressBar.VISIBLE);
 
+            var email = etEmail.getText().toString();
+            var password = etPassword.getText().toString();
 
+            if (TextUtils.isEmpty(email)) {
+                etEmail.setError("Email is required");
+                pbSignIn.setVisibility(ProgressBar.GONE);
+                return;
             }
+
+            if (TextUtils.isEmpty(password)) {
+                etPassword.setError("Password is required");
+                pbSignIn.setVisibility(ProgressBar.GONE);
+                return;
+            }
+
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+                        pbSignIn.setVisibility(ProgressBar.GONE);
+                        if (task.isSuccessful()) {
+                            Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+
+                            if (email.equals("manager") && password.equals("manager")) {
+                                Intent i = new Intent(v.getContext(), GeneralManagerActivity.class);
+                                startActivity(i);
+                                finish();
+                            } else {
+                                Intent i = new Intent(v.getContext(), GeneralEmployeeActivity.class);
+                                startActivity(i);
+                                finish();
+                            }
+                        } else {
+
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            pbSignIn.setVisibility(ProgressBar.GONE);
+
+                        }
+                    });
         });
 
-        tvRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), RegisterActivity.class);
-                startActivity(i);
-                finish();
-            }
+        tvRegister.setOnClickListener(v -> {
+            Intent i = new Intent(v.getContext(), RegisterActivity.class);
+            startActivity(i);
+            finish();
         });
-
     }
 }
