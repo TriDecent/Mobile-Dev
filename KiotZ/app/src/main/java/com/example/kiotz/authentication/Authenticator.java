@@ -14,11 +14,11 @@ public class Authenticator {
     }
 
     public void signIn(Account account, OnCompleteListener<AuthResult> listener) {
-        mAuth.signInWithEmailAndPassword(account.UserName(), account.Password()).addOnCompleteListener(listener);
+        mAuth.signInWithEmailAndPassword(account.Email(), account.Password()).addOnCompleteListener(listener);
     }
 
     public void register(Account account, OnCompleteListener<AuthResult> listener) {
-        mAuth.createUserWithEmailAndPassword(account.UserName(), account.Password()).addOnCompleteListener(listener);
+        mAuth.createUserWithEmailAndPassword(account.Email(), account.Password()).addOnCompleteListener(listener);
     }
 
     public String getCurrentUserId() {
