@@ -25,4 +25,12 @@ public class Authenticator {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         return currentUser != null ? currentUser.getUid() : null;
     }
+
+    public void signOut() {
+        mAuth.signOut();
+    }
+
+    public FirebaseUser getCurrentUser() {
+        return mAuth.getCurrentUser();
+    }
 }
