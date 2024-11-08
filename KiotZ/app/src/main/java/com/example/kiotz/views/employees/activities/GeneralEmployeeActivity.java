@@ -1,11 +1,8 @@
-package com.example.kiotz;
+package com.example.kiotz.views.employees.activities;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -13,6 +10,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.kiotz.R;
+import com.example.kiotz.views.employees.fragments.ProductEmployeeFragment;
+import com.example.kiotz.views.employees.fragments.SaleEmployeeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 

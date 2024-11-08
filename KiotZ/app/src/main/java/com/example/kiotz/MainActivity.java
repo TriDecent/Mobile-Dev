@@ -7,6 +7,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.kiotz.views.managers.activities.GeneralManagerActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     Button button;

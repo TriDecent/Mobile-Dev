@@ -1,8 +1,10 @@
-package com.example.kiotz;
+package com.example.kiotz.views.general.activities;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.kiotz.R;
 
 public class ProductForSaleActivity extends AppCompatActivity {
 

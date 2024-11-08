@@ -1,4 +1,4 @@
-package com.example.kiotz;
+package com.example.kiotz.views.managers.activities;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,6 +11,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.kiotz.R;
+import com.example.kiotz.views.general.fragments.OverviewFragment;
+import com.example.kiotz.views.managers.fragments.SaleManagerFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
