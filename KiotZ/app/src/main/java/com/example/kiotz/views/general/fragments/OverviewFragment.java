@@ -13,6 +13,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.kiotz.R;
 import com.example.kiotz.views.general.activities.CreateProductActivity;
+import com.example.kiotz.CreateAccountActivity;
+import com.example.kiotz.ViewInventoryActivity;
+import com.example.kiotz.ViewAccount;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -11,16 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-<<<<<<< HEAD:KiotZ/app/src/main/java/com/example/kiotz/ProductEmployeeFragment.java
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.kiotz.adapters.ProductsAdapterEmployee;
-=======
+
 import com.example.kiotz.R;
-import com.example.kiotz.adapters.ProductsAdapter;
->>>>>>> 7477e559f18a98671b15cb54a0f3574c9c7df78b:KiotZ/app/src/main/java/com/example/kiotz/views/employees/fragments/ProductEmployeeFragment.java
 
 /**
  * A simple {@link Fragment} subclass.

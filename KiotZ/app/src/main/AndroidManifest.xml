@@ -31,6 +31,18 @@
             android:name=".views.managers.activities.GeneralManagerActivity"
             android:exported="false" />
         <activity
+            android:name=".CreateAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewAccount"
+            android:exported="false" />
+        <activity
+            android:name=".ViewInventoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.general.activities.LoginActivity"
             android:exported="true">
             <intent-filter>
