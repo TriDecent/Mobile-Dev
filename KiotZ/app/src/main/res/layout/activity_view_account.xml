@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ViewAccount">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintViewAccount"
+        android:layout_width="match_parent"
+        android:background="@drawable/bginfor"
+        android:padding="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="7dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/avatar"
+            />
+
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nguyễn Ngô Hải Nam"
+            app:layout_constraintStart_toEndOf="@id/imgAvatar"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="20dp"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/tvRole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Manager"
+            app:layout_constraintStart_toStartOf="@id/tvUserName"
+            app:layout_constraintTop_toBottomOf="@id/tvUserName"
+            android:layout_marginTop="7dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/highlightBar"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/constraintViewAccount"
+                android:background="@drawable/bg_search_rounded_form5"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                >
+            </View>
+
+    <TextView
+        android:id="@+id/staff_count_tv_form14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/highlightBar"
+        app:layout_constraintTop_toTopOf="@id/highlightBar"
+        app:layout_constraintBottom_toBottomOf="@id/highlightBar"
+        android:text="100"
+        android:textColor="@color/md_theme_primary"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginStart="25dp"
+        >
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/staff_tv_form14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/staff_count_tv_form14"
+        app:layout_constraintTop_toTopOf="@id/highlightBar"
+        app:layout_constraintBottom_toBottomOf="@id/highlightBar"
+        android:text="nhân viên"
+        android:textColor="@color/md_theme_scrim"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginStart="5dp"
+        >
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/sort_tv_form14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="140dp"
+        android:text="Sắp xếp theo"
+        android:textColor="@color/md_theme_scrim"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/highlightBar"
+        app:layout_constraintTop_toTopOf="@id/highlightBar"
+        app:layout_constraintRight_toLeftOf="@id/sort_by_tv_form14"
+        android:layout_marginEnd="5dp"
+        >
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/sort_by_tv_form14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="tên"
+        app:layout_constraintTop_toTopOf="@id/highlightBar"
+        app:layout_constraintRight_toLeftOf="@id/sort_iv_form14"
+        app:layout_constraintBottom_toBottomOf="@id/highlightBar"
+        android:textStyle="bold"
+        android:textColor="@color/md_theme_primary"
+        android:layout_marginEnd="25dp"
+        >
+
+    </TextView>
+
+    <ImageView
+        android:id="@+id/sort_iv_form14"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/sort_icon"
+        app:layout_constraintTop_toTopOf="@id/highlightBar"
+        app:layout_constraintRight_toRightOf="@id/highlightBar"
+        app:layout_constraintBottom_toBottomOf="@id/highlightBar"
+        android:layout_marginEnd="25dp"
+        >
+
+    </ImageView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleViewInforEmployee"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/highlightBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        tools:listitem="@layout/item_form14"
+        android:background="@drawable/bg_staff_list_form14"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

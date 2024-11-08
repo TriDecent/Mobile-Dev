@@ -98,5 +98,17 @@ public class OverviewFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+
+        CardView cardViewViewCount=view.findViewById(R.id.cardViewAccount);
+        cardViewViewCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(v.getContext(), ViewAccount.class);
+                startActivity(i);
+            }
+        });
+
+
     }
 }

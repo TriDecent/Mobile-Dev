@@ -78,14 +78,14 @@ public class DetailProductActivity extends AppCompatActivity  {
             tvID.setText(data.ID());
             tvName.setText(data.Name());
             tvPrice.setText(String.valueOf(data.Price())+" VND");
-            tvSelling.setText(String.valueOf(data.SellingPrice())+"VND");
+            tvSelling.setText(String.valueOf(data.SellingPrice())+" VND");
             tvUnit.setText(data.Unit());
             tvCategory.setText(data.Category());
-            tvTotal.setText(String.valueOf(data.Total())+"VND");
-            tvSold.setText(String.valueOf(data.Sold())+"VND");
-            tvRemaining.setText(String.valueOf(data.Remaining())+"VND");
-            tvRevenue.setText(String.valueOf(data.Revenue())+"VND");
-            tvProfit.setText(String.valueOf(data.Profit())+"VND");
+            tvTotal.setText(String.valueOf(data.Total()));
+            tvSold.setText(String.valueOf(data.Sold()));
+            tvRemaining.setText(String.valueOf(data.Remaining()));
+            tvRevenue.setText(String.valueOf(data.Revenue())+" VND");
+            tvProfit.setText(String.valueOf(data.Profit())+" VND");
         }
 
 
