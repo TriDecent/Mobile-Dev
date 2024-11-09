@@ -57,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.et_sign_up_password);
 
         pbSignUp = findViewById(R.id.pb_sign_up);
-        authenticator = new Authenticator();
+        authenticator = Authenticator.getInstance();
 
         employeeInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new EmployeeSerializer())));
         employeeViewModel = InventoryViewModelFactory.getInstance().getViewModel(employeeInventory, Employee.class);

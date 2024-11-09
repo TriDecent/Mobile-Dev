@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
         });
 
-        authenticator = new Authenticator();
+        authenticator = Authenticator.getInstance();
 
         Inventory<Employee> employeeInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new EmployeeSerializer())));
         employeeViewModel = InventoryViewModelFactory.getInstance().getViewModel(employeeInventory, Employee.class);
