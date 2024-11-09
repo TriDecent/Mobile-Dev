@@ -72,7 +72,7 @@ public class ProductsAdapterEmployee extends RecyclerView.Adapter<ProductsAdapte
         }
 
         public void bindData(Product product) {
-            tvId.setText(String.format(Locale.getDefault(), "SP%d", product.ID()));
+            tvId.setText(String.format(Locale.getDefault(), "SP%s", product.ID()));
             tvName.setText(String.format(Locale.getDefault(), "%s", product.Name()));
             tvPrice.setText(String.format(Locale.getDefault(), "$%s", product.Price()));
         }

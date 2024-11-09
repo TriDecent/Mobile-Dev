@@ -26,7 +26,6 @@ public class GeneralManagerActivity extends AppCompatActivity {
 
     private final Map<Integer, Fragment> fragmentCache = new HashMap<>();
     private final Map<Integer, Class<? extends Fragment>> fragmentClasses = new HashMap<>();
-    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +52,7 @@ public class GeneralManagerActivity extends AppCompatActivity {
     }
 
     private void setupBottomNavigationView() {
-        bottomNavigationView = findViewById(R.id.nav_view);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setOnItemSelectedListener(this::onNavigationItemSelected);
     }
 
