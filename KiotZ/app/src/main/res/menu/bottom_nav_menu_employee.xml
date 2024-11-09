@@ -14,7 +14,7 @@
         android:icon="@drawable/ic_product"
         android:title="Products" />
     <item
-        android:id="@+id/SettingEmployee"
+        android:id="@+id/SettingsEmployee"
         android:icon="@drawable/ic_settings"
         android:title="Setting" />
 </menu>

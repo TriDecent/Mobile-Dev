@@ -52,7 +52,7 @@ public class GeneralEmployeeActivity extends AppCompatActivity {
     private void setupFragmentClasses() {
         fragmentClasses.put(R.id.SaleEmployee, SaleEmployeeFragment.class);
         fragmentClasses.put(R.id.ProductsEmployee, ProductEmployeeFragment.class);
-        fragmentClasses.put(R.id.settings, SettingsFragment.class);
+        fragmentClasses.put(R.id.SettingsEmployee, SettingsFragment.class);
     }
 
     private void setupBottomNavigationView() {
@@ -61,11 +61,8 @@ public class GeneralEmployeeActivity extends AppCompatActivity {
     }
 
     private boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.SaleEmployee || id == R.id.ProductsEmployee || id == R.id.settings) {
-            replaceFragment(id);
-            return true;
-        } else return id == R.id.ReceiptsEmployee;
+        replaceFragment(item.getItemId());
+        return true;
     }
 
     private void replaceFragment(int itemId) {
