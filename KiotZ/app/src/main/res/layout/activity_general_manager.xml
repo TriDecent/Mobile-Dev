@@ -8,7 +8,7 @@
     tools:context=".views.managers.activities.GeneralManagerActivity">
 
     <FrameLayout
-        android:id="@+id/frameLayour"
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
