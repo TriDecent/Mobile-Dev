@@ -1,4 +1,4 @@
-package com.example.kiotz.database.serializers;
+package com.example.kiotz.database.dto;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;

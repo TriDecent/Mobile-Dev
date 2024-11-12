@@ -17,7 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.kiotz.R;
 import com.example.kiotz.authentication.Authenticator;
 import com.example.kiotz.database.FireBaseService;
-import com.example.kiotz.database.serializers.EmployeeSerializer;
+import com.example.kiotz.database.dto.EmployeeSerializer;
 import com.example.kiotz.inventory.Inventory;
 import com.example.kiotz.models.Account;
 import com.example.kiotz.models.Employee;
@@ -25,6 +25,8 @@ import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -71,8 +73,8 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(v -> {
             pbSignUp.setVisibility(ProgressBar.VISIBLE);
 
-            String email = etEmail.getText().toString();
-            String password = etPassword.getText().toString();
+            String email = Objects.requireNonNull(etEmail.getText()).toString();
+            String password = Objects.requireNonNull(etPassword.getText()).toString();
 
             if (TextUtils.isEmpty(email)) {
                 etEmail.setError("Email is required");

@@ -17,7 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.kiotz.R;
 import com.example.kiotz.authentication.Authenticator;
 import com.example.kiotz.database.FireBaseService;
-import com.example.kiotz.database.serializers.EmployeeSerializer;
+import com.example.kiotz.database.dto.EmployeeSerializer;
 import com.example.kiotz.inventory.Inventory;
 import com.example.kiotz.models.Account;
 import com.example.kiotz.models.Employee;
@@ -29,6 +29,8 @@ import com.example.kiotz.views.employees.activities.GeneralEmployeeActivity;
 import com.example.kiotz.views.managers.activities.GeneralManagerActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -76,8 +78,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(v -> {
             pbSignIn.setVisibility(ProgressBar.VISIBLE);
 
-            String email = etEmail.getText().toString();
-            String password = etPassword.getText().toString();
+            String email = Objects.requireNonNull(etEmail.getText()).toString();
+            String password = Objects.requireNonNull(etPassword.getText()).toString();
 
             if (email.isEmpty()) {
                 etEmail.setError("Email is required");

@@ -2,10 +2,10 @@ package com.example.kiotz.database;
 
 import androidx.annotation.NonNull;
 
-import com.example.kiotz.database.serializers.EmployeeSerializer;
-import com.example.kiotz.database.serializers.ISerializer;
-import com.example.kiotz.database.serializers.ProductSerializer;
-import com.example.kiotz.database.serializers.ReceiptSerializer;
+import com.example.kiotz.database.dto.EmployeeSerializer;
+import com.example.kiotz.database.dto.ISerializer;
+import com.example.kiotz.database.dto.ProductSerializer;
+import com.example.kiotz.database.dto.ReceiptSerializer;
 import com.example.kiotz.models.IIdentifiable;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
