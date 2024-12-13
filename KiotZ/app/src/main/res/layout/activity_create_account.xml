@@ -55,21 +55,20 @@
         android:id="@+id/tvHeadingCreateAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/status"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:textColor="@color/md_theme_scrim"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="sans-serif"
-        android:textStyle="bold"
+        android:gravity="center_horizontal|center_vertical"
+        android:lineSpacingExtra="-8sp"
         android:text="Create account"
         android:textAllCaps="true"
+        android:textColor="@color/md_theme_scrim"
         android:textSize="22sp"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="15dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="30dp"
-        android:lineSpacingExtra="-8sp"
-        android:gravity="center_horizontal|center_vertical"
-        >
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/status">
 
     </TextView>
 
@@ -77,63 +76,57 @@
         android:id="@+id/tvHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create account for your employee"
-        app:layout_constraintTop_toBottomOf="@id/tvHeadingCreateAccount"
-        app:layout_constraintStart_toStartOf="@id/tvHeadingCreateAccount"
-        android:textColor="@color/md_theme_secondary"
-        android:textStyle="italic"
         android:layout_marginStart="5dp"
+        android:text="Create account for your employee"
+        android:textColor="@color/md_theme_secondary"
         android:textSize="12dp"
-        />
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@id/tvHeadingCreateAccount"
+        app:layout_constraintTop_toBottomOf="@id/tvHeadingCreateAccount" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvHint"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/bgframe"
         android:padding="5dp"
-        >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvHint">
+
         <TextView
             android:id="@+id/tvAccount"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
             android:text="Account: "
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="10dp"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/create_email_ti"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/create_username_ti"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Username"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:hint="Email:"
             android:textColorHint="@color/md_theme_onSurface"
             app:boxBackgroundColor="@color/md_theme_secondaryContainer"
-            app:endIconMode="clear_text"
-            app:helperText="Please enter username"
+            app:helperText="Please enter email"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tvAccount"
             app:layout_constraintTop_toBottomOf="@id/tvAccount"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="5dp"
             app:prefixTextColor="@color/md_theme_scrim"
-            app:startIconDrawable="@drawable/user_icon">
+            app:startIconDrawable="@drawable/email_icon">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:textSize="15sp"
-                android:layout_height="wrap_content" />
-
-
-
+                android:layout_height="wrap_content"
+                android:textSize="15sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -141,52 +134,25 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
             android:hint="Password"
             android:textColorHint="@color/md_theme_onSurface"
             app:boxBackgroundColor="@color/md_theme_secondaryContainer"
-            app:helperText="Please enter password"
-            app:layout_constraintTop_toBottomOf="@id/create_username_ti"
-            app:prefixTextColor="@color/md_theme_scrim"
             app:endIconMode="password_toggle"
-            app:layout_constraintStart_toStartOf="@id/tvAccount"
+            app:helperText="Please enter password"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
+            app:layout_constraintStart_toStartOf="@id/tvAccount"
+            app:layout_constraintTop_toBottomOf="@id/create_email_ti"
+            app:prefixTextColor="@color/md_theme_scrim"
             app:startIconDrawable="@drawable/password_icon">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:textSize="15sp"
-                />
+                android:textSize="15sp" />
         </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/create_email_ti"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Email:"
-            android:textColorHint="@color/md_theme_onSurface"
-            app:boxBackgroundColor="@color/md_theme_secondaryContainer"
-            app:helperText="Please enter email"
-            app:layout_constraintTop_toBottomOf="@id/create_password_ti"
-            app:prefixTextColor="@color/md_theme_scrim"
-            app:layout_constraintStart_toStartOf="@id/tvAccount"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            app:startIconDrawable="@drawable/email_icon">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -196,95 +162,90 @@
         android:id="@+id/constraintDetailInfor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/constraintAccount"
-        app:layout_constraintStart_toStartOf="@id/constraintAccount"
-        app:layout_constraintEnd_toEndOf="@id/constraintAccount"
-        android:background="@drawable/bgframe"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/bgframe"
         android:padding="5dp"
-        >
+        app:layout_constraintEnd_toEndOf="@id/constraintAccount"
+        app:layout_constraintStart_toStartOf="@id/constraintAccount"
+        app:layout_constraintTop_toBottomOf="@id/constraintAccount">
 
         <TextView
             android:id="@+id/tvHeadingDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Detail information"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            />
+            android:text="Detail information"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/tvFullName"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/tvHeadingDetail"
-            app:layout_constraintStart_toStartOf="@id/tvHeadingDetail"
-            app:layout_constraintBottom_toBottomOf="@id/editTextFullName"
-            android:gravity="center"
-            android:textSize="15sp"
             android:layout_marginTop="5dp"
-            android:text="Full Name: "/>
+            android:gravity="center"
+            android:text="Full Name: "
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/editTextFullName"
+            app:layout_constraintStart_toStartOf="@id/tvHeadingDetail"
+            app:layout_constraintTop_toBottomOf="@id/tvHeadingDetail" />
+
         <EditText
             android:id="@+id/editTextFullName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Enter fullname employee"
-            app:layout_constraintStart_toEndOf="@id/tvPhone"
-            app:layout_constraintTop_toTopOf="@id/tvFullName"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="Enter employee name"
             android:textSize="15sp"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_employee_date"
+            app:layout_constraintTop_toTopOf="@id/tvFullName" />
 
         <TextView
-            android:id="@+id/tvPhone"
+            android:id="@+id/tv_employee_date"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/tvFullName"
+            android:gravity="center"
+            android:text="Date:"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/et_employee_date"
             app:layout_constraintStart_toStartOf="@id/tvFullName"
-            app:layout_constraintBottom_toBottomOf="@id/editTextPhone"
-            android:gravity="center"
-            android:textSize="15sp"
-            android:text="Phone number:"/>
+            app:layout_constraintTop_toBottomOf="@id/tvFullName" />
+
         <EditText
-            android:id="@+id/editTextPhone"
+            android:id="@+id/et_employee_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Enter phone number employee"
-            app:layout_constraintStart_toEndOf="@id/tvPhone"
-            app:layout_constraintTop_toTopOf="@id/tvPhone"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="Enter employee date"
             android:textSize="15sp"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_employee_date"
+            app:layout_constraintTop_toTopOf="@id/tv_employee_date" />
 
         <TextView
-            android:id="@+id/tvAddress"
+            android:id="@+id/tv_is_admin"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/tvPhone"
-            app:layout_constraintStart_toStartOf="@id/tvPhone"
-            app:layout_constraintBottom_toBottomOf="@id/editTextAdress"
+            android:layout_marginTop="8dp"
             android:gravity="center"
+            android:text="@string/is_manager"
             android:textSize="15sp"
-            android:text="Address:"/>
-        <EditText
-            android:id="@+id/editTextAdress"
-            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_employee_date"
+            app:layout_constraintTop_toBottomOf="@+id/tv_employee_date" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/sw_is_admin"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Enter address employee"
-            app:layout_constraintStart_toEndOf="@id/tvPhone"
-            app:layout_constraintTop_toTopOf="@id/tvAddress"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:textSize="15sp"
-            />
+            app:layout_constraintBottom_toBottomOf="@+id/tv_is_admin"
+            app:layout_constraintStart_toEndOf="@+id/tv_is_admin"
+            app:layout_constraintTop_toTopOf="@+id/tv_is_admin" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -293,16 +254,14 @@
         android:id="@+id/buttonCreateAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="create an account > "
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraintDetailInfor"
-        android:textAllCaps="true"
         android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="10dp"
-        />
-
+        android:text="create an account > "
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraintDetailInfor" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
