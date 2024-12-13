@@ -1,7 +1,11 @@
 package com.example.kiotz.inventory;
 
+import android.media.Image;
+import android.net.Uri;
+
 import com.example.kiotz.models.IIdentifiable;
 import com.example.kiotz.repositories.IRepository;
+import com.example.kiotz.utilities.ImageUtils;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -36,5 +40,16 @@ public class Inventory<T extends IIdentifiable> implements IInventory<T> {
     @Override
     public CompletableFuture<Void> removeAsync(T item) {
         return repository.removeAsync(item);
+    }
+
+    @Override
+    public CompletableFuture<String> uploadImageAsync(Uri imageUri, String imageName) {
+        return repository.uploadImageAsync(imageUri, imageName);
+    }
+
+    @Override
+    public CompletableFuture<Image> getImageAsync(String imageUri) {
+        return repository.getBitmapAsync(imageUri)
+                .thenApply(bitmap -> ImageUtils.convertBitmapToImage(bitmap, imageUri));
     }
 }

@@ -1,5 +1,8 @@
 package com.example.kiotz.viewmodels;
 
+import android.media.Image;
+import android.net.Uri;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.kiotz.inventory.IInventory;
@@ -68,6 +71,14 @@ public class InventoryViewModel<T extends IIdentifiable> {
 
     public CompletableFuture<T> getById(String id) {
         return inventory.getByIdAsync(id);
+    }
+
+    public CompletableFuture<String> uploadImage(Uri imageUri, String imageName) {
+        return inventory.uploadImageAsync(imageUri, imageName);
+    }
+
+    public CompletableFuture<Image> getImage(String imageUri) {
+        return inventory.getImageAsync(imageUri);
     }
 
     // Update items list by adding a new item
