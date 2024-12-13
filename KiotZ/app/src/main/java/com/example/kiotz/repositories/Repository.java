@@ -1,5 +1,8 @@
 package com.example.kiotz.repositories;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
+
 import com.example.kiotz.database.IDataBaseService;
 import com.example.kiotz.models.IIdentifiable;
 
@@ -38,4 +41,13 @@ public class Repository<T extends IIdentifiable> implements IRepository<T> {
         return databaseService.getAllAsync();
     }
 
+    @Override
+    public CompletableFuture<String> uploadImageAsync(Uri imageUri, String imageName) {
+        return databaseService.uploadImageAsync(imageUri, imageName);
+    }
+
+    @Override
+    public CompletableFuture<Bitmap> getBitmapAsync(String imageUri) {
+        return databaseService.getBitmapAsync(imageUri);
+    }
 }

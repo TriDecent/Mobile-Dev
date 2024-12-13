@@ -1,5 +1,9 @@
 package com.example.kiotz.database;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+
 import androidx.annotation.NonNull;
 
 import com.example.kiotz.database.dto.EmployeeSerializer;
@@ -12,6 +16,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +28,12 @@ public class FireBaseService<T extends IIdentifiable> implements IDataBaseServic
 
     private final FirebaseDatabase database;
     private final ISerializer<T> serializer;
+    private final FirebaseStorage storage;
 
     public FireBaseService(ISerializer<T> serializer) {
         this.database = FirebaseDatabase.getInstance();
         this.serializer = serializer;
+        this.storage = FirebaseStorage.getInstance();
     }
 
     private DatabaseReference getDatabaseReference() {
@@ -139,6 +148,32 @@ public class FireBaseService<T extends IIdentifiable> implements IDataBaseServic
                 future.completeExceptionally(databaseError.toException());
             }
         });
+        return future;
+    }
+
+    public CompletableFuture<String> uploadImageAsync(Uri imageUri, String imageName) {
+        CompletableFuture<String> future = new CompletableFuture<>();
+        StorageReference storageRef = storage.getReference().child("images/" + imageName);
+        UploadTask uploadTask = storageRef.putFile(imageUri);
+
+        uploadTask.addOnSuccessListener(taskSnapshot ->
+                storageRef.getDownloadUrl().addOnSuccessListener(uri ->
+                        future.complete(uri.toString())
+                ).addOnFailureListener(future::completeExceptionally)
+        ).addOnFailureListener(future::completeExceptionally);
+
+        return future;
+    }
+
+    public CompletableFuture<Bitmap> getBitmapAsync(String imageUri) {
+        CompletableFuture<Bitmap> future = new CompletableFuture<>();
+        StorageReference storageRef = storage.getReferenceFromUrl(imageUri);
+
+        storageRef.getStream((taskSnapshot, inputStream) -> {
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            future.complete(bitmap);
+        }).addOnFailureListener(future::completeExceptionally);
+
         return future;
     }
 }

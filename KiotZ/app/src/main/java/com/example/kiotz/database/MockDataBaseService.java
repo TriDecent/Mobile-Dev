@@ -1,5 +1,8 @@
 package com.example.kiotz.database;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
+
 import com.example.kiotz.models.IIdentifiable;
 
 import java.util.ArrayList;
@@ -65,5 +68,15 @@ public class MockDataBaseService<T extends IIdentifiable> implements IDataBaseSe
             }
             data.put(currentItem.ID(), newItem);
         });
+    }
+
+    @Override
+    public CompletableFuture<String> uploadImageAsync(Uri imageUri, String imageName) {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<Bitmap> getBitmapAsync(String imageUri) {
+        return null;
     }
 }
