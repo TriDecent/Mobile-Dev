@@ -34,10 +34,10 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/id_nv_tv_form14" />
+                app:layout_constraintTop_toTopOf="@id/tv_employee_id" />
 
             <TextView
-                android:id="@+id/id_nv_tv_form14"
+                android:id="@+id/tv_employee_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -49,7 +49,7 @@
                 app:layout_constraintTop_toTopOf="@id/avatar_nv_iv_form14" />
 
             <TextView
-                android:id="@+id/ten_tv_form14"
+                android:id="@+id/tv_employee_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -58,7 +58,7 @@
                 android:textAppearance="?attr/textAppearanceSubtitle1"
                 android:textColor="#45664C"
                 app:layout_constraintStart_toEndOf="@+id/avatar_nv_iv_form14"
-                app:layout_constraintTop_toBottomOf="@+id/id_nv_tv_form14" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_employee_id" />
 
             <ImageView
                 android:id="@+id/avatar_nv_iv_form14"

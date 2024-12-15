@@ -250,6 +250,29 @@
             app:layout_constraintStart_toEndOf="@+id/tv_is_admin"
             app:layout_constraintTop_toTopOf="@+id/tv_is_admin" />
 
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:checkedButton="@id/rb_male"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/tv_is_admin"
+            app:layout_constraintTop_toBottomOf="@+id/tv_is_admin">
+
+            <RadioButton
+                android:id="@+id/rb_male"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Male" />
+
+            <RadioButton
+                android:id="@+id/rb_female"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Female" />
+        </RadioGroup>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

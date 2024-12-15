@@ -79,7 +79,7 @@
     </View>
 
     <TextView
-        android:id="@+id/staff_count_tv_form14"
+        android:id="@+id/tv_employees_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@id/high_ligh_bar_form14"
@@ -98,7 +98,7 @@
         android:id="@+id/staff_tv_form14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/staff_count_tv_form14"
+        app:layout_constraintLeft_toRightOf="@id/tv_employees_count"
         app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form14"
         app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form14"
         android:text="nhân viên"
@@ -134,7 +134,7 @@
         android:textSize="16sp"
         android:text="tên"
         app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form14"
-        app:layout_constraintRight_toLeftOf="@id/sort_iv_form14"
+        app:layout_constraintRight_toLeftOf="@id/iv_employee_sort_by_name"
         app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form14"
         android:textStyle="bold"
         android:textColor="@color/md_theme_primary"
@@ -144,7 +144,7 @@
     </TextView>
 
     <ImageView
-        android:id="@+id/sort_iv_form14"
+        android:id="@+id/iv_employee_sort_by_name"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/sort_icon"
