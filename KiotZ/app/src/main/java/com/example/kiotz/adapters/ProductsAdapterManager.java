@@ -90,7 +90,7 @@ public class ProductsAdapterManager extends RecyclerView.Adapter<ProductsAdapter
             textViewName=itemView.findViewById(R.id.tvNameProduct);
             textViewPrice=itemView.findViewById(R.id.tvPriceProduct);
             textViewCategory=itemView.findViewById(R.id.tvCategoryProduct);
-            cv=itemView.findViewById(R.id.cv_inventory);
+            cv = itemView.findViewById(R.id.cv_employee);
         }
     }
 }

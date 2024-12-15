@@ -12,8 +12,8 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.kiotz.CreateAccountActivity;
+import com.example.kiotz.EmployeesView;
 import com.example.kiotz.R;
-import com.example.kiotz.ViewAccount;
 import com.example.kiotz.ViewInventoryActivity;
 import com.example.kiotz.views.general.activities.CreateProductActivity;
 
@@ -108,7 +108,7 @@ public class OverviewFragment extends Fragment {
         cardViewViewCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(v.getContext(), ViewAccount.class);
+                Intent i = new Intent(v.getContext(), EmployeesView.class);
                 startActivity(i);
             }
         });
