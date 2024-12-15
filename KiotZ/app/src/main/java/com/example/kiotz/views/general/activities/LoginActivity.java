@@ -20,8 +20,8 @@ import com.example.kiotz.database.FireBaseService;
 import com.example.kiotz.database.dto.EmployeeSerializer;
 import com.example.kiotz.enums.Gender;
 import com.example.kiotz.inventory.Inventory;
-import com.example.kiotz.models.Account;
 import com.example.kiotz.models.Employee;
+import com.example.kiotz.models.UserCredentials;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.utilities.EmailUtils;
 import com.example.kiotz.viewmodels.InventoryViewModel;
@@ -94,9 +94,9 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            Account account = new Account(email, password);
+            UserCredentials userCredentials = new UserCredentials(email, password);
 
-            authenticator.signIn(account, task -> {
+            authenticator.signIn(userCredentials, task -> {
                 pbSignIn.setVisibility(ProgressBar.GONE);
                 if (task.isSuccessful()) {
                     Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();

@@ -3,7 +3,7 @@ package com.example.kiotz.authentication;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.kiotz.models.Account;
+import com.example.kiotz.models.UserCredentials;
 import com.example.kiotz.views.general.activities.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.AuthResult;
@@ -25,15 +25,15 @@ public class Authenticator {
         return instance;
     }
 
-    public void signIn(Account account, OnCompleteListener<AuthResult> listener) {
+    public void signIn(UserCredentials userCredentials, OnCompleteListener<AuthResult> listener) {
         mAuth
-                .signInWithEmailAndPassword(account.Email(), account.Password())
+                .signInWithEmailAndPassword(userCredentials.Email(), userCredentials.Password())
                 .addOnCompleteListener(listener);
     }
 
-    public void register(Account account, OnCompleteListener<AuthResult> listener) {
+    public void register(UserCredentials userCredentials, OnCompleteListener<AuthResult> listener) {
         mAuth
-                .createUserWithEmailAndPassword(account.Email(), account.Password())
+                .createUserWithEmailAndPassword(userCredentials.Email(), userCredentials.Password())
                 .addOnCompleteListener(listener);
     }
 

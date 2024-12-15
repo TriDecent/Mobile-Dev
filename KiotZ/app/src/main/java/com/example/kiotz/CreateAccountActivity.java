@@ -21,8 +21,8 @@ import com.example.kiotz.database.FireBaseService;
 import com.example.kiotz.database.dto.EmployeeSerializer;
 import com.example.kiotz.enums.Gender;
 import com.example.kiotz.inventory.Inventory;
-import com.example.kiotz.models.Account;
 import com.example.kiotz.models.Employee;
+import com.example.kiotz.models.UserCredentials;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
@@ -113,9 +113,9 @@ public class CreateAccountActivity extends AppCompatActivity {
                 return;
             }
 
-            Account account = new Account(email, password);
+            UserCredentials userCredentials = new UserCredentials(email, password);
 
-            authenticator.register(account, task -> {
+            authenticator.register(userCredentials, task -> {
                 pbCreateAccount.setVisibility(ProgressBar.GONE);
                 if (task.isSuccessful()) {
                     var employeeId = authenticator.getCurrentUserId();
