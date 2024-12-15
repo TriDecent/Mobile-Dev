@@ -8,24 +8,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kiotz.R;
 import com.example.kiotz.enums.Gender;
 import com.example.kiotz.models.Employee;
-import com.example.kiotz.viewmodels.InventoryViewModel;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyViewHolder> {
     private final Context context;
-    private final InventoryViewModel<Employee> employeeViewModel;
+    private final List<Employee> employees;
 
-    public EmployeesAdapter(Context context, InventoryViewModel<Employee> employeeInventory) {
+    public EmployeesAdapter(Context context, List<Employee> employees) {
         this.context = context;
-        this.employeeViewModel = employeeInventory;
+        this.employees = employees;
     }
 
     @NonNull
@@ -38,9 +37,6 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        var employees = employeeViewModel.getObservableItems().getValue();
-        if (employees == null) return;
-
         var currentEmployee = employees.get(position);
         holder.bindData(currentEmployee);
 
@@ -60,13 +56,12 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
 
     @Override
     public int getItemCount() {
-        return Objects.requireNonNull(employeeViewModel.getObservableItems().getValue()).size();
+        return employees.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         private final ImageView ivEmployee;
         private final TextView tvId, tvName, tvDate, tvGender;
-        private final CardView cvEmployee;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -76,7 +71,6 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
             tvName = itemView.findViewById(R.id.tv_employee_name);
             tvDate = itemView.findViewById(R.id.tv_employee_item_date);
             tvGender = itemView.findViewById(R.id.tv_employee_gender);
-            cvEmployee = itemView.findViewById(R.id.cv_employee);
         }
 
         public void bindData(Employee employee) {
