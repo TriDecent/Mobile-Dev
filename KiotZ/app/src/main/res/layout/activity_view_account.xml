@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewAccount">
+    tools:context=".EmployeesView">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintViewAccount"
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="Nguyễn Ngô Hải Nam"
+            android:text="Trần Vũ Anh Trí"
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/imgAvatar"
@@ -67,63 +67,17 @@
         app:layout_constraintTop_toBottomOf="@id/constraintViewAccount"></View>
 
     <TextView
-        android:id="@+id/tv_employees_count"
+        android:id="@+id/tv_employee_sort_by_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:text="100"
-        android:textColor="@color/md_theme_primary"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/highlightBar"
-        app:layout_constraintLeft_toLeftOf="@id/highlightBar"
-        app:layout_constraintTop_toTopOf="@id/highlightBar">
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/staff_tv_form14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="nhân viên"
+        android:layout_marginEnd="16dp"
+        android:text="Sort By Name"
         android:textColor="@color/md_theme_scrim"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/highlightBar"
-        app:layout_constraintLeft_toRightOf="@id/tv_employees_count"
-        app:layout_constraintTop_toTopOf="@id/highlightBar">
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/sort_tv_form14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="140dp"
-        android:layout_marginEnd="5dp"
-        android:text="Sắp xếp theo"
-        android:textColor="@color/md_theme_scrim"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/highlightBar"
-        app:layout_constraintRight_toLeftOf="@id/sort_by_tv_form14"
-        app:layout_constraintTop_toTopOf="@id/highlightBar">
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/sort_by_tv_form14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="25dp"
-        android:text="tên"
-        android:textColor="@color/md_theme_primary"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/highlightBar"
-        app:layout_constraintRight_toLeftOf="@id/iv_employee_sort_by_name"
-        app:layout_constraintTop_toTopOf="@id/highlightBar">
+        app:layout_constraintBottom_toBottomOf="@+id/iv_employee_sort_by_name"
+        app:layout_constraintEnd_toStartOf="@+id/iv_employee_sort_by_name"
+        app:layout_constraintTop_toTopOf="@+id/iv_employee_sort_by_name">
 
     </TextView>
 
@@ -132,7 +86,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginEnd="25dp"
-        android:src="@drawable/sort_icon"
+        android:src="@drawable/sort"
         app:layout_constraintBottom_toBottomOf="@id/highlightBar"
         app:layout_constraintRight_toRightOf="@id/highlightBar"
         app:layout_constraintTop_toTopOf="@id/highlightBar">
@@ -154,6 +108,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/highlightBar"
         tools:listitem="@layout/item_form14" />
+
+    <TextView
+        android:id="@+id/tv_employee_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:text="1000 Employees"
+        android:textColor="@color/md_theme_scrim"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/highlightBar"
+        app:layout_constraintStart_toStartOf="@+id/highlightBar"
+        app:layout_constraintTop_toTopOf="@+id/highlightBar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

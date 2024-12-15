@@ -20,7 +20,7 @@
         android:id="@+id/avatar_iv_form4"
         android:layout_width="57dp"
         android:layout_height="58dp"
-        android:src="@drawable/generic_avatar_icon"
+        android:src="@drawable/ic_employee"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="21dp"
