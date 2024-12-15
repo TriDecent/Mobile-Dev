@@ -8,11 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kiotz.R;
 import com.example.kiotz.enums.Gender;
 import com.example.kiotz.models.Employee;
+import com.example.kiotz.views.dialogs.EmployeeDetailsDialog;
 
 import java.util.List;
 import java.util.Locale;
@@ -31,7 +33,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
     @Override
     public EmployeesAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         var inflater = LayoutInflater.from(context);
-        var view = inflater.inflate(R.layout.item_form14, parent, false);
+        var view = inflater.inflate(R.layout.item_employee_view, parent, false);
         return new EmployeesAdapter.MyViewHolder(view);
     }
 
@@ -40,9 +42,11 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
         var currentEmployee = employees.get(position);
         holder.bindData(currentEmployee);
 
+        holder.cvEmployee.setOnClickListener(v ->
+                new EmployeeDetailsDialog(context, currentEmployee).show());
+
         if (currentEmployee.IsAdmin()) {
             holder.ivEmployee.setImageResource(R.drawable.ic_manager);
-
             return;
         }
 
@@ -62,6 +66,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         private final ImageView ivEmployee;
         private final TextView tvId, tvName, tvDate, tvGender;
+        private final CardView cvEmployee;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,6 +76,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
             tvName = itemView.findViewById(R.id.tv_employee_name);
             tvDate = itemView.findViewById(R.id.tv_employee_item_date);
             tvGender = itemView.findViewById(R.id.tv_employee_gender);
+            cvEmployee = itemView.findViewById(R.id.cv_employee);
         }
 
         public void bindData(Employee employee) {
@@ -79,7 +85,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
             String employeeDate = Objects.equals(employee.Date(), "") ? "N/A" : employee.Date();
             String employeeGender = employee.Gender() == null ? "N/A" : employee.Gender().toString();
 
-            tvId.setText(employeeId == null ? "" : String.format(Locale.getDefault(), employeeId));
+            tvId.setText(String.format(Locale.getDefault(), employeeId));
             tvName.setText(employeeName == null ? "" : String.format(Locale.getDefault(), employeeName));
             tvDate.setText(employeeDate == null ? "" : String.format(Locale.getDefault(), employeeDate));
             tvGender.setText(String.format(Locale.getDefault(), employeeGender));
