@@ -94,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
                 pbSignUp.setVisibility(ProgressBar.GONE);
                 if (task.isSuccessful()) {
                     var employeeId = authenticator.getCurrentUserId();
-                    employeeViewModel.add(new Employee(employeeId, email, null, null, false));
+                    employeeViewModel.add(new Employee(employeeId, email, null, null, null, false));
                     Toast.makeText(this, "Account created.", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show();

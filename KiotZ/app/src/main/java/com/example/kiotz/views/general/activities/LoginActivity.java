@@ -18,6 +18,7 @@ import com.example.kiotz.R;
 import com.example.kiotz.authentication.Authenticator;
 import com.example.kiotz.database.FireBaseService;
 import com.example.kiotz.database.dto.EmployeeSerializer;
+import com.example.kiotz.enums.Gender;
 import com.example.kiotz.inventory.Inventory;
 import com.example.kiotz.models.Account;
 import com.example.kiotz.models.Employee;
@@ -147,8 +148,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        Gender gender = Gender.MALE;
+
         // Test add
-        Employee newEmployee = new Employee("id123", "john.doe@example.com", "John Doe", "2023-10-01", false);
+        String date = "12-11-2004";
+        Employee newEmployee = new Employee("id123", "john.doe@example.com", "John Doe", date, gender, false);
         employeeViewModel.add(newEmployee).thenRun(() -> {
             Log.d(TAG, "Employee added: " + newEmployee);
             employeeViewModel.getAll().thenAccept(employees -> {
@@ -161,7 +165,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // Test delete
-        Employee employeeToDelete = new Employee("id123", "john.doe@example.com", "John Doe", "2023-10-01", false);
+        Employee employeeToDelete = new Employee("id123", "john.doe@example.com", "John Doe", date, gender, false);
         employeeViewModel.delete(employeeToDelete).thenRun(() -> {
             Log.d(TAG, "Employee deleted: " + employeeToDelete);
             employeeViewModel.getAll().thenAccept(employees -> {
@@ -174,8 +178,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // Test update
-        Employee currentEmployee = new Employee("id123", "john.doe@example.com", "John Doe", "2023-10-01", false);
-        Employee updatedEmployee = new Employee("id123", "john.doe@example.com", "John Doe", "2023-10-01", true);
+        Employee currentEmployee = new Employee("id123", "john.doe@example.com", "John Doe", date, gender, false);
+        Employee updatedEmployee = new Employee("id123", "john.doe@example.com", "John Doe", date, gender, true);
         employeeViewModel.update(currentEmployee, updatedEmployee).thenRun(() -> {
             Log.d(TAG, "Employee updated: " + updatedEmployee);
             employeeViewModel.getAll().thenAccept(employees -> {

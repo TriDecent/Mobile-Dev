@@ -1,5 +1,6 @@
 package com.example.kiotz.database.dto;
 
+import com.example.kiotz.enums.Gender;
 import com.example.kiotz.models.Employee;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -12,6 +13,7 @@ public class EmployeeSerializer implements ISerializer<Employee> {
         ref.child("Email").setValue(employee.Email());
         ref.child("Name").setValue(employee.Name());
         ref.child("Date").setValue(employee.Date());
+        ref.child("Gender").setValue(employee.Gender());
         ref.child("IsAdmin").setValue(employee.IsAdmin());
     }
 
@@ -21,7 +23,10 @@ public class EmployeeSerializer implements ISerializer<Employee> {
         String email = snapshot.child("Email").getValue(String.class);
         String name = snapshot.child("Name").getValue(String.class);
         String date = snapshot.child("Date").getValue(String.class);
+        String genderAsString = snapshot.child("Gender").getValue(String.class);
+
+        Gender gender = genderAsString != null ? Gender.valueOf(genderAsString.toUpperCase()) : null;
         boolean isAdmin = Boolean.TRUE.equals(snapshot.child("IsAdmin").getValue(Boolean.class));
-        return new Employee(id, email, name, date, isAdmin);
+        return new Employee(id, email, name, date, gender, isAdmin);
     }
 }

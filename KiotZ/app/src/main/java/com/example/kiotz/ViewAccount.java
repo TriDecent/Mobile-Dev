@@ -23,6 +23,6 @@ public class ViewAccount extends AppCompatActivity {
             return insets;
         });
 
-        recyclerViewEmployee = findViewById(R.id.recycleViewInforEmployee);
+        recyclerViewEmployee = findViewById(R.id.rv_employees);
     }
 }
