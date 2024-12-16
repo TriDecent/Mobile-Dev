@@ -17,6 +17,7 @@ import java.util.Objects;
 public class EmployeeDetailsDialog {
     private final Context context;
     private Employee employee;
+    private OnEmployeeUpdateListener updateListener;
 
     private TextView tvDialogId, tvDialogName, tvDialogEmail, tvDialogDate, tvGender, tvDialogPosition;
 
@@ -52,11 +53,19 @@ public class EmployeeDetailsDialog {
                 employee = editedEmployee;
 
                 displayStudentDetails(employee);
+
+                if (updateListener != null) {
+                    updateListener.onEmployeeUpdated(employee);
+                }
             });
         });
 
         builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
         builder.create().show();
+    }
+
+    public void setOnEmployeeUpdateListener(OnEmployeeUpdateListener listener) {
+        this.updateListener = listener;
     }
 
     private void displayStudentDetails(Employee employee) {
@@ -73,5 +82,9 @@ public class EmployeeDetailsDialog {
         tvDialogDate.setText(employeeDate == null ? "" : String.format(Locale.getDefault(), employeeDate));
         tvGender.setText(String.format(Locale.getDefault(), employeeGender));
         tvDialogPosition.setText(String.format(Locale.getDefault(), employeePosition));
+    }
+
+    public interface OnEmployeeUpdateListener {
+        void onEmployeeUpdated(Employee employee);
     }
 }
