@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import com.example.kiotz.CreateAccountActivity;
+import com.example.kiotz.AccountCreationActivity;
 import com.example.kiotz.EmployeesView;
 import com.example.kiotz.R;
 import com.example.kiotz.ViewInventoryActivity;
@@ -89,7 +89,7 @@ public class OverviewFragment extends Fragment {
         cardViewCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(v.getContext(), CreateAccountActivity.class);
+                Intent i=new Intent(v.getContext(), AccountCreationActivity.class);
                 startActivity(i);
             }
         });
