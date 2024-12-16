@@ -2,6 +2,7 @@ package com.example.kiotz.viewmodels;
 
 import android.media.Image;
 import android.net.Uri;
+import android.util.Pair;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -14,10 +15,10 @@ import java.util.concurrent.CompletableFuture;
 public class InventoryViewModel<T extends IIdentifiable> {
     private final IInventory<T> inventory;
 
-    public final MutableLiveData<List<T>> items = new MutableLiveData<>();
-    public final MutableLiveData<T> addedItem = new MutableLiveData<>();
-    public final MutableLiveData<Integer> deletedPosition = new MutableLiveData<>();
-    public final MutableLiveData<Integer> updatedPosition = new MutableLiveData<>();
+    private final MutableLiveData<List<T>> items = new MutableLiveData<>();
+    private final MutableLiveData<T> addedItem = new MutableLiveData<>();
+    private final MutableLiveData<Integer> deletedPosition = new MutableLiveData<>();
+    private final MutableLiveData<Pair<Integer, T>> updatedItem = new MutableLiveData<>();
 
     public InventoryViewModel(IInventory<T> inventory) {
         this.inventory = inventory;
@@ -36,8 +37,8 @@ public class InventoryViewModel<T extends IIdentifiable> {
         return deletedPosition;
     }
 
-    public MutableLiveData<Integer> getObservableUpdatedItemPosition() {
-        return updatedPosition;
+    public MutableLiveData<Pair<Integer, T>> getObservableUpdatedItem() {
+        return updatedItem;
     }
 
     // Load initial list of items
@@ -110,15 +111,10 @@ public class InventoryViewModel<T extends IIdentifiable> {
             int position = currentList.indexOf(currentItem);
             if (position != -1) {
                 currentList.set(position, newItem);
-                updatedPosition.setValue(position); // Notify observers of the updated item's position
+
+                updatedItem.setValue(new Pair<>(position, newItem));
                 items.setValue(currentList);
             }
         }
     }
 }
-
-
-
-
-
-
