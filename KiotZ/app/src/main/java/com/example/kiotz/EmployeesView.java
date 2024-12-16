@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kiotz.adapters.EmployeesAdapter;
+import com.example.kiotz.authentication.Authenticator;
 import com.example.kiotz.database.FireBaseService;
 import com.example.kiotz.database.dto.EmployeeSerializer;
 import com.example.kiotz.inventory.Inventory;
@@ -26,7 +27,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class EmployeesView extends AppCompatActivity {
-    private TextView tvEmployeeCount;
+    private TextView tvEmployeeCount, tvEmployeeName, tvEmployeePosition;
     private ImageView ivSortByName;
     private RecyclerView recyclerViewEmployee;
     private InventoryViewModel<Employee> employeeViewModel;
@@ -43,6 +44,7 @@ public class EmployeesView extends AppCompatActivity {
 
         initializeViews();
         setupViewModel();
+        setupStatusBar();
         loadEmployees();
         setupObservers();
     }
@@ -57,9 +59,24 @@ public class EmployeesView extends AppCompatActivity {
 
     private void initializeViews() {
         tvEmployeeCount = findViewById(R.id.tv_employee_count);
+        tvEmployeeName = findViewById(R.id.tv_status_bar_employee_name);
+        tvEmployeePosition = findViewById(R.id.tv_status_bar_position);
         ivSortByName = findViewById(R.id.iv_employee_sort_by_name);
         recyclerViewEmployee = findViewById(R.id.rv_employees);
         recyclerViewEmployee.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void setupStatusBar() {
+        var authenticator = Authenticator.getInstance();
+        var userId = authenticator.getCurrentUserId();
+
+        employeeViewModel.getById(userId)
+                .thenAccept(currentUser -> runOnUiThread(() -> {
+                    tvEmployeeName.setText(getString(R.string.employee_name, currentUser.Name()));
+
+                    var position = currentUser.IsAdmin() ? "Manager" : "Employee";
+                    tvEmployeePosition.setText(getString(R.string.position, position));
+                }));
     }
 
     private void setupViewModel() {

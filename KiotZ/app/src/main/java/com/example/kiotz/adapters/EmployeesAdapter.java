@@ -49,17 +49,17 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
             var dialog = new EmployeeDetailsDialog(context, currentEmployee);
             dialog.show();
 
-            dialog.setOnEmployeeUpdateListener(updatedEmployee -> {
-                employeeViewModel.update(currentEmployee, updatedEmployee).thenRun(() -> {
-                    employees.set(position, updatedEmployee);
+            dialog.setOnEmployeeUpdateListener(updatedEmployee ->
+                    employeeViewModel
+                            .update(currentEmployee, updatedEmployee)
+                            .thenRun(() -> {
+                                employees.set(position, updatedEmployee);
 
-                    // this one below is not needed because we used the observer in the EmployeesView class
-                    // to listen for changes in the list of employees
-                    // just put here for reference
-                    // notifyItemChanged(position);
-                });
-                ;
-            });
+                                // this one below is not needed because we used the observer in the EmployeesView class
+                                // to listen for changes in the list of employees
+                                // just put here for reference
+                                // notifyItemChanged(position);
+                            }));
         });
 
 
