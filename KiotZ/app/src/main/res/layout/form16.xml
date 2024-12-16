@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <View
-        android:id="@+id/rectangle_2_form15"
+        android:id="@+id/rectangle_2_form16"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_alignParentStart="true"
@@ -16,7 +16,7 @@
         />
 
     <ImageView
-        android:id="@+id/avatar_iv_form15"
+        android:id="@+id/avatar_iv_form16"
         android:layout_width="57dp"
         android:layout_height="58dp"
         android:src="@drawable/ic_employee"
@@ -65,7 +65,7 @@
     </TextView>
 
     <View
-        android:id="@+id/high_ligh_bar_form15"
+        android:id="@+id/high_ligh_bar_form16"
         android:layout_width="0dp"
         android:layout_height="60dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -80,12 +80,12 @@
     </View>
 
     <TextView
-        android:id="@+id/staff_count_tv_form15"
+        android:id="@+id/staff_count_tv_form16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="@id/high_ligh_bar_form15"
-        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form15"
-        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form15"
+        app:layout_constraintLeft_toLeftOf="@id/high_ligh_bar_form16"
+        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
+        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
         android:text="100"
         android:textColor="@color/md_theme_primary"
         android:textStyle="bold"
@@ -98,12 +98,12 @@
 
 
     <TextView
-        android:id="@+id/staff_tv_form15"
+        android:id="@+id/staff_tv_form16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/staff_count_tv_form15"
-        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form15"
-        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form15"
+        app:layout_constraintLeft_toRightOf="@id/staff_count_tv_form16"
+        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
+        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
         android:text="nhân viên"
         android:textColor="@color/md_theme_scrim"
         android:textStyle="bold"
@@ -116,14 +116,14 @@
     </TextView>
 
     <TextView
-        android:id="@+id/sum_money_tv_from15"
+        android:id="@+id/daily_sum_money_tv_from15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="@id/high_ligh_bar_form15"
-        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form15"
-        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form15"
-        android:text="200.000.000₫"
-        android:textColor="@color/md_theme_tertiary"
+        app:layout_constraintLeft_toLeftOf="@id/high_ligh_bar_form16"
+        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
+        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
+        android:text="Tổng doanh thu trong ngày"
+        android:textColor="@color/md_theme_primary"
         android:textStyle="bold"
         android:textSize="16sp"
         android:layout_marginTop="25dp"
@@ -133,7 +133,24 @@
     </TextView>
 
     <TextView
-        android:id="@+id/sort_tv_form15"
+        android:id="@+id/sum_money_tv_from15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/daily_sum_money_tv_from15"
+        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
+        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
+        android:text="200.000.000₫"
+        android:textColor="@color/md_theme_tertiary"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="10dp"
+        >
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/sort_tv_form16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="140dp"
@@ -141,9 +158,9 @@
         android:textColor="@color/md_theme_scrim"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form15"
-        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form15"
-        app:layout_constraintRight_toLeftOf="@id/sort_by_tv_form15"
+        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
+        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
+        app:layout_constraintRight_toLeftOf="@id/sort_by_tv_form16"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="20dp"
         >
@@ -151,14 +168,14 @@
     </TextView>
 
     <TextView
-        android:id="@+id/sort_by_tv_form15"
+        android:id="@+id/sort_by_tv_form16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:text="thành tiền"
-        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form15"
-        app:layout_constraintRight_toRightOf="@id/high_ligh_bar_form15"
-        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form15"
+        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
+        app:layout_constraintRight_toRightOf="@id/high_ligh_bar_form16"
+        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
         android:textStyle="bold"
         android:textColor="@color/md_theme_primary"
         android:layout_marginEnd="35dp"
@@ -167,66 +184,15 @@
 
     </TextView>
 
-    <TextView
-        android:id="@+id/date_start_tv_form15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="140dp"
-        android:text="20/11/2024"
-        android:textColor="@color/md_theme_primary"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form15"
-        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form15"
-        app:layout_constraintRight_toRightOf="@id/high_ligh_bar_form15"
-        android:layout_marginEnd="130dp"
-        android:layout_marginTop="25dp"
-        >
 
-    </TextView>
-
-    <TextView
-        android:id="@+id/date_range_tv_form15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-"
-        android:textColor="@color/md_theme_scrim"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form15"
-        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form15"
-        app:layout_constraintLeft_toRightOf="@id/date_start_tv_form15"
-        android:layout_marginTop="25dp"
-        android:layout_marginStart="5dp"
-        >
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/date_end_tv_form15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="29/11/2024"
-        android:textColor="@color/md_theme_primary"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form15"
-        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form15"
-        app:layout_constraintLeft_toRightOf="@id/date_range_tv_form15"
-        android:layout_marginEnd="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="25dp"
-        >
-
-    </TextView>
 
     <ImageView
         android:id="@+id/iv_sort_by_employee_name"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/sort_icon"
-        app:layout_constraintTop_toBottomOf="@id/rectangle_2_form15"
-        app:layout_constraintRight_toRightOf="@id/high_ligh_bar_form15"
+        app:layout_constraintTop_toBottomOf="@id/rectangle_2_form16"
+        app:layout_constraintRight_toRightOf="@id/high_ligh_bar_form16"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="10dp"
         >
@@ -234,13 +200,13 @@
     </ImageView>
 
     <SearchView
-        android:id="@+id/search_sv_form15"
+        android:id="@+id/search_sv_form16"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/bg_staff_list_form14"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        app:layout_constraintTop_toBottomOf="@id/high_ligh_bar_form15"
+        app:layout_constraintTop_toBottomOf="@id/high_ligh_bar_form16"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/md_theme_surfaceVariant"
         >
@@ -251,7 +217,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/search_sv_form15"
+        app:layout_constraintTop_toBottomOf="@id/search_sv_form16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -273,7 +239,7 @@
         android:text="Statistics"
         android:textStyle="bold"
         android:textColor="@color/md_theme_scrim"
-        app:layout_constraintTop_toBottomOf="@id/rectangle_2_form15"
+        app:layout_constraintTop_toBottomOf="@id/rectangle_2_form16"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
