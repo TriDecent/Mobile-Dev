@@ -5,12 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateAccountActivity">
+    tools:context=".AccountCreationActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/bginfor"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="Nguyễn Ngô Hải Nam"
+            android:text="Trần Vũ Anh Trí"
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/img_avatar"
@@ -43,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
-            android:text="Manager"
+            android:text="President"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/tv_username"
@@ -57,12 +60,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="15dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="30dp"
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal|center_vertical"
         android:lineSpacingExtra="-8sp"
-        android:text="Create account"
+        android:text="Create An Account"
         android:textAllCaps="true"
         android:textColor="@color/md_theme_scrim"
         android:textSize="22sp"
@@ -76,8 +79,7 @@
         android:id="@+id/tvHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="Create account for your employee"
+        android:text="Create account for the employee"
         android:textColor="@color/md_theme_secondary"
         android:textSize="12dp"
         android:textStyle="italic"
@@ -88,9 +90,9 @@
         android:id="@+id/constraintAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/bgframe"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +103,7 @@
             android:id="@+id/tvAccount"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="8dp"
             android:text="Account: "
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -112,7 +114,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="8dp"
             android:hint="Email:"
             android:textColorHint="@color/md_theme_onSurface"
             app:boxBackgroundColor="@color/md_theme_secondaryContainer"
@@ -136,7 +138,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="8dp"
             android:hint="Password"
             android:textColorHint="@color/md_theme_onSurface"
             app:boxBackgroundColor="@color/md_theme_secondaryContainer"
@@ -164,9 +166,9 @@
         android:id="@+id/constraintDetailInfor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/bgframe"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="@id/constraintAccount"
@@ -177,8 +179,8 @@
             android:id="@+id/tvHeadingDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="6dp"
             android:text="Detail information"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -186,35 +188,36 @@
         <TextView
             android:id="@+id/tvFullName"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
             android:gravity="center"
             android:text="Full Name: "
             android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@id/et_employee_name"
-            app:layout_constraintStart_toStartOf="@id/tvHeadingDetail"
-            app:layout_constraintTop_toBottomOf="@id/tvHeadingDetail" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvHeadingDetail" />
 
         <EditText
             android:id="@+id/et_employee_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:hint="Enter employee name"
             android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvFullName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_employee_date"
+            app:layout_constraintStart_toEndOf="@+id/tvFullName"
             app:layout_constraintTop_toTopOf="@id/tvFullName" />
 
         <TextView
             android:id="@+id/tv_employee_date"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:gravity="center"
             android:text="Date:"
             android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@id/et_employee_date"
             app:layout_constraintStart_toStartOf="@id/tvFullName"
             app:layout_constraintTop_toBottomOf="@id/tvFullName" />
 
@@ -222,54 +225,63 @@
             android:id="@+id/et_employee_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="8dp"
             android:hint="Enter employee date"
             android:inputType="date"
             android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_employee_date"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_employee_date"
-            app:layout_constraintTop_toTopOf="@id/tv_employee_date" />
-
-        <TextView
-            android:id="@+id/tv_is_admin"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="@string/is_manager"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="@+id/tv_employee_date"
-            app:layout_constraintTop_toBottomOf="@+id/tv_employee_date" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/sw_is_admin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_is_admin"
-            app:layout_constraintStart_toEndOf="@+id/tv_is_admin"
-            app:layout_constraintTop_toTopOf="@+id/tv_is_admin" />
+            app:layout_constraintStart_toStartOf="@+id/et_employee_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_employee_date" />
 
         <RadioGroup
+            android:id="@+id/rg_account_creation_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:checkedButton="@id/rb_male"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:checkedButton="@id/rb_account_creation_employee"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@+id/tv_is_admin"
-            app:layout_constraintTop_toBottomOf="@+id/tv_is_admin">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rg_account_creation_gender">
 
             <RadioButton
-                android:id="@+id/rb_male"
+                android:id="@+id/rb_account_creation_manager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Manager" />
+
+            <RadioButton
+                android:id="@+id/rb_account_creation_employee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Employee" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/rg_account_creation_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:checkedButton="@id/rb_account_creation_male"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/tv_employee_date"
+            app:layout_constraintTop_toBottomOf="@+id/tv_employee_date">
+
+            <RadioButton
+                android:id="@+id/rb_account_creation_male"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Male" />
 
             <RadioButton
-                android:id="@+id/rb_female"
+                android:id="@+id/rb_account_creation_female"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="40dp"
                 android:text="Female" />
         </RadioGroup>
 
@@ -280,8 +292,8 @@
         android:id="@+id/btn_create_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         android:text="create an account > "
         android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"

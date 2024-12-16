@@ -31,7 +31,7 @@
             android:name=".views.managers.activities.GeneralManagerActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateAccountActivity"
+            android:name=".AccountCreationActivity"
             android:exported="false" />
         <activity
             android:name=".DetailProductActivity"
