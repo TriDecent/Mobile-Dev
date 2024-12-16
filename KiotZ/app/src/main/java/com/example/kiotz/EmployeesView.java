@@ -31,7 +31,7 @@ public class EmployeesView extends AppCompatActivity {
     private ImageView ivSortByName;
     private RecyclerView recyclerViewEmployee;
     private InventoryViewModel<Employee> employeeViewModel;
-    private List<Employee> employees;
+    private List<Employee> employees = new ArrayList<>();
     private EmployeesAdapter adapter;
     private boolean isAscendingSort = true;
 
@@ -46,7 +46,6 @@ public class EmployeesView extends AppCompatActivity {
         setupViewModel();
         setupStatusBar();
         loadEmployees();
-        setupObservers();
     }
 
     private void setupWindowInsets() {
@@ -72,10 +71,10 @@ public class EmployeesView extends AppCompatActivity {
 
         employeeViewModel.getById(userId)
                 .thenAccept(currentUser -> runOnUiThread(() -> {
-                    tvEmployeeName.setText(getString(R.string.employee_name, currentUser.Name()));
+                    tvEmployeeName.setText(currentUser.Name());
 
                     var position = currentUser.IsAdmin() ? "Manager" : "Employee";
-                    tvEmployeePosition.setText(getString(R.string.position, position));
+                    tvEmployeePosition.setText(position);
                 }));
     }
 
@@ -91,6 +90,7 @@ public class EmployeesView extends AppCompatActivity {
             setupAdapter();
             setupSortButton();
             updateEmployeeCount();
+            setupObservers();
         }));
     }
 

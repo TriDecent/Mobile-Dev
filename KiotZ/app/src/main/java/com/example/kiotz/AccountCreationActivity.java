@@ -155,9 +155,10 @@ public class AccountCreationActivity extends AppCompatActivity {
         pbCreateAccount.setVisibility(ProgressBar.GONE);
         if (task.isSuccessful()) {
             createEmployee();
-            Toast.makeText(this, "Account created.", Toast.LENGTH_SHORT).show();
+            clearForm();
         } else {
             Toast.makeText(this, "Create account failed (Email may already exist).", Toast.LENGTH_SHORT).show();
+            clearForm();
         }
     }
 
@@ -171,7 +172,10 @@ public class AccountCreationActivity extends AppCompatActivity {
                 rbMale.isChecked() ? Gender.MALE : Gender.FEMALE,
                 rbManager.isChecked()
         );
-        employeeViewModel.add(employee);
+
+        employeeViewModel
+                .add(employee)
+                .thenRun(() -> Toast.makeText(this, "Account created.", Toast.LENGTH_SHORT).show());
     }
 
     private void setupStatusBar() {
@@ -184,5 +188,14 @@ public class AccountCreationActivity extends AppCompatActivity {
         tvEmployeeName.setText(currentUser.Name());
         var position = currentUser.IsAdmin() ? "Manager" : "Employee";
         tvEmployeePosition.setText(position);
+    }
+
+    private void clearForm() {
+        etEmail.setText("");
+        etPassword.setText("");
+        etName.setText("");
+        etDate.setText("");
+        rbMale.setChecked(true);
+        rbManager.setChecked(false);
     }
 }
