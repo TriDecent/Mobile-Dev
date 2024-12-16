@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kiotz.R;
 import com.example.kiotz.enums.Gender;
 import com.example.kiotz.models.Employee;
+import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.views.dialogs.EmployeeDetailsDialog;
 
 import java.util.List;
@@ -23,10 +24,12 @@ import java.util.Objects;
 public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyViewHolder> {
     private final Context context;
     private final List<Employee> employees;
+    private final InventoryViewModel<Employee> employeeViewModel;
 
-    public EmployeesAdapter(Context context, List<Employee> employees) {
+    public EmployeesAdapter(Context context, List<Employee> employees, InventoryViewModel<Employee> employeeViewModel) {
         this.context = context;
         this.employees = employees;
+        this.employeeViewModel = employeeViewModel;
     }
 
     @NonNull
@@ -42,8 +45,23 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
         var currentEmployee = employees.get(position);
         holder.bindData(currentEmployee);
 
-        holder.cvEmployee.setOnClickListener(v ->
-                new EmployeeDetailsDialog(context, currentEmployee).show());
+        holder.cvEmployee.setOnClickListener(v -> {
+            var dialog = new EmployeeDetailsDialog(context, currentEmployee);
+            dialog.show();
+
+            dialog.setOnEmployeeUpdateListener(updatedEmployee -> {
+                employeeViewModel.update(currentEmployee, updatedEmployee).thenRun(() -> {
+                    employees.set(position, updatedEmployee);
+
+                    // this one below is not needed because we used the observer in the EmployeesView class
+                    // to listen for changes in the list of employees
+                    // just put here for reference
+                    // notifyItemChanged(position);
+                });
+                ;
+            });
+        });
+
 
         if (currentEmployee.IsAdmin()) {
             holder.ivEmployee.setImageResource(R.drawable.ic_manager);

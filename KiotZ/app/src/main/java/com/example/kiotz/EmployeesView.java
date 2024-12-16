@@ -44,6 +44,7 @@ public class EmployeesView extends AppCompatActivity {
         initializeViews();
         setupViewModel();
         loadEmployees();
+        setupObservers();
     }
 
     private void setupWindowInsets() {
@@ -67,19 +68,38 @@ public class EmployeesView extends AppCompatActivity {
     }
 
     private void loadEmployees() {
-        employeeViewModel.getAll().thenAccept(fetchedEmployees -> {
-            runOnUiThread(() -> {
-                employees = new ArrayList<>(fetchedEmployees);
+        employeeViewModel.getAll().thenAccept(fetchedEmployees -> runOnUiThread(() -> {
+            employees = new ArrayList<>(fetchedEmployees);
 
-                setupAdapter();
-                setupSortButton();
-                updateEmployeeCount();
-            });
+            setupAdapter();
+            setupSortButton();
+            updateEmployeeCount();
+        }));
+    }
+
+    private void setupObservers() {
+        employeeViewModel.getObservableAddedItem().observe(this, addedEmployee -> {
+            employees.add(addedEmployee);
+            adapter.notifyItemInserted(employees.size() - 1);
+            updateEmployeeCount();
+        });
+
+        employeeViewModel.getObservableDeletedItemPosition().observe(this, position -> {
+            employees.remove(position.intValue());
+            adapter.notifyItemRemoved(position);
+            updateEmployeeCount();
+        });
+
+        employeeViewModel.getObservableUpdatedItem().observe(this, pair -> {
+            var position = pair.first;
+            var updatedEmployee = pair.second;
+            employees.set(position, updatedEmployee);
+            adapter.notifyItemChanged(position);
         });
     }
 
     private void setupAdapter() {
-        adapter = new EmployeesAdapter(this, employees);
+        adapter = new EmployeesAdapter(this, employees, employeeViewModel);
         recyclerViewEmployee.setAdapter(adapter);
     }
 
