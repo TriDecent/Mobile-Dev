@@ -32,9 +32,20 @@ public class Authenticator {
     }
 
     public void register(UserCredentials userCredentials, OnCompleteListener<AuthResult> listener) {
-        mAuth
-                .createUserWithEmailAndPassword(userCredentials.Email(), userCredentials.Password())
-                .addOnCompleteListener(listener);
+        var currentUser = mAuth.getCurrentUser();
+        var currentUid = currentUser != null ? currentUser.getUid() : null;
+
+        mAuth.createUserWithEmailAndPassword(userCredentials.Email(), userCredentials.Password())
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        mAuth.signOut();
+
+                        if (currentUid != null) {
+                            mAuth.updateCurrentUser(currentUser);
+                        }
+                    }
+                    listener.onComplete(task);
+                });
     }
 
     public String getCurrentUserId() {
