@@ -17,7 +17,7 @@ public class InventoryViewModel<T extends IIdentifiable> {
 
     private final MutableLiveData<List<T>> items = new MutableLiveData<>();
     private final MutableLiveData<T> addedItem = new MutableLiveData<>();
-    private final MutableLiveData<Integer> deletedPosition = new MutableLiveData<>();
+    private final MutableLiveData<Pair<Integer, T>> deletedItem = new MutableLiveData<>();
     private final MutableLiveData<Pair<Integer, T>> updatedItem = new MutableLiveData<>();
 
     public InventoryViewModel(IInventory<T> inventory) {
@@ -33,8 +33,8 @@ public class InventoryViewModel<T extends IIdentifiable> {
         return addedItem;
     }
 
-    public MutableLiveData<Integer> getObservableDeletedItemPosition() {
-        return deletedPosition;
+    public MutableLiveData<Pair<Integer, T>> getObservableDeletedItem() {
+        return deletedItem;
     }
 
     public MutableLiveData<Pair<Integer, T>> getObservableUpdatedItem() {
@@ -98,7 +98,8 @@ public class InventoryViewModel<T extends IIdentifiable> {
             int position = currentList.indexOf(item);
             if (position != -1) {
                 currentList.remove(position);
-                deletedPosition.setValue(position); // Notify observers of the deleted item's position
+                // Notify with both position and deleted item
+                deletedItem.setValue(new Pair<>(position, item));
                 items.setValue(currentList);
             }
         }
