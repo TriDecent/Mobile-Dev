@@ -181,7 +181,7 @@ public class AccountCreationActivity extends AppCompatActivity {
     private void setupStatusBar() {
         var userId = authenticator.getCurrentUserId();
         employeeViewModel.getById(userId)
-                .thenAccept(currentUser -> runOnUiThread(() -> updateStatusBar(currentUser)));
+                .thenAccept(this::updateStatusBar);
     }
 
     private void updateStatusBar(Employee currentUser) {
