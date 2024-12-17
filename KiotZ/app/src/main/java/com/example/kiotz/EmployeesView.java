@@ -96,13 +96,24 @@ public class EmployeesView extends AppCompatActivity {
 
     private void setupObservers() {
         employeeViewModel.getObservableAddedItem().observe(this, addedEmployee -> {
+            if (employees.stream().anyMatch(e -> e.ID().equals(addedEmployee.ID()))) {
+                return;
+            }
+
             employees.add(addedEmployee);
             adapter.notifyItemInserted(employees.size() - 1);
             updateEmployeeCount();
         });
 
-        employeeViewModel.getObservableDeletedItemPosition().observe(this, position -> {
-            employees.remove(position.intValue());
+        employeeViewModel.getObservableDeletedItem().observe(this, pair -> {
+            int position = pair.first;
+            var deletedEmployee = pair.second;
+
+            if (employees.stream().noneMatch(e -> e.ID().equals(deletedEmployee.ID()))) {
+                return;
+            }
+
+            employees.remove(position);
             adapter.notifyItemRemoved(position);
             updateEmployeeCount();
         });
@@ -110,6 +121,13 @@ public class EmployeesView extends AppCompatActivity {
         employeeViewModel.getObservableUpdatedItem().observe(this, pair -> {
             var position = pair.first;
             var updatedEmployee = pair.second;
+
+            var employeeNeedsToBeUpdated = employees.get(position);
+
+            if (employeeNeedsToBeUpdated.equals(updatedEmployee)) {
+                return;
+            }
+
             employees.set(position, updatedEmployee);
             adapter.notifyItemChanged(position);
         });

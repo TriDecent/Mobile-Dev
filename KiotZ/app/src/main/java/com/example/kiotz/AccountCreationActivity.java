@@ -80,8 +80,8 @@ public class AccountCreationActivity extends AppCompatActivity {
         rbMale = findViewById(R.id.rb_account_creation_male);
         btnCreateAccount = findViewById(R.id.btn_create_account);
         pbCreateAccount = findViewById(R.id.pb_create_account);
-        tvEmployeeName = findViewById(R.id.tv_status_bar_employee_name);
-        tvEmployeePosition = findViewById(R.id.tv_status_bar_position);
+        tvEmployeeName = findViewById(R.id.tv_status_bar_account_creation_employee_name);
+        tvEmployeePosition = findViewById(R.id.tv_status_bar_account_creation_employee_position);
     }
 
     private void initializeComponents() {
@@ -156,10 +156,10 @@ public class AccountCreationActivity extends AppCompatActivity {
         if (task.isSuccessful()) {
             createEmployee();
             clearForm();
-        } else {
-            Toast.makeText(this, "Create account failed (Email may already exist).", Toast.LENGTH_SHORT).show();
-            clearForm();
+            return;
         }
+
+        Toast.makeText(this, "Create account failed (Email may already exist).", Toast.LENGTH_SHORT).show();
     }
 
     private void createEmployee() {
