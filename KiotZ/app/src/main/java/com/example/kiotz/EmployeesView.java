@@ -25,6 +25,7 @@ import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class EmployeesView extends AppCompatActivity {
     private TextView tvEmployeeCount, tvEmployeeName, tvEmployeePosition;
@@ -44,8 +45,12 @@ public class EmployeesView extends AppCompatActivity {
 
         initializeViews();
         setupViewModel();
-        setupStatusBar();
-        loadEmployees();
+        loadEmployees()
+                .thenRun(this::setupStatusBar)
+                .thenRun(this::updateEmployeeCount)
+                .thenRun(this::setupAdapter)
+                .thenRun(this::setupSortButton)
+                .thenRun(this::setupObservers);
     }
 
     private void setupWindowInsets() {
@@ -69,13 +74,16 @@ public class EmployeesView extends AppCompatActivity {
         var authenticator = Authenticator.getInstance();
         var userId = authenticator.getCurrentUserId();
 
-        employeeViewModel.getById(userId)
-                .thenAccept(currentUser -> runOnUiThread(() -> {
-                    tvEmployeeName.setText(currentUser.Name());
+        var sessionEmployee = employees.stream()
+                .filter(e -> e.ID().equals(userId))
+                .findFirst()
+                .orElse(null);
 
-                    var position = currentUser.IsAdmin() ? "Manager" : "Employee";
-                    tvEmployeePosition.setText(position);
-                }));
+        assert sessionEmployee != null;
+        tvEmployeeName.setText(sessionEmployee.Name());
+
+        var position = sessionEmployee.IsAdmin() ? "Manager" : "Employee";
+        tvEmployeePosition.setText(position);
     }
 
     private void setupViewModel() {
@@ -83,14 +91,9 @@ public class EmployeesView extends AppCompatActivity {
         employeeViewModel = InventoryViewModelFactory.getInstance().getViewModel(employeeInventory, Employee.class);
     }
 
-    private void loadEmployees() {
-        employeeViewModel.getAll().thenAccept(fetchedEmployees -> runOnUiThread(() -> {
+    private CompletableFuture<Void> loadEmployees() {
+        return employeeViewModel.getAll().thenAccept(fetchedEmployees -> runOnUiThread(() -> {
             employees = new ArrayList<>(fetchedEmployees);
-
-            setupAdapter();
-            setupSortButton();
-            updateEmployeeCount();
-            setupObservers();
         }));
     }
 
@@ -134,7 +137,15 @@ public class EmployeesView extends AppCompatActivity {
     }
 
     private void setupAdapter() {
-        adapter = new EmployeesAdapter(this, employees, employeeViewModel);
+        var authenticator = Authenticator.getInstance();
+        var userId = authenticator.getCurrentUserId();
+
+        var sessionEmployee = employees.stream()
+                .filter(e -> e.ID().equals(userId))
+                .findFirst()
+                .orElse(null);
+
+        adapter = new EmployeesAdapter(this, sessionEmployee, employees, employeeViewModel);
         recyclerViewEmployee.setAdapter(adapter);
     }
 
