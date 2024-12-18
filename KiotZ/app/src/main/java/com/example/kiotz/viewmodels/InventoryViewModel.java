@@ -22,7 +22,7 @@ public class InventoryViewModel<T extends IIdentifiable> {
 
     public InventoryViewModel(IInventory<T> inventory) {
         this.inventory = inventory;
-        loadItems(); // Load initial list of items
+        loadItems();
     }
 
     public MutableLiveData<List<T>> getObservableItems() {
@@ -41,31 +41,22 @@ public class InventoryViewModel<T extends IIdentifiable> {
         return updatedItem;
     }
 
-    // Load initial list of items
-    public void loadItems() {
-        inventory.getAllAsync().thenAccept(items::postValue);
-    }
-
     public CompletableFuture<Void> add(T item) {
         return inventory.addAsync(item).thenRun(() -> {
             addedItem.postValue(item);
-            addItemToList(item); // Add item to the observable list
+            addItemToObservableList(item);
         });
     }
 
     public CompletableFuture<Void> delete(T item) {
-        return inventory.removeAsync(item).thenRun(() -> {
-            removeItemFromList(item); // Remove item from the observable list
-        });
+        return inventory.removeAsync(item).thenRun(() -> removeItemFromObservableList(item));
     }
 
     public CompletableFuture<Void> update(T currentItem, T newItem) {
-        return inventory.updateAsync(currentItem, newItem).thenRun(() -> {
-            updateItemInList(currentItem, newItem); // Update item in the observable list
-        });
+        return inventory.updateAsync(currentItem, newItem).thenRun(() ->
+                updateItemInObservableList(currentItem, newItem));
     }
 
-    // Asynchronous retrieval for UI compatibility
     public CompletableFuture<List<T>> getAll() {
         return inventory.getAllAsync();
     }
@@ -82,8 +73,11 @@ public class InventoryViewModel<T extends IIdentifiable> {
         return inventory.getImageAsync(imageUri);
     }
 
-    // Update items list by adding a new item
-    private void addItemToList(T item) {
+    private void loadItems() {
+        inventory.getAllAsync().thenAccept(items::postValue);
+    }
+
+    private void addItemToObservableList(T item) {
         List<T> currentList = items.getValue();
         if (currentList != null) {
             currentList.add(item);
@@ -91,22 +85,20 @@ public class InventoryViewModel<T extends IIdentifiable> {
         }
     }
 
-    // Update items list by removing an item
-    private void removeItemFromList(T item) {
+    private void removeItemFromObservableList(T item) {
         List<T> currentList = items.getValue();
         if (currentList != null) {
             int position = currentList.indexOf(item);
             if (position != -1) {
                 currentList.remove(position);
-                // Notify with both position and deleted item
+
                 deletedItem.setValue(new Pair<>(position, item));
                 items.setValue(currentList);
             }
         }
     }
 
-    // Update items list by modifying an existing item
-    private void updateItemInList(T currentItem, T newItem) {
+    private void updateItemInObservableList(T currentItem, T newItem) {
         List<T> currentList = items.getValue();
         if (currentList != null) {
             int position = currentList.indexOf(currentItem);
