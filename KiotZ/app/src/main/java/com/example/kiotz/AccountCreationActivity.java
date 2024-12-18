@@ -48,27 +48,19 @@ public class AccountCreationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setupUI();
-        initializeComponents();
-        setupDatePicker();
-        setupCreateAccountButton();
-        setupStatusBar();
-    }
-
-    private void setupUI() {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_create_account);
-        setupWindowInsets();
-        bindViews();
-    }
-
-    private void setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        bindViews();
+        initializeComponents();
+        setupStatusBar();
+        setupDatePicker();
+        setupCreateAccountButton();
     }
 
     private void bindViews() {
