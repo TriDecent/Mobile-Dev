@@ -23,11 +23,13 @@ import java.util.Objects;
 
 public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyViewHolder> {
     private final Context context;
+    private final Employee currentSessionEmployee;
     private final List<Employee> employees;
     private final InventoryViewModel<Employee> employeeViewModel;
 
-    public EmployeesAdapter(Context context, List<Employee> employees, InventoryViewModel<Employee> employeeViewModel) {
+    public EmployeesAdapter(Context context, Employee currentSessionEmployee, List<Employee> employees, InventoryViewModel<Employee> employeeViewModel) {
         this.context = context;
+        this.currentSessionEmployee = currentSessionEmployee;
         this.employees = employees;
         this.employeeViewModel = employeeViewModel;
     }
@@ -42,33 +44,34 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        var currentEmployee = employees.get(position);
-        holder.bindData(currentEmployee);
+        var selectedEmployee = employees.get(position);
+        holder.bindData(selectedEmployee);
 
         holder.cvEmployee.setOnClickListener(v -> {
-            var dialog = new EmployeeDetailsDialog(context, currentEmployee);
+            var dialog = new EmployeeDetailsDialog(context, selectedEmployee, currentSessionEmployee);
             dialog.show();
 
             dialog.setOnEmployeeUpdateListener(updatedEmployee ->
                     employeeViewModel
-                            .update(currentEmployee, updatedEmployee)
+                            .update(selectedEmployee, updatedEmployee)
                             .thenRun(() -> {
-                                employees.set(position, updatedEmployee);
 
-                                // this one below is not needed because we used the observer in the EmployeesView class
+                                // the ones below is not needed because we used the observer in the EmployeesView class
                                 // to listen for changes in the list of employees
                                 // just put here for reference
+
+                                // employees.set(position, updatedEmployee);
                                 // notifyItemChanged(position);
                             }));
         });
 
 
-        if (currentEmployee.IsAdmin()) {
+        if (selectedEmployee.IsAdmin()) {
             holder.ivEmployee.setImageResource(R.drawable.ic_manager);
             return;
         }
 
-        if (currentEmployee.Gender() == Gender.FEMALE) {
+        if (selectedEmployee.Gender() == Gender.FEMALE) {
             holder.ivEmployee.setImageResource(R.drawable.ic_female_employee);
             return;
         }

@@ -16,14 +16,16 @@ import java.util.Objects;
 
 public class EmployeeDetailsDialog {
     private final Context context;
-    private Employee employee;
+    private final Employee currentSessionEmployee;
+    private Employee selectedEmployee;
     private OnEmployeeUpdateListener updateListener;
 
     private TextView tvDialogId, tvDialogName, tvDialogEmail, tvDialogDate, tvGender, tvDialogPosition;
 
-    public EmployeeDetailsDialog(Context context, Employee employee) {
+    public EmployeeDetailsDialog(Context context, Employee selectedEmployee, Employee currentSessionEmployee) {
         this.context = context;
-        this.employee = employee;
+        this.selectedEmployee = selectedEmployee;
+        this.currentSessionEmployee = currentSessionEmployee;
     }
 
     public void show() {
@@ -41,21 +43,30 @@ public class EmployeeDetailsDialog {
 
         ImageView ivEdit = dialogView.findViewById(R.id.iv_edit);
 
-        displayStudentDetails(employee);
+        displayStudentDetails(selectedEmployee);
 
         ivEdit.setOnClickListener(v -> {
-            var dialog = new EmployeeEditedDialog(context, employee);
+            if (currentSessionEmployee == selectedEmployee) {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+                builder1.setTitle("Not Available");
+                builder1.setMessage("You are not allowed to edit your own account.");
+                builder1.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
+                builder1.create().show();
+                return;
+            }
+
+            var dialog = new EmployeeEditedDialog(context, selectedEmployee);
             dialog.show();
 
             dialog.setOnSaveClickListener(editedEmployee -> {
-                if (editedEmployee == employee) return;
+                if (editedEmployee == selectedEmployee) return;
 
-                employee = editedEmployee;
+                selectedEmployee = editedEmployee;
 
-                displayStudentDetails(employee);
+                displayStudentDetails(selectedEmployee);
 
                 if (updateListener != null) {
-                    updateListener.onEmployeeUpdated(employee);
+                    updateListener.onEmployeeUpdated(selectedEmployee);
                 }
             });
         });
