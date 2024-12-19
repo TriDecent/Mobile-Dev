@@ -23,4 +23,15 @@ public class DailyStatistics extends AppCompatActivity {
             return insets;
         });
     }
+
+    private  void initVariable()
+    {
+
+    }
+
+    private void setupViewModel() {
+//        var employeeInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new EmployeeSerializer())));
+//        employeeViewModel = InventoryViewModelFactory.getInstance().getViewModel(employeeInventory, Employee.class);
+//        TODO: reflect data on UI
+    }
 }
