@@ -16,6 +16,7 @@ import com.example.kiotz.EmployeesView;
 import com.example.kiotz.R;
 import com.example.kiotz.ViewInventoryActivity;
 import com.example.kiotz.views.general.activities.CreateProductActivity;
+import com.example.kiotz.views.managers.activities.DailyStatistics;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -112,5 +113,15 @@ public class OverviewFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+        CardView cardViewDailyStatistics = view.findViewById(R.id.cardViewDay);
+        cardViewDailyStatistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), DailyStatistics.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
