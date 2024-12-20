@@ -32,7 +32,7 @@
                 />
 
             <TextView
-                android:id="@+id/tvUserName"
+                android:id="@+id/tv_status_bar_employee_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Trần Vũ Anh Trí"
@@ -43,12 +43,12 @@
                 android:textStyle="bold"
                 />
             <TextView
-                android:id="@+id/tvRole"
+                android:id="@+id/tv_status_bar_position"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Employee"
-                app:layout_constraintStart_toStartOf="@id/tvUserName"
-                app:layout_constraintTop_toBottomOf="@id/tvUserName"
+                app:layout_constraintStart_toStartOf="@id/tv_status_bar_employee_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_status_bar_employee_name"
                 android:layout_marginTop="7dp"
                 android:textSize="16sp"
                 android:textStyle="bold"

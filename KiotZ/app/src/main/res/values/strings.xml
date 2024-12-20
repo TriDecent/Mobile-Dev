@@ -22,4 +22,6 @@
     </string-array>
 
 
+    <string name="employee_name" />
+    <string name="position" />
 </resources>

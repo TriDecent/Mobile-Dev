@@ -2,6 +2,7 @@ package com.example.kiotz.viewmodels;
 
 import android.media.Image;
 import android.net.Uri;
+import android.util.Pair;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -14,14 +15,14 @@ import java.util.concurrent.CompletableFuture;
 public class InventoryViewModel<T extends IIdentifiable> {
     private final IInventory<T> inventory;
 
-    public final MutableLiveData<List<T>> items = new MutableLiveData<>();
-    public final MutableLiveData<T> addedItem = new MutableLiveData<>();
-    public final MutableLiveData<Integer> deletedPosition = new MutableLiveData<>();
-    public final MutableLiveData<Integer> updatedPosition = new MutableLiveData<>();
+    private final MutableLiveData<List<T>> items = new MutableLiveData<>();
+    private final MutableLiveData<T> addedItem = new MutableLiveData<>();
+    private final MutableLiveData<Pair<Integer, T>> deletedItem = new MutableLiveData<>();
+    private final MutableLiveData<Pair<Integer, T>> updatedItem = new MutableLiveData<>();
 
     public InventoryViewModel(IInventory<T> inventory) {
         this.inventory = inventory;
-        loadItems(); // Load initial list of items
+        loadItems();
     }
 
     public MutableLiveData<List<T>> getObservableItems() {
@@ -32,41 +33,32 @@ public class InventoryViewModel<T extends IIdentifiable> {
         return addedItem;
     }
 
-    public MutableLiveData<Integer> getObservableDeletedItemPosition() {
-        return deletedPosition;
+    public MutableLiveData<Pair<Integer, T>> getObservableDeletedItem() {
+        return deletedItem;
     }
 
-    public MutableLiveData<Integer> getObservableUpdatedItemPosition() {
-        return updatedPosition;
-    }
-
-    // Load initial list of items
-    public void loadItems() {
-        inventory.getAllAsync().thenAccept(items::postValue);
+    public MutableLiveData<Pair<Integer, T>> getObservableUpdatedItem() {
+        return updatedItem;
     }
 
     public CompletableFuture<Void> add(T item) {
         return inventory.addAsync(item).thenRun(() -> {
             addedItem.postValue(item);
-            addItemToList(item); // Add item to the observable list
+            addItemToObservableList(item);
         });
 
     }
 
 
     public CompletableFuture<Void> delete(T item) {
-        return inventory.removeAsync(item).thenRun(() -> {
-            removeItemFromList(item); // Remove item from the observable list
-        });
+        return inventory.removeAsync(item).thenRun(() -> removeItemFromObservableList(item));
     }
 
     public CompletableFuture<Void> update(T currentItem, T newItem) {
-        return inventory.updateAsync(currentItem, newItem).thenRun(() -> {
-            updateItemInList(currentItem, newItem); // Update item in the observable list
-        });
+        return inventory.updateAsync(currentItem, newItem).thenRun(() ->
+                updateItemInObservableList(currentItem, newItem));
     }
 
-    // Asynchronous retrieval for UI compatibility
     public CompletableFuture<List<T>> getAll() {
         return inventory.getAllAsync();
     }
@@ -83,8 +75,11 @@ public class InventoryViewModel<T extends IIdentifiable> {
         return inventory.getImageAsync(imageUri);
     }
 
-    // Update items list by adding a new item
-    private void addItemToList(T item) {
+    private void loadItems() {
+        inventory.getAllAsync().thenAccept(items::postValue);
+    }
+
+    private void addItemToObservableList(T item) {
         List<T> currentList = items.getValue();
         if (currentList != null) {
             currentList.add(item);
@@ -92,35 +87,29 @@ public class InventoryViewModel<T extends IIdentifiable> {
         }
     }
 
-    // Update items list by removing an item
-    private void removeItemFromList(T item) {
+    private void removeItemFromObservableList(T item) {
         List<T> currentList = items.getValue();
         if (currentList != null) {
             int position = currentList.indexOf(item);
             if (position != -1) {
                 currentList.remove(position);
-                deletedPosition.setValue(position); // Notify observers of the deleted item's position
+
+                deletedItem.setValue(new Pair<>(position, item));
                 items.setValue(currentList);
             }
         }
     }
 
-    // Update items list by modifying an existing item
-    private void updateItemInList(T currentItem, T newItem) {
+    private void updateItemInObservableList(T currentItem, T newItem) {
         List<T> currentList = items.getValue();
         if (currentList != null) {
             int position = currentList.indexOf(currentItem);
             if (position != -1) {
                 currentList.set(position, newItem);
-                updatedPosition.setValue(position); // Notify observers of the updated item's position
+
+                updatedItem.setValue(new Pair<>(position, newItem));
                 items.setValue(currentList);
             }
         }
     }
 }
-
-
-
-
-
-

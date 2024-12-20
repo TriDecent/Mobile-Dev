@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kiotz.R;
 import com.example.kiotz.enums.Gender;
 import com.example.kiotz.models.Employee;
+import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.views.dialogs.EmployeeDetailsDialog;
 
 import java.util.List;
@@ -22,11 +23,15 @@ import java.util.Objects;
 
 public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyViewHolder> {
     private final Context context;
+    private final Employee currentSessionEmployee;
     private final List<Employee> employees;
+    private final InventoryViewModel<Employee> employeeViewModel;
 
-    public EmployeesAdapter(Context context, List<Employee> employees) {
+    public EmployeesAdapter(Context context, Employee currentSessionEmployee, List<Employee> employees, InventoryViewModel<Employee> employeeViewModel) {
         this.context = context;
+        this.currentSessionEmployee = currentSessionEmployee;
         this.employees = employees;
+        this.employeeViewModel = employeeViewModel;
     }
 
     @NonNull
@@ -39,18 +44,34 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        var currentEmployee = employees.get(position);
-        holder.bindData(currentEmployee);
+        var selectedEmployee = employees.get(position);
+        holder.bindData(selectedEmployee);
 
-        holder.cvEmployee.setOnClickListener(v ->
-                new EmployeeDetailsDialog(context, currentEmployee).show());
+        holder.cvEmployee.setOnClickListener(v -> {
+            var dialog = new EmployeeDetailsDialog(context, selectedEmployee, currentSessionEmployee);
+            dialog.show();
 
-        if (currentEmployee.IsAdmin()) {
+            dialog.setOnEmployeeUpdateListener(updatedEmployee ->
+                    employeeViewModel
+                            .update(selectedEmployee, updatedEmployee)
+                            .thenRun(() -> {
+
+                                // the ones below is not needed because we used the observer in the EmployeesView class
+                                // to listen for changes in the list of employees
+                                // just put here for reference
+
+                                // employees.set(position, updatedEmployee);
+                                // notifyItemChanged(position);
+                            }));
+        });
+
+
+        if (selectedEmployee.IsAdmin()) {
             holder.ivEmployee.setImageResource(R.drawable.ic_manager);
             return;
         }
 
-        if (currentEmployee.Gender() == Gender.FEMALE) {
+        if (selectedEmployee.Gender() == Gender.FEMALE) {
             holder.ivEmployee.setImageResource(R.drawable.ic_female_employee);
             return;
         }
