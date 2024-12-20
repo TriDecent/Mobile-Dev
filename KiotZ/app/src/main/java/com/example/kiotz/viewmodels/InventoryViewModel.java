@@ -50,7 +50,9 @@ public class InventoryViewModel<T extends IIdentifiable> {
             addedItem.postValue(item);
             addItemToList(item); // Add item to the observable list
         });
+
     }
+
 
     public CompletableFuture<Void> delete(T item) {
         return inventory.removeAsync(item).thenRun(() -> {
