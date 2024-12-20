@@ -40,9 +40,8 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
-    implementation(libs.firebase.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation("com.github.yuriy-budiyev:code-scanner:2.3.0")
+    implementation ("com.github.yuriy-budiyev:code-scanner:2.3.0")
 }
