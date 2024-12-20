@@ -92,9 +92,8 @@ public class EmployeesView extends AppCompatActivity {
     }
 
     private CompletableFuture<Void> loadEmployees() {
-        return employeeViewModel.getAll().thenAccept(fetchedEmployees -> runOnUiThread(() -> {
-            employees = new ArrayList<>(fetchedEmployees);
-        }));
+        return employeeViewModel.getAll().thenAccept(fetchedEmployees ->
+                runOnUiThread(() -> employees = new ArrayList<>(fetchedEmployees)));
     }
 
     private void setupObservers() {
