@@ -2,6 +2,7 @@ package com.example.kiotz.views.managers.activities;
 
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class DailyStatistics extends AppCompatActivity {
     InventoryViewModel<Receipt> receiptViewModel;
     RecyclerView recycler_view;
     List<Receipt> receiptList;
+    TextView total_sum_tv, staff_count_tv_form16;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,15 +44,18 @@ public class DailyStatistics extends AppCompatActivity {
         });
 
         initVariable();
-        loadEmployees();
         setupViewModel();
+        loadEmployees();
         setupRecyclerView();
-
+        calculateTotalDailyIncome();
+        displayTotalReceipt();
     }
 
     private void initVariable() {
         change_sort_order_bt = findViewById(R.id.iv_sort_by_employee_name);
         recycler_view = findViewById(R.id.recycler_view_rv);
+        total_sum_tv = findViewById(R.id.sum_money_tv_from15);
+        staff_count_tv_form16 = findViewById(R.id.staff_count_tv_form16);
     }
 
     private void setupRecyclerView() {
@@ -66,5 +71,20 @@ public class DailyStatistics extends AppCompatActivity {
     private CompletableFuture<Void> loadEmployees() {
         return receiptViewModel.getAll().thenAccept(fetched_receipts ->
                 runOnUiThread(() -> receiptList = new ArrayList<>(fetched_receipts)));
+    }
+
+    private void calculateTotalDailyIncome()
+    {
+        double sum = 0;
+        for (Receipt receipt : receiptList)
+        {
+            sum = sum + receipt.TotalPrice();
+        }
+        total_sum_tv.setText(String.format("%,d",sum));
+    }
+
+    private void displayTotalReceipt()
+    {
+
     }
 }
