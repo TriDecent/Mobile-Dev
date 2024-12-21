@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailProductActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/statusDetailProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bginfor"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_avatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="7dp"
+            android:src="@drawable/avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="Nguyễn Ngô Hải Nam"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/img_avatar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="Manager"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tv_username"
+            app:layout_constraintTop_toBottomOf="@id/tv_username" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tvHeadingDetailProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal|center_vertical"
+        android:lineSpacingExtra="-8sp"
+        android:text="Detail Invoice"
+        android:textAllCaps="true"
+        android:textColor="@color/md_theme_scrim"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusDetailProduct">
+
+    </TextView>
+
+<!--    <ImageView-->
+<!--        android:id="@+id/swap"-->
+<!--        android:layout_width="25dp"-->
+<!--        android:layout_height="20dp"-->
+<!--        android:layout_marginStart="7dp"-->
+<!--        android:src="@drawable/refresh"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/tvHeadingDetailProduct"-->
+<!--        app:layout_constraintStart_toEndOf="@id/tvHeadingDetailProduct"-->
+<!--        app:layout_constraintTop_toTopOf="@id/tvHeadingDetailProduct" />-->
+
+
+    <View
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/bginfor"
+        android:padding="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeadingDetailProduct">
+
+
+
+
+    </View>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        app:layout_constraintTop_toTopOf="@id/scrollView2"
+        app:layout_constraintLeft_toLeftOf="@id/scrollView2"
+        app:layout_constraintRight_toRightOf="@id/scrollView2"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        >
+
+        <TextView
+            android:id="@id/id_receipt_header_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="ID: "
+            android:textSize="16sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/receipt_id_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MG001"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/receipt_date_tv"
+            app:layout_constraintTop_toTopOf="@id/id_receipt_header_tv" />
+
+        <TextView
+            android:id="@id/receipt_date_header_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="Date: "
+            android:textSize="16sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintStart_toStartOf="@id/id_receipt_header_tv"
+            app:layout_constraintTop_toBottomOf="@id/id_receipt_header_tv" />
+
+        <TextView
+            android:id="@+id/receipt_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="11/12/2024 14:21"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/receipt_date_header_tv"
+            app:layout_constraintTop_toTopOf="@id/receipt_date_header_tv" />
+
+        <TextView
+            android:id="@id/employee_header_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="Employee: "
+            android:textSize="16sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintStart_toStartOf="@id/receipt_date_header_tv"
+            app:layout_constraintTop_toBottomOf="@id/receipt_date_header_tv" />
+
+        <TextView
+            android:id="@+id/employee_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Bích Dân"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/employee_header_tv"
+            app:layout_constraintTop_toTopOf="@id/employee_header_tv" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_products"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/employee_name_tv"
+            android:layout_marginTop="20dp"
+            >
+
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <View
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/linedDetailProduct2"
+            android:layout_width="200dp"
+            android:layout_height="1dp"
+            android:background="@color/md_theme_onBackground"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view_products"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="184dp" />
+
+        <TextView
+            android:id="@+id/tv7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Total: "
+            android:textSize="16sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintTop_toBottomOf="@id/linedDetailProduct2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginStart="10dp"
+            tools:layout_editor_absoluteX="10dp" />
+
+        <TextView
+            android:id="@+id/receipt_total_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="300"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/receipt_customer_phone_tv"
+            app:layout_constraintTop_toTopOf="@id/tv7" />
+
+        <TextView
+            android:id="@+id/tv8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="Name: "
+            android:textSize="16sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintStart_toStartOf="@id/tv7"
+            app:layout_constraintTop_toBottomOf="@id/tv7"
+
+            />
+
+        <TextView
+            android:id="@+id/receipt_customer_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="120"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/receipt_customer_phone_tv"
+            app:layout_constraintTop_toTopOf="@id/tv8" />
+
+        <TextView
+            android:id="@+id/tv9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="Phone: "
+            android:textSize="16sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintStart_toStartOf="@id/tv8"
+            app:layout_constraintTop_toBottomOf="@id/tv8"
+
+            />
+
+        <TextView
+            android:id="@+id/receipt_customer_phone_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="180"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/tv9"
+            app:layout_constraintTop_toTopOf="@id/tv9" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

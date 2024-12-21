@@ -279,7 +279,7 @@
                         android:padding="5dp">
 
                         <TextView
-                            android:id="@+id/tv1"
+                            android:id="@+id/id_receipt_header_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Manage products"
@@ -296,8 +296,8 @@
                             android:layout_marginTop="10dp"
                             app:cardCornerRadius="7dp"
                             app:layout_constraintBottom_toTopOf="@id/cardViewModifyInventory"
-                            app:layout_constraintStart_toStartOf="@id/tv1"
-                            app:layout_constraintTop_toBottomOf="@id/tv1"
+                            app:layout_constraintStart_toStartOf="@id/id_receipt_header_tv"
+                            app:layout_constraintTop_toBottomOf="@id/id_receipt_header_tv"
 
                             >
 
@@ -429,7 +429,7 @@
                         android:padding="5dp">
 
                         <TextView
-                            android:id="@+id/tv2"
+                            android:id="@+id/receipt_date_header_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Manage employee"
@@ -446,7 +446,7 @@
                             android:layout_marginTop="10dp"
                             app:cardCornerRadius="7dp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv2"
+                            app:layout_constraintTop_toBottomOf="@+id/receipt_date_header_tv"
 
                             >
 
@@ -579,7 +579,7 @@
                         android:padding="5dp">
 
                         <TextView
-                            android:id="@+id/tv3"
+                            android:id="@+id/employee_header_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Today analysis"
@@ -595,8 +595,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
                             app:cardCornerRadius="7dp"
-                            app:layout_constraintStart_toStartOf="@id/tv3"
-                            app:layout_constraintTop_toBottomOf="@id/tv3"
+                            app:layout_constraintStart_toStartOf="@id/employee_header_tv"
+                            app:layout_constraintTop_toBottomOf="@id/employee_header_tv"
 
 
                             >

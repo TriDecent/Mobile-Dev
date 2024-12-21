@@ -1,6 +1,7 @@
 package com.example.kiotz.adapters;
 
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.kiotz.DetailReceipt;
 import com.example.kiotz.R;
 
 public class ReceiptViewHolder extends RecyclerView.ViewHolder {
@@ -21,5 +23,7 @@ public class ReceiptViewHolder extends RecyclerView.ViewHolder {
         total_price_tv = itemView.findViewById(R.id.total_price_tv);
         date_tv = itemView.findViewById(R.id.date_tv);
         time_tv = itemView.findViewById(R.id.time_tv);
+
+
     }
 }
