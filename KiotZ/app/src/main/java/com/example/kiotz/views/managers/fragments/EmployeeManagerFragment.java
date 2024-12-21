@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.kiotz.R;
 import com.example.kiotz.adapters.ItemFragmentEmployeeAdapter;
 import com.example.kiotz.models.ItemFragment;
+import com.example.kiotz.views.managers.data.App;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +73,7 @@ public class EmployeeManagerFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setupStatusBar(view);
         createDataForRecycleView();
         recyclerView=view.findViewById(R.id.recycleViewFragmentEmployee);
         ItemFragmentEmployeeAdapter adapter=new ItemFragmentEmployeeAdapter(view.getContext(),itemFragmentList);
@@ -95,7 +98,12 @@ public class EmployeeManagerFragment extends Fragment {
         itemFragmentList.add(new ItemFragment(title[1],R.drawable.removeaccount));
         itemFragmentList.add(new ItemFragment(title[2],R.drawable.viewaccount));
         itemFragmentList.add(new ItemFragment(title[3],R.drawable.modifyaccount));
-
-
+    }
+    private void setupStatusBar(View v){
+        App app=(App) requireActivity().getApplication();
+        TextView tvName=v.findViewById(R.id.tvUserName);
+        TextView tvPosition=v.findViewById(R.id.tvRole);
+        tvName.setText(app.getName());
+        tvPosition.setText(app.getPosition());
     }
 }

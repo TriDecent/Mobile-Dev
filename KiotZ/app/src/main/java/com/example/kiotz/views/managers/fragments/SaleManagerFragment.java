@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kiotz.R;
 import com.example.kiotz.adapters.ItemFragmentSaleAdapter;
 import com.example.kiotz.models.ItemFragment;
+import com.example.kiotz.views.managers.data.App;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +81,7 @@ public class SaleManagerFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        setupStatusBar(view);
         createDataForRecycleView();
         recyclerView=view.findViewById(R.id.recycleViewFragmentSale);
         ItemFragmentSaleAdapter adapter=new ItemFragmentSaleAdapter(view.getContext(),itemFragmentList);
@@ -95,8 +98,12 @@ public class SaleManagerFragment extends Fragment {
         itemFragmentList.add(new ItemFragment(title[2],R.drawable.viewinventory));
         itemFragmentList.add(new ItemFragment(title[3],R.drawable.modifyinventory));
 
-
-
-
+    }
+    private void setupStatusBar(View v){
+        App app=(App) requireActivity().getApplication();
+        TextView tvName=v.findViewById(R.id.tvUserName);
+        TextView tvPosition=v.findViewById(R.id.tvRole);
+        tvName.setText(app.getName());
+        tvPosition.setText(app.getPosition());
     }
 }
