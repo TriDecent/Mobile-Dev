@@ -52,7 +52,7 @@ public class DailyStatistics extends AppCompatActivity {
         initVariable();
         setupViewModel();
         setupSortButton();
-        loadEmployees()
+        loadReceipt()
                 .thenRun(this::setupRecyclerView)
                 .thenRun(this::calculateTotalDailyIncome)
                 .thenRun(this::displayTotalReceipt);
@@ -155,7 +155,7 @@ public class DailyStatistics extends AppCompatActivity {
         receiptViewModel = InventoryViewModelFactory.getInstance().getViewModel(receiptInventory, Receipt.class);
     }
 
-    private CompletableFuture<Void> loadEmployees() {
+    private CompletableFuture<Void> loadReceipt() {
         return receiptViewModel.getAll().thenAccept(fetched_receipts ->
                 runOnUiThread(() -> receiptList = new ArrayList<>(fetched_receipts)));
     }
