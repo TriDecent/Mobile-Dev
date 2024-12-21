@@ -89,11 +89,20 @@ public class DailyStatistics extends AppCompatActivity {
                 {
                     case 0:
                     {
-                        sort_by_tv_form16.setText("mới nhất");
-//                        TODO: add sort
+                        sort_by_tv_form16.setText("cũ nhất");
+                        receiptList.sort(new ReceiptSortByDateOld());
+                        receiptAdapter.notifyDataSetChanged();
                     }
                         break;
                     case 1:
+                    {
+                        sort_by_tv_form16.setText("mới nhất");
+                        receiptList.sort(new ReceiptSortByDateNew());
+                        receiptAdapter.notifyDataSetChanged();
+//                        TODO: add sort
+                    }
+                        break;
+                    case 2:
                     {
                         sort_by_tv_form16.setText("số tiền");
 //                      TODO: handle sort
@@ -102,12 +111,11 @@ public class DailyStatistics extends AppCompatActivity {
 
                     }
                         break;
-                    case 2:
-                    {
-                        sort_by_tv_form16.setText("case thứ 3 (case index 2)");
-                        //do sort TODO
-                    }
-                        break;
+//                    case 3:
+//                    {
+//                        sort_by_tv_form16.setText("case thứ 3 (case index 2)");
+//                    }
+//                        break;
                 }
             }
         });
@@ -123,6 +131,22 @@ public class DailyStatistics extends AppCompatActivity {
             else if (a.TotalPrice() < b.TotalPrice())
                 return  1;
             return 0;
+        }
+    }
+
+    class ReceiptSortByDateNew implements Comparator<Receipt> {
+
+        // Used for sorting in ascending order of total amount
+        public int compare(Receipt a, Receipt b){
+            return -a.DateTime().compareTo(b.DateTime());
+        }
+    }
+
+    class ReceiptSortByDateOld implements Comparator<Receipt> {
+
+        // Used for sorting in ascending order of total amount
+        public int compare(Receipt a, Receipt b){
+            return a.DateTime().compareTo(b.DateTime());
         }
     }
 

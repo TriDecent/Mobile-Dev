@@ -53,7 +53,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/tv1"
+            android:id="@+id/id_receipt_header_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="MANAGE YOUR EMPLOYEE !"

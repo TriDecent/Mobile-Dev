@@ -173,7 +173,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:text="mới nhất"
+        android:text="cũ nhất"
         app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
         app:layout_constraintRight_toRightOf="@id/high_ligh_bar_form16"
         app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"

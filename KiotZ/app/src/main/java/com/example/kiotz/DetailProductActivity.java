@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
-import androidx.core.graphics.PathParser;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
@@ -57,15 +56,15 @@ public class DetailProductActivity extends AppCompatActivity  {
 
         imageViewSwap=findViewById(R.id.swap);
         imageProduct=findViewById(R.id.imageDetailProduct);
-        tvID=findViewById(R.id.tvIdDetailProduct);
-        tvName=findViewById(R.id.tvNameDetailProduct);
-        tvPrice=findViewById(R.id.tvCostCapitalDetail);
+        tvID=findViewById(R.id.receipt_id_tv);
+        tvName=findViewById(R.id.receipt_date_tv);
+        tvPrice=findViewById(R.id.employee_name_tv);
         tvSelling=findViewById(R.id.tvSellingPriceDetail);
         tvUnit=findViewById(R.id.tvUnitDetailProduct);
         tvCategory=findViewById(R.id.tvCategoryDetailProduct);
-        tvTotal=findViewById(R.id.tvTotalDetailProduct);
-        tvSold=findViewById(R.id.tvSoldDetailProduct);
-        tvRemaining=findViewById(R.id.tvRemaningDetailProduct);
+        tvTotal=findViewById(R.id.receipt_total_price_tv);
+        tvSold=findViewById(R.id.receipt_customer_name_tv);
+        tvRemaining=findViewById(R.id.receipt_customer_phone_tv);
         tvRevenue=findViewById(R.id.tvRevenueDetailProduct);
         tvProfit=findViewById(R.id.tvProfitDetailProduct);
 
