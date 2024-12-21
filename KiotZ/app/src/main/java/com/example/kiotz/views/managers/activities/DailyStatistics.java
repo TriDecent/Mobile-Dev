@@ -1,6 +1,7 @@
 package com.example.kiotz.views.managers.activities;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +23,9 @@ import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -31,7 +34,9 @@ public class DailyStatistics extends AppCompatActivity {
     InventoryViewModel<Receipt> receiptViewModel;
     RecyclerView recycler_view;
     List<Receipt> receiptList;
-    TextView total_sum_tv, staff_count_tv_form16;
+    TextView sum_money_tv_from15, daily_receipt_count, sort_by_tv_form16;
+    int sort_type;
+    ReceiptAdapter receiptAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,7 @@ public class DailyStatistics extends AppCompatActivity {
 
         initVariable();
         setupViewModel();
+        setupSortButton();
         loadEmployees()
                 .thenRun(this::setupRecyclerView)
                 .thenRun(this::calculateTotalDailyIncome)
@@ -55,13 +61,69 @@ public class DailyStatistics extends AppCompatActivity {
     private void initVariable() {
         change_sort_order_bt = findViewById(R.id.iv_sort_by_employee_name);
         recycler_view = findViewById(R.id.recycler_view_rv);
-        total_sum_tv = findViewById(R.id.sum_money_tv_from15);
-        staff_count_tv_form16 = findViewById(R.id.staff_count_tv_form16);
+        sum_money_tv_from15 = findViewById(R.id.sum_money_tv_from15);
+        daily_receipt_count = findViewById(R.id.daily_receipt_count_tv_form16);
+        sort_by_tv_form16 = findViewById(R.id.sort_by_tv_form16);
     }
 
     private void setupRecyclerView() {
         recycler_view.setLayoutManager(new LinearLayoutManager(this));
-        recycler_view.setAdapter(new ReceiptAdapter(this, receiptList));
+        receiptAdapter = new ReceiptAdapter(this, receiptList);
+        recycler_view.setAdapter(receiptAdapter);
+    }
+
+    private void setupSortButton()
+    {
+//        default sort type is newest (no need to sort again)
+        sort_type = 0;
+        change_sort_order_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ++sort_type;
+
+//                    reset
+                if (sort_type > 2)
+                    sort_type = 0;
+
+                switch (sort_type)
+                {
+                    case 0:
+                    {
+                        sort_by_tv_form16.setText("mới nhất");
+//                        TODO: add sort
+                    }
+                        break;
+                    case 1:
+                    {
+                        sort_by_tv_form16.setText("số tiền");
+//                      TODO: handle sort
+                        receiptList.sort(new ReceiptSortByPrice());
+                        receiptAdapter.notifyDataSetChanged();
+
+                    }
+                        break;
+                    case 2:
+                    {
+                        sort_by_tv_form16.setText("case thứ 3 (case index 2)");
+                        //do sort TODO
+                    }
+                        break;
+                }
+            }
+        });
+    }
+
+
+    class ReceiptSortByPrice implements Comparator<Receipt> {
+
+        // Used for sorting in ascending order of total amount
+        public int compare(Receipt a, Receipt b){
+            if (a.TotalPrice() > b.TotalPrice())
+                return -1;
+            else if (a.TotalPrice() < b.TotalPrice())
+                return  1;
+            return 0;
+        }
     }
 
     private void setupViewModel() {
@@ -79,10 +141,12 @@ public class DailyStatistics extends AppCompatActivity {
         for (Receipt receipt : receiptList) {
             sum = sum + receipt.TotalPrice();
         }
-        total_sum_tv.setText(String.format("%,d", sum));
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###,###");
+
+        sum_money_tv_from15.setText(decimalFormat.format(sum));
     }
 
     private void displayTotalReceipt() {
-
+        daily_receipt_count.setText(String.valueOf(receiptList.size()));
     }
 }

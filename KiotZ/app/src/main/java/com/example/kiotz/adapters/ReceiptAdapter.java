@@ -12,6 +12,7 @@ import com.example.kiotz.R;
 import com.example.kiotz.models.Employee;
 import com.example.kiotz.models.Receipt;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,11 +36,22 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptViewHolder> {
     public void onBindViewHolder(@NonNull ReceiptViewHolder holder, int position) {
 //        TODO: set user avatar
 //      holder.client_avatar_iv =
-        holder.employee_id_tv.setText(receiptList.get(position).EmployeeId());
-        holder.client_name_tv.setText(receiptList.get(position).CustomerName());
-        holder.total_price_tv.setText(String.valueOf(receiptList.get(position).TotalPrice()));
+        int employee_id_size = receiptList.get(position).EmployeeId().length();
+        if (employee_id_size > 15)
+            holder.employee_id_tv.setText(receiptList.get(position).EmployeeId().substring(0, 15) + "...");
+        else
+            holder.employee_id_tv.setText(receiptList.get(position).EmployeeId());
+
+        int client_name_size = receiptList.get(position).CustomerName().length();
+        if (client_name_size > 15)
+            holder.employee_id_tv.setText(receiptList.get(position).CustomerName().substring(0, 15) + "...");
+        else
+            holder.client_name_tv.setText(receiptList.get(position).CustomerName());
+
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###,###");
+        holder.total_price_tv.setText(String.valueOf(decimalFormat.format(receiptList.get(position).TotalPrice())));
         LocalDateTime dateTime = receiptList.get(position).DateTime();
-        holder.date_tv.setText(dateTime.getDayOfMonth() + "/" + dateTime.getMonth() + "/" + dateTime.getYear());
+        holder.date_tv.setText(dateTime.getDayOfMonth() + "/" + dateTime.getMonthValue() + "/" + dateTime.getYear());
         holder.time_tv.setText(dateTime.getHour() + ":" + dateTime.getMinute());
     }
 
