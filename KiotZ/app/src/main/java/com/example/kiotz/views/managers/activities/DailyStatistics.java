@@ -32,6 +32,7 @@ public class DailyStatistics extends AppCompatActivity {
     RecyclerView recycler_view;
     List<Receipt> receiptList;
     TextView total_sum_tv, staff_count_tv_form16;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +46,10 @@ public class DailyStatistics extends AppCompatActivity {
 
         initVariable();
         setupViewModel();
-        loadEmployees();
-        setupRecyclerView();
-        calculateTotalDailyIncome();
-        displayTotalReceipt();
+        loadEmployees()
+                .thenRun(this::setupRecyclerView)
+                .thenRun(this::calculateTotalDailyIncome)
+                .thenRun(this::displayTotalReceipt);
     }
 
     private void initVariable() {
@@ -64,8 +65,8 @@ public class DailyStatistics extends AppCompatActivity {
     }
 
     private void setupViewModel() {
-        var employeeInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new ReceiptSerializer())));
-        receiptViewModel = InventoryViewModelFactory.getInstance().getViewModel(employeeInventory, Receipt.class);
+        var receiptInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new ReceiptSerializer())));
+        receiptViewModel = InventoryViewModelFactory.getInstance().getViewModel(receiptInventory, Receipt.class);
     }
 
     private CompletableFuture<Void> loadEmployees() {
@@ -73,18 +74,15 @@ public class DailyStatistics extends AppCompatActivity {
                 runOnUiThread(() -> receiptList = new ArrayList<>(fetched_receipts)));
     }
 
-    private void calculateTotalDailyIncome()
-    {
+    private void calculateTotalDailyIncome() {
         double sum = 0;
-        for (Receipt receipt : receiptList)
-        {
+        for (Receipt receipt : receiptList) {
             sum = sum + receipt.TotalPrice();
         }
-        total_sum_tv.setText(String.format("%,d",sum));
+        total_sum_tv.setText(String.format("%,d", sum));
     }
 
-    private void displayTotalReceipt()
-    {
+    private void displayTotalReceipt() {
 
     }
 }
