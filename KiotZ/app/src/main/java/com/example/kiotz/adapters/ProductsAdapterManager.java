@@ -78,10 +78,6 @@ public class ProductsAdapterManager extends RecyclerView.Adapter<ProductsAdapter
                 }
             });
 
-
-
-
-
         }
 
         private void bindingView(){

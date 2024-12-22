@@ -9,13 +9,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.kiotz.adapters.ProductsAdapterEmployee;
+import com.example.kiotz.adapters.ProductsAdapterManager;
 import com.example.kiotz.adapters.ReceiptAdapter;
 import com.example.kiotz.database.FireBaseService;
 import com.example.kiotz.database.dto.EmployeeSerializer;
+import com.example.kiotz.database.dto.ProductSerializer;
 import com.example.kiotz.database.dto.ReceiptSerializer;
 import com.example.kiotz.inventory.Inventory;
 import com.example.kiotz.models.Employee;
+import com.example.kiotz.models.Product;
 import com.example.kiotz.models.Receipt;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
@@ -24,6 +30,7 @@ import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
 public class DetailReceipt extends AppCompatActivity {
@@ -31,10 +38,15 @@ public class DetailReceipt extends AppCompatActivity {
     TextView receipt_id_tv,receipt_date_tv,employee_name_tv,receipt_total_price_tv,receipt_customer_name_tv,receipt_customer_phone_tv;
     InventoryViewModel<Receipt> receiptViewModel;
     InventoryViewModel<Employee> employeeViewModel;
+    InventoryViewModel<Product> productViewModel;
+    RecyclerView recyclerView;
     Receipt receipt;
+//    ProductsAdapterEmployee productAdapter;
     ArrayList<Employee> employeeArrayList;
+    ArrayList<Product> productArrayList;
     ArrayList<Receipt> receiptList;
     Employee employee;
+//    ArrayList<Product> tempProductList = new ArrayList<Product>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +61,7 @@ public class DetailReceipt extends AppCompatActivity {
         setupViewModel();
         loadReceipt()
                 .thenCompose(aVoid -> loadEmployee())
+                .thenCompose(aVoid -> loadProduct())
                 .thenRun(this::findReceipt)
                 .thenRun(this::findEmployee)
                 .thenRun(this::updateView);
@@ -60,7 +73,12 @@ public class DetailReceipt extends AppCompatActivity {
             employee_name_tv = findViewById(R.id.employee_name_tv);
             receipt_total_price_tv = findViewById(R.id.receipt_total_price_tv);
             receipt_customer_name_tv = findViewById(R.id.receipt_customer_name_tv);
-            receipt_customer_phone_tv = findViewById(R.id.receipt_customer_phone_tv);;
+            receipt_customer_phone_tv = findViewById(R.id.receipt_customer_phone_tv);
+            recyclerView = findViewById(R.id.recycler_view_products);
+
+            //placeholder product list
+
+
         }
 
         private void findReceipt()
@@ -92,6 +110,9 @@ public class DetailReceipt extends AppCompatActivity {
 
             var employeeInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new EmployeeSerializer())));
             employeeViewModel = InventoryViewModelFactory.getInstance().getViewModel(employeeInventory, Employee.class);
+
+            var productInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new ProductSerializer())));
+            productViewModel = InventoryViewModelFactory.getInstance().getViewModel(productInventory, Product.class);
         }
 
         private CompletableFuture<Void> loadReceipt() {
@@ -102,6 +123,12 @@ public class DetailReceipt extends AppCompatActivity {
         private CompletableFuture<Void> loadEmployee() {
             return employeeViewModel.getAll().thenAccept(fetched_employee ->
                     runOnUiThread(() -> employeeArrayList = new ArrayList<>(fetched_employee)));
+        }
+
+        private CompletableFuture<Void> loadProduct()
+        {
+            return productViewModel.getAll().thenAccept(fetched_employee ->
+                    runOnUiThread(() -> productArrayList = new ArrayList<>(fetched_employee)));
         }
 
         @SuppressLint("SetTextI18n")
@@ -119,4 +146,11 @@ public class DetailReceipt extends AppCompatActivity {
             receipt_customer_name_tv.setText(receipt.CustomerName());
             receipt_customer_phone_tv.setText(receipt.CustomerPhone());
         }
+
+//    private void setupRecyclerView() {
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        productAdapter = new ProductsAdapterManager(this, tempProductList);
+//        recyclerView.setAdapter(productAdapter);
+//    }
+
 }
