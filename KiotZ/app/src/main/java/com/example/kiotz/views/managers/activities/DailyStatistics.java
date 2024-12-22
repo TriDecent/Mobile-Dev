@@ -24,6 +24,7 @@ import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -34,9 +35,14 @@ public class DailyStatistics extends AppCompatActivity {
     InventoryViewModel<Receipt> receiptViewModel;
     RecyclerView recycler_view;
     List<Receipt> receiptList;
-    TextView sum_money_tv_from15, daily_receipt_count, sort_by_tv_form16;
+    TextView sum_money_tv_from15, daily_receipt_count, sort_by_tv_form16,statistic_title_tv,daily_sum_money_tv_from15;
     int sort_type;
     ReceiptAdapter receiptAdapter;
+    public final static String STATISTIC_RANGE_KEY = "STATISTIC_RAMGE_KEY_INTENT";
+    public static final int  Daily_int_value = 231;
+    public final static int weekly_int_value = 2231;
+    public final static int monthly_int_value = 3122;
+    int Time_range_from_extras = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +56,90 @@ public class DailyStatistics extends AppCompatActivity {
         });
 
         initVariable();
+        getExtras();
         setupViewModel();
         setupSortButton();
         loadReceipt()
+                .thenRun(this::AdaptViewToTimeRange)
                 .thenRun(this::setupRecyclerView)
                 .thenRun(this::calculateTotalDailyIncome)
                 .thenRun(this::displayTotalReceipt);
+    }
+
+    private void getExtras()
+    {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null);
+            Time_range_from_extras = extras.getInt(STATISTIC_RANGE_KEY);
+    }
+
+    private void AdaptViewToTimeRange()
+    {
+        if (Time_range_from_extras == 0)
+            return;
+//        TODO: if no intent is pasaed, set it as a general time date for the user to pick
+        ArrayList<Receipt> receipts_filter = new ArrayList<Receipt>();
+        LocalDateTime current_localDateTime = LocalDateTime.now();
+        switch (Time_range_from_extras)
+        {
+            case Daily_int_value:
+            {
+                for (Receipt i: receiptList) {
+                    if (i.DateTime().getDayOfMonth() == current_localDateTime.getDayOfMonth() &&
+                        i.DateTime().getMonthValue() == current_localDateTime.getMonthValue() &&
+                            i.DateTime().getYear() == current_localDateTime.getYear())
+                    {
+                        receipts_filter.add(i);
+                    }
+
+                }
+
+                // replace the original receipt list
+                receiptList = receipts_filter;
+            }
+            break;
+
+            case weekly_int_value:
+            {
+                statistic_title_tv.setText("Weekly Statistics");
+                daily_sum_money_tv_from15.setText("Tổng doanh thu trong tuần");
+//              TODO: filter current week
+//
+//              for (Receipt i: receiptList) {
+//                    if (i.DateTime().getDayOfMonth() == current_localDateTime.getDayOfMonth() &&
+//                            i.DateTime().getMonthValue() == current_localDateTime.getMonthValue() &&
+//                            i.DateTime().getYear() == current_localDateTime.getYear())
+//                    {
+//                        receipts_filter.add(i);
+//                    }
+//
+//                }
+//
+//                // replace the original receipt list
+//                receiptList = receipts_filter;
+            }
+            break;
+
+            case monthly_int_value:
+            {
+                statistic_title_tv.setText("Monthly Statistics");
+                daily_sum_money_tv_from15.setText("Tổng doanh thu trong tháng");
+
+                for (Receipt i: receiptList) {
+                    if (
+                            i.DateTime().getMonthValue() == current_localDateTime.getMonthValue() &&
+                            i.DateTime().getYear() == current_localDateTime.getYear())
+                    {
+                        receipts_filter.add(i);
+                    }
+
+                }
+
+                // replace the original receipt list
+                receiptList = receipts_filter;
+            }
+            break;
+        }
     }
 
     private void initVariable() {
@@ -64,6 +148,8 @@ public class DailyStatistics extends AppCompatActivity {
         sum_money_tv_from15 = findViewById(R.id.sum_money_tv_from15);
         daily_receipt_count = findViewById(R.id.daily_receipt_count_tv_form16);
         sort_by_tv_form16 = findViewById(R.id.sort_by_tv_form16);
+        statistic_title_tv = findViewById(R.id.statistic_title_tv);
+        daily_sum_money_tv_from15 = findViewById(R.id.daily_sum_money_tv_from15);
     }
 
     private void setupRecyclerView() {

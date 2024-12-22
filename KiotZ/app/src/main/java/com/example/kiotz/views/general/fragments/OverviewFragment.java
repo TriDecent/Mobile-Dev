@@ -156,6 +156,27 @@ public class OverviewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), DailyStatistics.class);
+                intent.putExtra(DailyStatistics.STATISTIC_RANGE_KEY,DailyStatistics.Daily_int_value);
+                startActivity(intent);
+            }
+        });
+
+        CardView cardViewWeeklyStatistics = view.findViewById(R.id.cardViewWeek);
+        cardViewWeeklyStatistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), DailyStatistics.class);
+                intent.putExtra(DailyStatistics.STATISTIC_RANGE_KEY,DailyStatistics.weekly_int_value);
+                startActivity(intent);
+            }
+        });
+
+        CardView cardViewMonthlyStatistics = view.findViewById(R.id.cardViewMonth);
+        cardViewMonthlyStatistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), DailyStatistics.class);
+                intent.putExtra(DailyStatistics.STATISTIC_RANGE_KEY,DailyStatistics.monthly_int_value);
                 startActivity(intent);
             }
         });
