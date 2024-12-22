@@ -1,6 +1,7 @@
 package com.example.kiotz.views.managers.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +25,8 @@ import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 
 import java.text.DecimalFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -70,7 +73,8 @@ public class DailyStatistics extends AppCompatActivity {
     {
         Bundle extras = getIntent().getExtras();
         if (extras != null);
-            Time_range_from_extras = extras.getInt(STATISTIC_RANGE_KEY);
+        assert extras != null;
+        Time_range_from_extras = extras.getInt(STATISTIC_RANGE_KEY);
     }
 
     private void AdaptViewToTimeRange()
@@ -85,9 +89,7 @@ public class DailyStatistics extends AppCompatActivity {
             case Daily_int_value:
             {
                 for (Receipt i: receiptList) {
-                    if (i.DateTime().getDayOfMonth() == current_localDateTime.getDayOfMonth() &&
-                        i.DateTime().getMonthValue() == current_localDateTime.getMonthValue() &&
-                            i.DateTime().getYear() == current_localDateTime.getYear())
+                    if (i.DateTime().toLocalDate().isEqual(current_localDateTime.toLocalDate()))
                     {
                         receipts_filter.add(i);
                     }
@@ -104,19 +106,25 @@ public class DailyStatistics extends AppCompatActivity {
                 statistic_title_tv.setText("Weekly Statistics");
                 daily_sum_money_tv_from15.setText("Tổng doanh thu trong tuần");
 //              TODO: filter current week
-//
-//              for (Receipt i: receiptList) {
-//                    if (i.DateTime().getDayOfMonth() == current_localDateTime.getDayOfMonth() &&
-//                            i.DateTime().getMonthValue() == current_localDateTime.getMonthValue() &&
-//                            i.DateTime().getYear() == current_localDateTime.getYear())
-//                    {
-//                        receipts_filter.add(i);
-//                    }
-//
-//                }
-//
-//                // replace the original receipt list
-//                receiptList = receipts_filter;
+
+                //find start of week
+                LocalDate first_day_of_week = current_localDateTime.toLocalDate();
+                while (first_day_of_week.getDayOfWeek() != DayOfWeek.MONDAY)
+                    first_day_of_week = first_day_of_week.minusDays(1);
+
+
+
+              for (Receipt i: receiptList) {
+                        Log.d("This is weird",i.DateTime().toString());
+                    if ((!i.DateTime().toLocalDate().isBefore(first_day_of_week)) &&
+                            (!i.DateTime().toLocalDate().isAfter(current_localDateTime.toLocalDate())))
+                    {
+                        receipts_filter.add(i);
+                    }
+                }
+
+                // replace the original receipt list
+                receiptList = receipts_filter;
             }
             break;
 
