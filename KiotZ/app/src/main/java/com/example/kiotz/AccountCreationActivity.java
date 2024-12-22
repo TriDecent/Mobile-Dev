@@ -146,7 +146,8 @@ public class AccountCreationActivity extends AppCompatActivity {
     private void handleRegistrationResult(Task<AuthResult> task) {
         pbCreateAccount.setVisibility(ProgressBar.GONE);
         if (task.isSuccessful()) {
-            createEmployee();
+            var newUserId = Objects.requireNonNull(task.getResult().getUser()).getUid();
+            createEmployee(newUserId);
             clearForm();
             return;
         }
@@ -154,10 +155,9 @@ public class AccountCreationActivity extends AppCompatActivity {
         Toast.makeText(this, "Create account failed (Email may already exist).", Toast.LENGTH_SHORT).show();
     }
 
-    private void createEmployee() {
-        var employeeId = authenticator.getCurrentUserId();
+    private void createEmployee(String newUserID) {
         var employee = new Employee(
-                employeeId,
+                newUserID,
                 Objects.requireNonNull(etEmail.getText()).toString(),
                 Objects.requireNonNull(etName.getText()).toString(),
                 Objects.requireNonNull(etDate.getText()).toString(),
