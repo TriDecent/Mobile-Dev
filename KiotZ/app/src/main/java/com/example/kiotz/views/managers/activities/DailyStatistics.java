@@ -41,7 +41,7 @@ public class DailyStatistics extends AppCompatActivity {
     TextView sum_money_tv_from15, daily_receipt_count, sort_by_tv_form16,statistic_title_tv,daily_sum_money_tv_from15;
     int sort_type;
     ReceiptAdapter receiptAdapter;
-    public final static String STATISTIC_RANGE_KEY = "STATISTIC_RAMGE_KEY_INTENT";
+    public final static String STATISTIC_RANGE_KEY = "STATISTIC_RANGE_KEY_INTENT";
     public static final int  Daily_int_value = 231;
     public final static int weekly_int_value = 2231;
     public final static int monthly_int_value = 3122;
