@@ -41,7 +41,7 @@ public class DetailReceipt extends AppCompatActivity {
     InventoryViewModel<Product> productViewModel;
     RecyclerView recyclerView;
     Receipt receipt;
-//    ProductsAdapterEmployee productAdapter;
+    ProductsAdapterEmployee productAdapter;
     ArrayList<Employee> employeeArrayList;
     ArrayList<Product> productArrayList;
     ArrayList<Receipt> receiptList;
@@ -64,7 +64,8 @@ public class DetailReceipt extends AppCompatActivity {
                 .thenCompose(aVoid -> loadProduct())
                 .thenRun(this::findReceipt)
                 .thenRun(this::findEmployee)
-                .thenRun(this::updateView);
+                .thenRun(this::updateView)
+                .thenRun(this::setupRecyclerView);
     }
         private void initVariables()
         {
@@ -147,10 +148,11 @@ public class DetailReceipt extends AppCompatActivity {
             receipt_customer_phone_tv.setText(receipt.CustomerPhone());
         }
 
-//    private void setupRecyclerView() {
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        productAdapter = new ProductsAdapterManager(this, tempProductList);
-//        recyclerView.setAdapter(productAdapter);
-//    }
+    private void setupRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        productAdapter = new ProductsAdapterEmployee(this);
+        recyclerView.setAdapter(productAdapter);
+//        TODO: pass in real product list after sample product data is inserted
+    }
 
 }
