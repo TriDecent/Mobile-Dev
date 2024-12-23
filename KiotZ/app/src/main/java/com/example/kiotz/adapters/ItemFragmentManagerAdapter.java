@@ -15,13 +15,13 @@ import com.example.kiotz.models.ItemFragment;
 
 import java.util.List;
 
-public class ItemFragmentEmployeeAdapter extends RecyclerView.Adapter<ItemFragmentEmployeeAdapter.MyViewHolder> {
+public class ItemFragmentManagerAdapter extends RecyclerView.Adapter<ItemFragmentManagerAdapter.MyViewHolder> {
 
 
     private final Context context;
     private final List<ItemFragment> itemFragments;
 
-    public ItemFragmentEmployeeAdapter(Context context, List<ItemFragment> itemFragments) {
+    public ItemFragmentManagerAdapter(Context context, List<ItemFragment> itemFragments) {
         this.context = context;
         this.itemFragments = itemFragments;
     }
@@ -32,7 +32,7 @@ public class ItemFragmentEmployeeAdapter extends RecyclerView.Adapter<ItemFragme
         //return null;
         LayoutInflater layoutInflater=LayoutInflater.from(context);
         View view=layoutInflater.inflate(R.layout.item_fragment_employee,parent,false);
-        return new ItemFragmentEmployeeAdapter.MyViewHolder(view);
+        return new ItemFragmentManagerAdapter.MyViewHolder(view);
     }
 
     @Override

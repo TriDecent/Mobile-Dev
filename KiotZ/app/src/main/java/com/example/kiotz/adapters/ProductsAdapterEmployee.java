@@ -25,16 +25,16 @@ public class ProductsAdapterEmployee extends RecyclerView.Adapter<ProductsAdapte
         this.context = context;
 
         tempProductList = Arrays.asList(
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1, "/path/to/qr1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/qr1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/qr1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece",1, "/path/to/qr1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/qr1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/qr1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/qr1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece",1, "/path/to/qr1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/qr1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/qr1")
+                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1, "/path/to/qr1","/path/to/img1"),
+                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/qr1","/path/to/img1"),
+                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/qr1","/path/to/img1"),
+                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece",1, "/path/to/qr1","/path/to/img1"),
+                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/qr1","/path/to/img1"),
+                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/qr1","/path/to/img1"),
+                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/qr1","/path/to/img1"),
+                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece",1, "/path/to/qr1","/path/to/img1"),
+                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/qr1","/path/to/img1"),
+                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/qr1","/path/to/img1")
         );
     }
 

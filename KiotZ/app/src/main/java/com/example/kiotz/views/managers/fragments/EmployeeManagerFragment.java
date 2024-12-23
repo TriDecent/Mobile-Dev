@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.kiotz.R;
-import com.example.kiotz.adapters.ItemFragmentEmployeeAdapter;
+import com.example.kiotz.adapters.ItemFragmentManagerAdapter;
 import com.example.kiotz.models.ItemFragment;
 import com.example.kiotz.views.managers.data.App;
 
@@ -76,7 +76,7 @@ public class EmployeeManagerFragment extends Fragment {
         setupStatusBar(view);
         createDataForRecycleView();
         recyclerView=view.findViewById(R.id.recycleViewFragmentEmployee);
-        ItemFragmentEmployeeAdapter adapter=new ItemFragmentEmployeeAdapter(view.getContext(),itemFragmentList);
+        ItemFragmentManagerAdapter adapter=new ItemFragmentManagerAdapter(view.getContext(),itemFragmentList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 

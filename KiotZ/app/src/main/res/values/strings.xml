@@ -20,6 +20,13 @@
         <item>View information employee</item>
         <item>Modify information employee</item>
     </string-array>
+    <string-array name="name_item_fragment_statistic">
+        <item>Products sold</item>
+        <item>Invoices</item>
+        <item>Statistics by day</item>
+        <item>Statistics by week</item>
+        <item>Statistics by month</item>
+    </string-array>
 
 
     <string name="employee_name" />

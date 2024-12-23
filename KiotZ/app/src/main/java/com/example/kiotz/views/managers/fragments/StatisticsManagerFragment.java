@@ -1,17 +1,17 @@
 package com.example.kiotz.views.managers.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.kiotz.R;
 import com.example.kiotz.adapters.ItemFragmentManagerAdapter;
@@ -23,10 +23,10 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SaleManagerFragment#newInstance} factory method to
+ * Use the {@link StatisticsManagerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SaleManagerFragment extends Fragment {
+public class StatisticsManagerFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,10 +37,11 @@ public class SaleManagerFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private List<ItemFragment> itemFragmentList;
-    private RecyclerView recyclerView;
-
-    public SaleManagerFragment() {
+    private RecyclerView recyclerViewToday;
+    private RecyclerView recyclerViewReports;
+    private List<ItemFragment> itemFragmentListToday;
+    private List<ItemFragment> itemFragmentListReports;
+    public StatisticsManagerFragment() {
         // Required empty public constructor
     }
 
@@ -50,11 +51,11 @@ public class SaleManagerFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SaleManagerFragment.
+     * @return A new instance of fragment StatisticsManagerFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SaleManagerFragment newInstance(String param1, String param2) {
-        SaleManagerFragment fragment = new SaleManagerFragment();
+    public static StatisticsManagerFragment newInstance(String param1, String param2) {
+        StatisticsManagerFragment fragment = new StatisticsManagerFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,7 +66,6 @@ public class SaleManagerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("TEST","onCreate");
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -76,35 +76,38 @@ public class SaleManagerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.e("TEST","onCreateView");
-        return inflater.inflate(R.layout.fragment_sale_manager, container, false);
+        return inflater.inflate(R.layout.fragment_statistics_manager, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.e("TEST","onViewCreated");
         setupStatusBar(view);
         createDataForRecycleView();
-        recyclerView=view.findViewById(R.id.recycleViewFragmentSale);
-        ItemFragmentManagerAdapter adapter=new ItemFragmentManagerAdapter(view.getContext(),itemFragmentList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerViewToday=view.findViewById(R.id.recycleViewFragmentStatisticToday);
+        recyclerViewReports=view.findViewById(R.id.recycleViewFragmentStatisticReports);
+        ItemFragmentManagerAdapter adapterToday=new ItemFragmentManagerAdapter(view.getContext(),itemFragmentListToday);
+        ItemFragmentManagerAdapter adapterReports=new ItemFragmentManagerAdapter(view.getContext(),itemFragmentListReports);
+        recyclerViewToday.setAdapter(adapterToday);
+        recyclerViewReports.setAdapter(adapterReports);
+        recyclerViewReports.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerViewToday.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
     }
-
     public void createDataForRecycleView(){
-        String[] title=getResources().getStringArray(R.array.name_item_fragment_sale);
-        itemFragmentList=new ArrayList<>();
-        itemFragmentList.add(new ItemFragment(title[0],R.drawable.addproduct));
-        itemFragmentList.add(new ItemFragment(title[1],R.drawable.removeproduct));
-        itemFragmentList.add(new ItemFragment(title[2],R.drawable.viewinventory));
-        itemFragmentList.add(new ItemFragment(title[3],R.drawable.modifyinventory));
+        String[] title=getResources().getStringArray(R.array.name_item_fragment_statistic);
+        itemFragmentListToday=new ArrayList<>();
+        itemFragmentListToday.add(new ItemFragment(title[0],R.drawable.productsale));
+        itemFragmentListToday.add(new ItemFragment(title[1],R.drawable.invoice));
+        itemFragmentListReports=new ArrayList<>();
+        itemFragmentListReports.add(new ItemFragment(title[2],R.drawable.day));
+        itemFragmentListReports.add(new ItemFragment(title[3],R.drawable.week));
+        itemFragmentListReports.add(new ItemFragment(title[4],R.drawable.month));
 
     }
     private void setupStatusBar(View v){
         App app=(App) requireActivity().getApplication();
-        TextView tvName=v.findViewById(R.id.tvUserName);
+                TextView tvName=v.findViewById(R.id.tvUserName);
         TextView tvPosition=v.findViewById(R.id.tvRole);
         tvName.setText(app.getName());
         tvPosition.setText(app.getPosition());
