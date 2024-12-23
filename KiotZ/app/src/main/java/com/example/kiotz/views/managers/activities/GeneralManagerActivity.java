@@ -3,6 +3,7 @@ package com.example.kiotz.views.managers.activities;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.kiotz.R;
 import com.example.kiotz.views.general.fragments.OverviewFragment;
@@ -21,6 +23,7 @@ import com.example.kiotz.views.managers.fragments.StatisticsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GeneralManagerActivity extends AppCompatActivity {
@@ -52,7 +55,6 @@ public class GeneralManagerActivity extends AppCompatActivity {
         fragmentClasses.put(R.id.sale, SaleManagerFragment.class);
         fragmentClasses.put(R.id.settings, SettingsFragment.class);
         fragmentClasses.put(R.id.statistic, StatisticsFragment.class);
-
         fragmentClasses.put(R.id.employee, EmployeeManagerFragment.class);
 
     }
@@ -67,17 +69,54 @@ public class GeneralManagerActivity extends AppCompatActivity {
         return true;
     }
 
-    private void replaceFragment(int itemId) {
+/*    private void replaceFragment(int itemId) {
         Fragment fragment = fragmentCache.get(itemId);
         if (fragment == null) {
             fragment = createFragmentById(itemId);
             fragmentCache.put(itemId, fragment);
+
         }
 
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.frameLayout, fragment)
+                .addToBackStack(null)
                 .commit();
+    }*/
+
+    private Fragment getCurrentVisibleFragment() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        for (Fragment fragment : fragments) {
+            if (fragment != null && fragment.isVisible()) {
+                return fragment;
+            }
+        }
+        return null;
+    }
+    private void replaceFragment(int itemId){
+        //Fragment currentFragment=getSupportFragmentManager().findFragmentById(R.id.frameLayout);
+        Fragment currentFragment=getCurrentVisibleFragment();
+        Fragment newFragment=fragmentCache.get(itemId);
+
+
+        if(newFragment==null){
+            newFragment=createFragmentById(itemId);
+            fragmentCache.put(itemId,newFragment);
+        }
+        FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
+        if(currentFragment!=null){
+           transaction.hide(currentFragment);
+        }
+
+        if(!newFragment.isAdded()){
+            transaction.add(R.id.frameLayout,newFragment);
+        }else{
+            transaction.show(newFragment);
+        }
+
+
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     private Fragment createFragmentById(int itemId) {

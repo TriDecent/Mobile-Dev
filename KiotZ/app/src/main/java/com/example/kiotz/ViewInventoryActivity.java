@@ -15,6 +15,7 @@ import com.example.kiotz.adapters.IRecycleManagerDetail;
 import com.example.kiotz.adapters.ProductsAdapterManager;
 import com.example.kiotz.models.CustomProduct;
 import com.example.kiotz.models.DetailProduct;
+import com.example.kiotz.models.Product;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ public class ViewInventoryActivity extends AppCompatActivity implements IRecycle
 
     RecyclerView recyclerViewProduct;
     ProductsAdapterManager adapterManager;
-    ArrayList<CustomProduct> products;
+    ArrayList<Product> products;
 
     ArrayList<DetailProduct> dataDetail;
 
@@ -48,10 +49,10 @@ public class ViewInventoryActivity extends AppCompatActivity implements IRecycle
 
     private void test(){
         products=new ArrayList<>();
-        products.add(new CustomProduct("MH001","Hao Hao noodles","Food",2500,3000,"package","path/QRCode",R.drawable.img_test1));
-        products.add(new CustomProduct("MH002","Coca Cola","Beverage",9000,10000,"bottle","path/QRCode",R.drawable.img_test2));
-        products.add(new CustomProduct("MH003","Pepsi","Beverage",9000,10000,"bottle","path/QRCode",R.drawable.img_test3));
-        products.add(new CustomProduct("MH004","Milo","Milk",8000,10000,"bottle","path/QRCode",R.drawable.img_test4));
+        products.add(new Product("MH001","Hao Hao noodles","Food",2500,"package",3000,"path/QRCode"));
+        products.add(new Product("MH002","Coca Cola","Beverage",9000,"bottle",5000,"path/QRCode"));
+        products.add(new Product("MH003","Pepsi","Beverage",9000,"bottle",10000,"path/QRCode"));
+        products.add(new Product("MH004","Milo","Milk",8000,"bottle",10000,"path/QRCode"));
 
 
 

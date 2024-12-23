@@ -13,17 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kiotz.R;
 import com.example.kiotz.models.CustomProduct;
+import com.example.kiotz.models.Product;
 
 import java.util.ArrayList;
 
 public class ProductsAdapterManager extends RecyclerView.Adapter<ProductsAdapterManager.MyViewHolder> {
 
     private Context context;
-    private ArrayList<CustomProduct> products;
+    private ArrayList<Product> products;
 
     IRecycleManagerDetail iRecycleManagerDetail;
 
-    public ProductsAdapterManager(Context context, ArrayList<CustomProduct> products,IRecycleManagerDetail iRecycleManagerDetail) {
+    public ProductsAdapterManager(Context context, ArrayList<Product> products,IRecycleManagerDetail iRecycleManagerDetail) {
         this.context = context;
         this.products = products;
         this.iRecycleManagerDetail=iRecycleManagerDetail;
@@ -41,11 +42,12 @@ public class ProductsAdapterManager extends RecyclerView.Adapter<ProductsAdapter
     @Override
     public void onBindViewHolder(@NonNull ProductsAdapterManager.MyViewHolder holder, int position) {
 
-        CustomProduct currentProduct=products.get(position);
-        holder.imageViewProduct.setImageResource(currentProduct.Image());
+        Product currentProduct=products.get(position);
+        //holder.imageViewProduct.setImageResource(currentProduct.Image());
+        holder.imageViewProduct.setImageResource(R.drawable.img_test2);
         holder.textViewID.setText(currentProduct.ID());
         holder.textViewName.setText(currentProduct.Name());
-        holder.textViewPrice.setText(String.valueOf(currentProduct.sellingPrice())+" VND");
+        holder.textViewPrice.setText(String.valueOf(currentProduct.Price())+" VND");
         holder.textViewCategory.setText(currentProduct.Category());
 
     }
@@ -64,7 +66,7 @@ public class ProductsAdapterManager extends RecyclerView.Adapter<ProductsAdapter
 
         IRecycleManagerDetail iRecycleManagerDetail;
 
-        public MyViewHolder(@NonNull View itemView,IRecycleManagerDetail iRecycleManagerDetail) {
+        public MyViewHolder(@NonNull View itemView, IRecycleManagerDetail iRecycleManagerDetail) {
             super(itemView);
 
             bindingView();
@@ -86,7 +88,8 @@ public class ProductsAdapterManager extends RecyclerView.Adapter<ProductsAdapter
             textViewName=itemView.findViewById(R.id.tvNameProduct);
             textViewPrice=itemView.findViewById(R.id.tvPriceProduct);
             textViewCategory=itemView.findViewById(R.id.tvCategoryProduct);
-            cv = itemView.findViewById(R.id.cv_employee);
+            cv = itemView.findViewById(R.id.cv_product);
+
         }
     }
 }

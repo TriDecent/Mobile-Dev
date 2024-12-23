@@ -79,6 +79,7 @@ public class OverviewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("TEST","onCreate");
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -94,6 +95,7 @@ public class OverviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.e("TEST","onCreateView");
         return inflater.inflate(R.layout.fragment_overview, container, false);
 
     }
@@ -102,6 +104,7 @@ public class OverviewFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         App app=(App) requireActivity().getApplication();
+        Log.e("TEST","onViewCreated");
         if(app.getName()==null||app.getPosition()==null){
             employeesLoadedFuture.thenRun(() -> {
                 requireActivity().runOnUiThread(() -> setupStatusBar(view));
