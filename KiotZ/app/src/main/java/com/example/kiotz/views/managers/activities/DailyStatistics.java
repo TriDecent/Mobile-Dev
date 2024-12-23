@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import androidx.appcompat.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,15 +32,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class DailyStatistics extends AppCompatActivity {
     ImageView change_sort_order_bt;
     InventoryViewModel<Receipt> receiptViewModel;
     RecyclerView recycler_view;
-    List<Receipt> receiptList;
+    ArrayList<Receipt> receiptList;
+    ArrayList<Receipt> temp_copy_list;
     TextView sum_money_tv_from15, daily_receipt_count, sort_by_tv_form16,statistic_title_tv,daily_sum_money_tv_from15;
+    SearchView search_sv_form16;
     int sort_type;
     ReceiptAdapter receiptAdapter;
     public final static String STATISTIC_RANGE_KEY = "STATISTIC_RANGE_KEY_INTENT";
@@ -63,10 +66,12 @@ public class DailyStatistics extends AppCompatActivity {
         setupViewModel();
         setupSortButton();
         loadReceipt()
+                .thenRun(this::copyReceiptList)
                 .thenRun(this::AdaptViewToTimeRange)
                 .thenRun(this::setupRecyclerView)
                 .thenRun(this::calculateTotalDailyIncome)
-                .thenRun(this::displayTotalReceipt);
+                .thenRun(this::displayTotalReceipt)
+                .thenRun(this::setupSearchView);
     }
 
     private void getExtras()
@@ -158,6 +163,8 @@ public class DailyStatistics extends AppCompatActivity {
         sort_by_tv_form16 = findViewById(R.id.sort_by_tv_form16);
         statistic_title_tv = findViewById(R.id.statistic_title_tv);
         daily_sum_money_tv_from15 = findViewById(R.id.daily_sum_money_tv_from15);
+        search_sv_form16 = findViewById(R.id.search_sv_form16);
+        temp_copy_list = new ArrayList<Receipt>();
     }
 
     private void setupRecyclerView() {
@@ -193,13 +200,11 @@ public class DailyStatistics extends AppCompatActivity {
                         sort_by_tv_form16.setText("mới nhất");
                         receiptList.sort(new ReceiptSortByDateNew());
                         receiptAdapter.notifyDataSetChanged();
-//                        TODO: add sort
                     }
                         break;
                     case 2:
                     {
                         sort_by_tv_form16.setText("số tiền");
-//                      TODO: handle sort
                         receiptList.sort(new ReceiptSortByPrice());
                         receiptAdapter.notifyDataSetChanged();
 
@@ -254,6 +259,11 @@ public class DailyStatistics extends AppCompatActivity {
                 runOnUiThread(() -> receiptList = new ArrayList<>(fetched_receipts)));
     }
 
+    private void copyReceiptList()
+    {
+        temp_copy_list.addAll(receiptList);
+    }
+
     private void calculateTotalDailyIncome() {
         double sum = 0;
         for (Receipt receipt : receiptList) {
@@ -267,4 +277,58 @@ public class DailyStatistics extends AppCompatActivity {
     private void displayTotalReceipt() {
         daily_receipt_count.setText(String.valueOf(receiptList.size()));
     }
+
+    private  void setupSearchView()
+    {
+
+        search_sv_form16.clearFocus();
+        search_sv_form16.setIconified(false);
+//        search_sv_form16.requestFocus();
+        search_sv_form16.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+//                return original data
+                receiptList.clear();
+                receiptList.addAll(temp_copy_list);;
+                receiptAdapter.notifyDataSetChanged();
+                search_sv_form16.clearFocus();
+
+                return true;
+            }
+
+            private void search_filter_text(String text)
+            {
+
+                ArrayList<Receipt> filtered_list = new ArrayList<Receipt>();
+                for (Receipt i : temp_copy_list) {
+                    if (i.CustomerName().toLowerCase().contains(text.toLowerCase()) ||
+                            i.EmployeeId().toLowerCase().contains(text.toLowerCase()) ||
+                            (String.valueOf( i.DateTime().getDayOfMonth()) + "/" +
+                                    String.valueOf(i.DateTime().getMonthValue()) + "/" +
+                                    String.valueOf(i.DateTime().getYear())).contains(text)
+                    )
+                    {
+                        filtered_list.add(i);
+                    }
+                }
+
+                receiptList.clear();
+                receiptList.addAll(filtered_list);
+                receiptAdapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                search_filter_text(s);
+                return true;
+            }
+        });
+
+
+    }
+
+
 }

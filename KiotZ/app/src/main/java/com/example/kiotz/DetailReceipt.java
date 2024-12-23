@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kiotz.adapters.ProductsAdapterEmployee;
-import com.example.kiotz.adapters.ProductsAdapterManager;
 import com.example.kiotz.adapters.ReceiptAdapter;
 import com.example.kiotz.database.FireBaseService;
 import com.example.kiotz.database.dto.EmployeeSerializer;
@@ -30,7 +29,6 @@ import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
 public class DetailReceipt extends AppCompatActivity {
