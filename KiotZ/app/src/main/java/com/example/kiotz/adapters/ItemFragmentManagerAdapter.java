@@ -19,11 +19,13 @@ public class ItemFragmentManagerAdapter extends RecyclerView.Adapter<ItemFragmen
 
 
     private final Context context;
-    private final List<ItemFragment> itemFragments;
+    private final List<ItemFragment> itemFragmentList;
+    private final IItemFragment iItemFragment;
 
-    public ItemFragmentManagerAdapter(Context context, List<ItemFragment> itemFragments) {
+    public ItemFragmentManagerAdapter(Context context, List<ItemFragment> itemFragments,IItemFragment iItemFragment) {
         this.context = context;
-        this.itemFragments = itemFragments;
+        this.itemFragmentList = itemFragments;
+        this.iItemFragment=iItemFragment;
     }
 
     @NonNull
@@ -31,13 +33,13 @@ public class ItemFragmentManagerAdapter extends RecyclerView.Adapter<ItemFragmen
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //return null;
         LayoutInflater layoutInflater=LayoutInflater.from(context);
-        View view=layoutInflater.inflate(R.layout.item_fragment_employee,parent,false);
-        return new ItemFragmentManagerAdapter.MyViewHolder(view);
+        View view=layoutInflater.inflate(R.layout.item_fragment,parent,false);
+        return new ItemFragmentManagerAdapter.MyViewHolder(view,this.iItemFragment);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        ItemFragment currentItem=itemFragments.get(position);
+        ItemFragment currentItem=itemFragmentList.get(position);
         holder.tvTitle.setText(currentItem.getTitle());
         holder.image.setImageResource(currentItem.getImage());
 
@@ -45,16 +47,30 @@ public class ItemFragmentManagerAdapter extends RecyclerView.Adapter<ItemFragmen
 
     @Override
     public int getItemCount() {
-        return itemFragments.size();
+        return itemFragmentList.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvTitle;
         ImageView image;
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView,IItemFragment iItemFragment) {
             super(itemView);
             bindingView();
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(iItemFragment!=null){
+                        int position=getAdapterPosition();
+                        if(position!=RecyclerView.NO_POSITION){
+                            iItemFragment.onItemClick(position);
+                        }
+
+                    }
+                }
+            });
+
         }
 
         public void bindingView(){

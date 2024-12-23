@@ -1,5 +1,6 @@
 package com.example.kiotz.views.managers.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,9 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.kiotz.EmployeesView;
 import com.example.kiotz.R;
+import com.example.kiotz.adapters.IItemFragment;
 import com.example.kiotz.adapters.ItemFragmentManagerAdapter;
 import com.example.kiotz.models.ItemFragment;
+import com.example.kiotz.views.managers.activities.ViewInformationEmployeeActivity;
 import com.example.kiotz.views.managers.data.App;
 
 import java.util.ArrayList;
@@ -26,7 +30,7 @@ import java.util.List;
  * Use the {@link EmployeeManagerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EmployeeManagerFragment extends Fragment {
+public class EmployeeManagerFragment extends Fragment implements IItemFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,6 +42,8 @@ public class EmployeeManagerFragment extends Fragment {
     private String mParam2;
     private List<ItemFragment> itemFragmentList;
     private RecyclerView recyclerView;
+
+
 
     public EmployeeManagerFragment() {
         // Required empty public constructor
@@ -76,7 +82,7 @@ public class EmployeeManagerFragment extends Fragment {
         setupStatusBar(view);
         createDataForRecycleView();
         recyclerView=view.findViewById(R.id.recycleViewFragmentEmployee);
-        ItemFragmentManagerAdapter adapter=new ItemFragmentManagerAdapter(view.getContext(),itemFragmentList);
+        ItemFragmentManagerAdapter adapter=new ItemFragmentManagerAdapter(view.getContext(),itemFragmentList,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
@@ -105,5 +111,20 @@ public class EmployeeManagerFragment extends Fragment {
         TextView tvPosition=v.findViewById(R.id.tvRole);
         tvName.setText(app.getName());
         tvPosition.setText(app.getPosition());
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        if(position==2){
+            App app=(App) requireActivity().getApplication();
+            Intent i = new Intent(getContext(), ViewInformationEmployeeActivity.class);
+            i.putExtra("Name",app.getName());
+            i.putExtra("Position",app.getPosition());
+            startActivity(i);
+        }
+        else if(position==3){
+            Intent i = new Intent(getContext(), EmployeesView.class);
+            startActivity(i);
+        }
     }
 }

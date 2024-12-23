@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kiotz.R;
+import com.example.kiotz.adapters.IItemFragment;
 import com.example.kiotz.adapters.ItemFragmentManagerAdapter;
 import com.example.kiotz.models.ItemFragment;
 import com.example.kiotz.views.managers.data.App;
@@ -26,7 +27,7 @@ import java.util.List;
  * Use the {@link SaleManagerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SaleManagerFragment extends Fragment {
+public class SaleManagerFragment extends Fragment implements IItemFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,7 +88,7 @@ public class SaleManagerFragment extends Fragment {
         setupStatusBar(view);
         createDataForRecycleView();
         recyclerView=view.findViewById(R.id.recycleViewFragmentSale);
-        ItemFragmentManagerAdapter adapter=new ItemFragmentManagerAdapter(view.getContext(),itemFragmentList);
+        ItemFragmentManagerAdapter adapter=new ItemFragmentManagerAdapter(view.getContext(),itemFragmentList,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
@@ -108,5 +109,10 @@ public class SaleManagerFragment extends Fragment {
         TextView tvPosition=v.findViewById(R.id.tvRole);
         tvName.setText(app.getName());
         tvPosition.setText(app.getPosition());
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
     }
 }

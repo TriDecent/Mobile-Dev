@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.managers.activities.ViewInformationEmployeeActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintViewAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bginfor"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="7dp"
+            android:src="@drawable/avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_status_bar_employee_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="Trần Vũ Anh Trí"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/imgAvatar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_status_bar_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="Manager"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tv_status_bar_employee_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_status_bar_employee_name" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:id="@+id/highlightBar"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/bg_search_rounded_form5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraintViewAccount"></View>
+
+    <TextView
+        android:id="@+id/tv_employee_sort_by_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Sort By Name"
+        android:textColor="@color/md_theme_scrim"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_employee_sort_by_name"
+        app:layout_constraintEnd_toStartOf="@+id/iv_employee_sort_by_name"
+        app:layout_constraintTop_toTopOf="@+id/iv_employee_sort_by_name">
+
+    </TextView>
+
+    <ImageView
+        android:id="@+id/iv_employee_sort_by_name"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/sort"
+        app:layout_constraintBottom_toBottomOf="@id/highlightBar"
+        app:layout_constraintRight_toRightOf="@id/highlightBar"
+        app:layout_constraintTop_toTopOf="@id/highlightBar">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/tv_employee_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:text="1000 Employees"
+        android:textColor="@color/md_theme_scrim"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/highlightBar"
+        app:layout_constraintStart_toStartOf="@+id/highlightBar"
+        app:layout_constraintTop_toTopOf="@+id/highlightBar" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_employees"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bginfor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/highlightBar"
+        tools:listitem="@layout/item_employee_view" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

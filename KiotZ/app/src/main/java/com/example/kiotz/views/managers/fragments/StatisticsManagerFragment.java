@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.kiotz.R;
+import com.example.kiotz.adapters.IItemFragment;
 import com.example.kiotz.adapters.ItemFragmentManagerAdapter;
 import com.example.kiotz.models.ItemFragment;
 import com.example.kiotz.views.managers.data.App;
@@ -26,7 +27,7 @@ import java.util.List;
  * Use the {@link StatisticsManagerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StatisticsManagerFragment extends Fragment {
+public class StatisticsManagerFragment extends Fragment implements IItemFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -86,8 +87,8 @@ public class StatisticsManagerFragment extends Fragment {
         createDataForRecycleView();
         recyclerViewToday=view.findViewById(R.id.recycleViewFragmentStatisticToday);
         recyclerViewReports=view.findViewById(R.id.recycleViewFragmentStatisticReports);
-        ItemFragmentManagerAdapter adapterToday=new ItemFragmentManagerAdapter(view.getContext(),itemFragmentListToday);
-        ItemFragmentManagerAdapter adapterReports=new ItemFragmentManagerAdapter(view.getContext(),itemFragmentListReports);
+        ItemFragmentManagerAdapter adapterToday=new ItemFragmentManagerAdapter(view.getContext(),itemFragmentListToday,this);
+        ItemFragmentManagerAdapter adapterReports=new ItemFragmentManagerAdapter(view.getContext(),itemFragmentListReports,this);
         recyclerViewToday.setAdapter(adapterToday);
         recyclerViewReports.setAdapter(adapterReports);
         recyclerViewReports.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -111,5 +112,10 @@ public class StatisticsManagerFragment extends Fragment {
         TextView tvPosition=v.findViewById(R.id.tvRole);
         tvName.setText(app.getName());
         tvPosition.setText(app.getPosition());
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
     }
 }
