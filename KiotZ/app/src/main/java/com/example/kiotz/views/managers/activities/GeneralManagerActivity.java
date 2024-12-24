@@ -19,6 +19,7 @@ import com.example.kiotz.views.general.fragments.OverviewFragment;
 import com.example.kiotz.views.general.fragments.SettingsFragment;
 import com.example.kiotz.views.managers.fragments.EmployeeManagerFragment;
 import com.example.kiotz.views.managers.fragments.SaleManagerFragment;
+import com.example.kiotz.views.managers.fragments.SettingManagerFragment;
 import com.example.kiotz.views.managers.fragments.StatisticsFragment;
 import com.example.kiotz.views.managers.fragments.StatisticsManagerFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -54,7 +55,7 @@ public class GeneralManagerActivity extends AppCompatActivity {
     private void setupFragmentClasses() {
         fragmentClasses.put(R.id.overview, OverviewFragment.class);
         fragmentClasses.put(R.id.sale, SaleManagerFragment.class);
-        fragmentClasses.put(R.id.settings, SettingsFragment.class);
+        fragmentClasses.put(R.id.settings, SettingManagerFragment.class);
         fragmentClasses.put(R.id.statistic, StatisticsManagerFragment.class);
         fragmentClasses.put(R.id.employee, EmployeeManagerFragment.class);
 
