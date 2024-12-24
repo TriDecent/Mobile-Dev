@@ -1,8 +1,6 @@
 package com.example.kiotz.views.managers.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,13 +31,14 @@ import java.util.concurrent.CompletableFuture;
 
 public class ViewInformationEmployeeActivity extends AppCompatActivity {
 
-    private TextView tvEmployeeCount,tvEmployeeName,tvEmployeePosition;
+    private TextView tvEmployeeCount, tvEmployeeName, tvEmployeePosition;
     private ImageView imgSortByName;
     private RecyclerView recyclerViewEmployee;
     private InventoryViewModel<Employee> employeeViewModel;
     private List<Employee> listEmployee;
     private EmployeesAdapter adapter;
-    private boolean isAscendingSort=true;
+    private boolean isAscendingSort = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +54,6 @@ public class ViewInformationEmployeeActivity extends AppCompatActivity {
                 .thenRun(this::setupAdapter)
                 .thenRun(this::setupObservers)
                 .thenRun(this::setupSortButton);
-
-
     }
 
     private void setupWindowInsets() {
@@ -74,11 +71,11 @@ public class ViewInformationEmployeeActivity extends AppCompatActivity {
         imgSortByName = findViewById(R.id.iv_employee_sort_by_name);
         recyclerViewEmployee = findViewById(R.id.rv_employees);
         recyclerViewEmployee.setLayoutManager(new LinearLayoutManager(this));
-        listEmployee=new ArrayList<>();
+        listEmployee = new ArrayList<>();
     }
 
     private void setupStatusBar() {
-        App app=(App)  getApplication();
+        App app = (App) getApplication();
         tvEmployeeName.setText(app.getName());
         tvEmployeePosition.setText(app.getPosition());
     }
@@ -88,29 +85,27 @@ public class ViewInformationEmployeeActivity extends AppCompatActivity {
         employeeViewModel = InventoryViewModelFactory.getInstance().getViewModel(employeeInventory, Employee.class);
     }
 
-    private CompletableFuture<Void> loadEmployees(){
-        return employeeViewModel.getAll().thenAccept(fetchedEmployees ->{
-            runOnUiThread(()->listEmployee=new ArrayList<>(fetchedEmployees));
-
-        });
+    private CompletableFuture<Void> loadEmployees() {
+        return employeeViewModel.getAll().thenAccept(fetchedEmployees ->
+                runOnUiThread(() -> listEmployee = new ArrayList<>(fetchedEmployees)));
     }
 
-    private void setupObservers(){
-        employeeViewModel.getObservableAddedItem().observe(this,addEmployee->{
-            if(listEmployee.stream().anyMatch(e-> e.ID().equals(addEmployee.ID()))){
+    private void setupObservers() {
+        employeeViewModel.getObservableAddedItem().observe(this, addEmployee -> {
+            if (listEmployee.stream().anyMatch(e -> e.ID().equals(addEmployee.ID()))) {
                 return;
             }
 
             listEmployee.add(addEmployee);
-            adapter.notifyItemInserted(listEmployee.size()-1);
+            adapter.notifyItemInserted(listEmployee.size() - 1);
             updateEmployeeCount();
         });
 
-        employeeViewModel.getObservableDeletedItem().observe(this,pair->{
-            int position=pair.first;
-            var deletedEmployee=pair.second;
+        employeeViewModel.getObservableDeletedItem().observe(this, pair -> {
+            int position = pair.first;
+            var deletedEmployee = pair.second;
 
-            if(listEmployee.stream().noneMatch(e->e.ID().equals(deletedEmployee.ID()))){
+            if (listEmployee.stream().noneMatch(e -> e.ID().equals(deletedEmployee.ID()))) {
                 return;
             }
             listEmployee.remove(position);
@@ -119,16 +114,15 @@ public class ViewInformationEmployeeActivity extends AppCompatActivity {
 
         });
 
-        employeeViewModel.getObservableUpdatedItem().observe(this,pair->{
-            int position=pair.first;
-            var updatedEmployee=pair.second;
+        employeeViewModel.getObservableUpdatedItem().observe(this, pair -> {
+            int position = pair.first;
+            var updatedEmployee = pair.second;
 
-
-            var employeeNeedToBeUpdated=listEmployee.get(position);
+            var employeeNeedToBeUpdated = listEmployee.get(position);
             if (employeeNeedToBeUpdated.equals(updatedEmployee)) {
                 return;
             }
-            listEmployee.set(position,updatedEmployee);
+            listEmployee.set(position, updatedEmployee);
             adapter.notifyItemChanged(position);
         });
     }
@@ -137,7 +131,7 @@ public class ViewInformationEmployeeActivity extends AppCompatActivity {
         tvEmployeeCount.setText(getString(R.string.employees_count, listEmployee.size()));
     }
 
-    private void setupAdapter(){
+    private void setupAdapter() {
 
         var authenticator = Authenticator.getInstance();
         var userId = authenticator.getCurrentUserId();
@@ -151,26 +145,17 @@ public class ViewInformationEmployeeActivity extends AppCompatActivity {
         recyclerViewEmployee.setAdapter(adapter);
     }
 
-    private void sortEmployeeByName(){
-        var comparator= Comparator.comparing(
+    private void sortEmployeeByName() {
+        var comparator = Comparator.comparing(
                 Employee::Name,
                 Comparator.nullsFirst(String::compareTo)
         );
-        listEmployee.sort(isAscendingSort?comparator:comparator.reversed());
-        isAscendingSort=!isAscendingSort;
+        listEmployee.sort(isAscendingSort ? comparator : comparator.reversed());
+        isAscendingSort = !isAscendingSort;
         adapter.notifyDataSetChanged();
     }
 
-    private void setupSortButton(){
-        imgSortByName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sortEmployeeByName();
-            }
-        });
+    private void setupSortButton() {
+        imgSortByName.setOnClickListener(v -> sortEmployeeByName());
     }
-
-
-
-
 }
