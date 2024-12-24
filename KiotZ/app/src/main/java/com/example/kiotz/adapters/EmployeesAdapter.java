@@ -129,13 +129,13 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
 
         public void bindData(Employee employee) {
             String employeeId = employee.ID();
-            String employeeName = Objects.equals(employee.Name(), "") ? "N/A" : employee.Name();
-            String employeeDate = Objects.equals(employee.Date(), "") ? "N/A" : employee.Date();
+            String employeeName = employee.Name() == null ? "N/A" : employee.Name();
+            String employeeDate = employee.Date() == null ? "N/A" : employee.Date();
             String employeeGender = employee.Gender() == null ? "N/A" : employee.Gender().toString();
 
             tvId.setText(String.format(Locale.getDefault(), employeeId));
-            tvName.setText(employeeName == null ? "" : String.format(Locale.getDefault(), employeeName));
-            tvDate.setText(employeeDate == null ? "" : String.format(Locale.getDefault(), employeeDate));
+            tvName.setText(String.format(Locale.getDefault(), employeeName));
+            tvDate.setText(String.format(Locale.getDefault(), employeeDate));
             tvGender.setText(String.format(Locale.getDefault(), employeeGender));
         }
     }
