@@ -16,11 +16,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kiotz.R;
 import com.example.kiotz.adapters.EmployeesAdapter;
 import com.example.kiotz.authentication.Authenticator;
+import com.example.kiotz.database.FireBaseService;
+import com.example.kiotz.database.dto.EmployeeSerializer;
+import com.example.kiotz.inventory.Inventory;
 import com.example.kiotz.models.Employee;
+import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
+import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class ViewInformationEmployeeActivity extends AppCompatActivity {
 
@@ -39,6 +45,12 @@ public class ViewInformationEmployeeActivity extends AppCompatActivity {
         setupWindowInsets();
         initializeViews();
         setupStatusBar();
+
+        setupViewModel();
+        loadEmployees()
+                .thenRun(this::updateEmployeeCount)
+                .thenRun(this::setupAdapter)
+                .thenRun(this::setupObservers);
 
 
     }
@@ -68,5 +80,77 @@ public class ViewInformationEmployeeActivity extends AppCompatActivity {
         tvEmployeeName.setText(name);
         tvEmployeePosition.setText(position);
     }
+
+    private void setupViewModel() {
+        var employeeInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new EmployeeSerializer())));
+        employeeViewModel = InventoryViewModelFactory.getInstance().getViewModel(employeeInventory, Employee.class);
+    }
+
+    private CompletableFuture<Void> loadEmployees(){
+        return employeeViewModel.getAll().thenAccept(fetchedEmployees ->{
+            runOnUiThread(()->listEmployee=new ArrayList<>(fetchedEmployees));
+
+        });
+    }
+
+    private void setupObservers(){
+        employeeViewModel.getObservableAddedItem().observe(this,addEmployee->{
+            if(listEmployee.stream().anyMatch(e-> e.ID().equals(addEmployee.ID()))){
+                return;
+            }
+
+            listEmployee.add(addEmployee);
+            adapter.notifyItemInserted(listEmployee.size()-1);
+            updateEmployeeCount();
+        });
+
+        employeeViewModel.getObservableDeletedItem().observe(this,pair->{
+            int position=pair.first;
+            var deletedEmployee=pair.second;
+
+            if(listEmployee.stream().noneMatch(e->e.ID().equals(deletedEmployee.ID()))){
+                return;
+            }
+            listEmployee.remove(position);
+            adapter.notifyItemRemoved(position);
+            updateEmployeeCount();
+
+        });
+
+        employeeViewModel.getObservableUpdatedItem().observe(this,pair->{
+            int position=pair.first;
+            var updatedEmployee=pair.second;
+
+
+            var employeeNeedToBeUpdated=listEmployee.get(position);
+            if (employeeNeedToBeUpdated.equals(updatedEmployee)) {
+                return;
+            }
+            listEmployee.set(position,updatedEmployee);
+            adapter.notifyItemChanged(position);
+        });
+    }
+
+    private void updateEmployeeCount() {
+        tvEmployeeCount.setText(getString(R.string.employees_count, listEmployee.size()));
+    }
+
+    private void setupAdapter(){
+
+        var authenticator = Authenticator.getInstance();
+        var userId = authenticator.getCurrentUserId();
+
+        var sessionEmployee = listEmployee.stream()
+                .filter(e -> e.ID().equals(userId))
+                .findFirst()
+                .orElse(null);
+
+        adapter = new EmployeesAdapter(this, sessionEmployee, listEmployee, null);
+        recyclerViewEmployee.setAdapter(adapter);
+    }
+
+
+
+
 
 }

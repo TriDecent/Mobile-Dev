@@ -47,23 +47,29 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
         var selectedEmployee = employees.get(position);
         holder.bindData(selectedEmployee);
 
-        holder.cvEmployee.setOnClickListener(v -> {
-            var dialog = new EmployeeDetailsDialog(context, selectedEmployee, currentSessionEmployee);
-            dialog.show();
+        if(employeeViewModel!=null){
+            holder.cvEmployee.setOnClickListener(v -> {
+                var dialog = new EmployeeDetailsDialog(context, selectedEmployee, currentSessionEmployee);
+                dialog.show();
 
-            dialog.setOnEmployeeUpdateListener(updatedEmployee ->
-                    employeeViewModel
-                            .update(selectedEmployee, updatedEmployee)
-                            .thenRun(() -> {
+                dialog.setOnEmployeeUpdateListener(updatedEmployee ->
+                        employeeViewModel
+                                .update(selectedEmployee, updatedEmployee)
+                                .thenRun(() -> {
 
-                                // the ones below is not needed because we used the observer in the EmployeesView class
-                                // to listen for changes in the list of employees
-                                // just put here for reference
+                                    // the ones below is not needed because we used the observer in the EmployeesView class
+                                    // to listen for changes in the list of employees
+                                    // just put here for reference
 
-                                // employees.set(position, updatedEmployee);
-                                // notifyItemChanged(position);
-                            }));
-        });
+                                    // employees.set(position, updatedEmployee);
+                                    // notifyItemChanged(position);
+                                }));
+            });
+        }
+        else{
+
+        }
+
 
 
         if (selectedEmployee.IsAdmin()) {
