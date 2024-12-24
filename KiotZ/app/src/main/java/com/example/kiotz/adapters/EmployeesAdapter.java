@@ -1,6 +1,9 @@
 package com.example.kiotz.adapters;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,8 @@ import com.example.kiotz.enums.Gender;
 import com.example.kiotz.models.Employee;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.views.dialogs.EmployeeDetailsDialog;
+import com.example.kiotz.views.managers.activities.DetailEmployeeInforActivity;
+import com.example.kiotz.views.managers.activities.ViewInformationEmployeeActivity;
 
 import java.util.List;
 import java.util.Locale;
@@ -67,6 +72,22 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
             });
         }
         else{
+
+            holder.cvEmployee.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int i=holder.getAdapterPosition();
+                    if(i!=RecyclerView.NO_POSITION){
+                        Employee selectedEmployee=employees.get(i);
+                        if(selectedEmployee!=null){
+                            Intent intent=new Intent(context, DetailEmployeeInforActivity.class);
+                            intent.putExtra("dataEmployee",selectedEmployee);
+                            startActivity(context,intent,null);
+                        }
+                    }
+
+                }
+            });
 
         }
 

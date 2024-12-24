@@ -61,6 +61,7 @@
             android:textStyle="bold"
             />
         <TextView
+            android:id="@+id/tvIDEmployeeContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/tvIDEmployee"
@@ -81,6 +82,7 @@
             android:textStyle="bold"
             />
         <TextView
+            android:id="@+id/tvNameEmployeeContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/tvNameEmployee"
@@ -101,6 +103,7 @@
             android:textStyle="bold"
             />
         <TextView
+            android:id="@+id/tvEmailEmployeeContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/tvEmailEmployee"
@@ -121,6 +124,7 @@
             android:textStyle="bold"
             />
         <TextView
+            android:id="@+id/tvGenderEmployeeContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/tvGenderEmployee"
@@ -141,6 +145,7 @@
             android:textStyle="bold"
             />
         <TextView
+            android:id="@+id/tvDateEmployeeContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/tvDateEmployee"
@@ -161,6 +166,7 @@
             android:textStyle="bold"
             />
         <TextView
+            android:id="@+id/tvPositionEmployeeContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/tvPositionEmployee"

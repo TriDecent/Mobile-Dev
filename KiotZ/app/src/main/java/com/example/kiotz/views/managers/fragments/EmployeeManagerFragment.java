@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.kiotz.AccountCreationActivity;
 import com.example.kiotz.EmployeesView;
 import com.example.kiotz.R;
 import com.example.kiotz.adapters.IItemFragment;
@@ -115,7 +116,12 @@ public class EmployeeManagerFragment extends Fragment implements IItemFragment {
 
     @Override
     public void onItemClick(int position) {
-        if(position==2){
+        if(position==0){
+            Intent i=new Intent(getContext(), AccountCreationActivity.class);
+            startActivity(i);
+
+        }
+        else if(position==2){
             App app=(App) requireActivity().getApplication();
             Intent i = new Intent(getContext(), ViewInformationEmployeeActivity.class);
             i.putExtra("Name",app.getName());

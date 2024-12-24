@@ -28,6 +28,7 @@ import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import com.example.kiotz.views.general.activities.CreateProductActivity;
 import com.example.kiotz.views.managers.activities.DailyStatistics;
+import com.example.kiotz.views.managers.activities.ViewInformationEmployeeActivity;
 import com.example.kiotz.views.managers.data.App;
 
 import java.util.ArrayList;
@@ -147,6 +148,15 @@ public class OverviewFragment extends Fragment {
 
         CardView cardViewViewCount=view.findViewById(R.id.cardViewAccount);
         cardViewViewCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), ViewInformationEmployeeActivity.class);
+                startActivity(i);
+            }
+        });
+
+        CardView cardViewModifyAccount=view.findViewById(R.id.cardViewModifyAccount);
+        cardViewModifyAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), EmployeesView.class);

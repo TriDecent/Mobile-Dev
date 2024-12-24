@@ -2,6 +2,7 @@ package com.example.kiotz.views.managers.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -50,7 +52,8 @@ public class ViewInformationEmployeeActivity extends AppCompatActivity {
         loadEmployees()
                 .thenRun(this::updateEmployeeCount)
                 .thenRun(this::setupAdapter)
-                .thenRun(this::setupObservers);
+                .thenRun(this::setupObservers)
+                .thenRun(this::setupSortButton);
 
 
     }
@@ -149,6 +152,24 @@ public class ViewInformationEmployeeActivity extends AppCompatActivity {
         recyclerViewEmployee.setAdapter(adapter);
     }
 
+    private void sortEmployeeByName(){
+        var comparator= Comparator.comparing(
+                Employee::Name,
+                Comparator.nullsFirst(String::compareTo)
+        );
+        listEmployee.sort(isAscendingSort?comparator:comparator.reversed());
+        isAscendingSort=!isAscendingSort;
+        adapter.notifyDataSetChanged();
+    }
+
+    private void setupSortButton(){
+        imgSortByName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sortEmployeeByName();
+            }
+        });
+    }
 
 
 

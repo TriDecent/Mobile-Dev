@@ -1,6 +1,9 @@
 package com.example.kiotz.views.managers.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,9 +12,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.kiotz.R;
+import com.example.kiotz.models.Employee;
 
 public class DetailEmployeeInforActivity extends AppCompatActivity {
 
+    private TextView tvID,tvName,tvEmail,tvGender,tvDate,tvPosition;
+    ImageView imageViewRole;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,5 +28,56 @@ public class DetailEmployeeInforActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
+        bindingViews();
+
+        loadInformationOfEmployee();
+
+
     }
+
+
+
+    private void bindingViews(){
+        tvID=findViewById(R.id.tvIDEmployeeContent);
+        tvName=findViewById(R.id.tvNameEmployeeContent);
+        tvEmail=findViewById(R.id.tvEmailEmployeeContent);
+        tvGender=findViewById(R.id.tvGenderEmployeeContent);
+        tvDate=findViewById(R.id.tvDateEmployeeContent);
+        tvPosition=findViewById(R.id.tvPositionEmployeeContent);
+        imageViewRole=findViewById(R.id.iconAvatarRole);
+    }
+
+    private void loadInformationOfEmployee(){
+        Intent intent=getIntent();
+        Employee employee=(Employee) intent.getSerializableExtra("dataEmployee");
+        if(employee!=null){
+            tvID.setText(employee.ID());
+            tvName.setText(employee.Name());
+            tvEmail.setText(employee.Email());
+            tvGender.setText(employee.Gender().toString());
+            tvDate.setText(employee.Date());
+            tvPosition.setText(employee.IsAdmin()?"Manager":"Employee");
+            setImageViewRole(employee.Gender().toString(),employee.IsAdmin()?"Manager":"Employee");
+
+        }
+    }
+
+    private void setImageViewRole(String Gender,String position){
+        if(position.equals("Manager")){
+            if(Gender.equals("MALE")){
+                imageViewRole.setImageResource(R.drawable.ic_manager);
+            }
+            else{
+                imageViewRole.setImageResource(R.drawable.ic_manager);
+            }
+        }
+        else{
+            int resource=Gender.equals("MALE")? R.drawable.ic_male_employee:R.drawable.ic_female_employee;
+            imageViewRole.setImageResource(resource);
+        }
+
+    }
+
 }
