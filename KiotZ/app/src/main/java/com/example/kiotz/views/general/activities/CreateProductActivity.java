@@ -1,11 +1,17 @@
 package com.example.kiotz.views.general.activities;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -19,6 +25,7 @@ import com.example.kiotz.models.Product;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
+import com.google.android.material.imageview.ShapeableImageView;
 
 public class CreateProductActivity extends AppCompatActivity {
     private InventoryViewModel<Product> productViewModel;
@@ -31,7 +38,9 @@ public class CreateProductActivity extends AppCompatActivity {
     private Button upload_img_bt;
     private Button discard_bt;
     private Button complete_bt;
-
+    ShapeableImageView imageView;
+    Uri image_uri;
+    ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +53,8 @@ public class CreateProductActivity extends AppCompatActivity {
         });
         initVariables();
         setupViewModel();
+        registerPhotoPicker();
+        setupOnClickListener();
     }
 
     private void setupViewModel() {
@@ -62,6 +73,26 @@ public class CreateProductActivity extends AppCompatActivity {
         upload_img_bt = findViewById(R.id.buttonUploadImg);
         discard_bt = findViewById(R.id.buttonDiscard);
         complete_bt = findViewById(R.id.buttonComplete);
+        imageView = findViewById(R.id.product_img_siv);
+    }
+
+    private void registerPhotoPicker()
+    {
+        // Registers a photo picker activity launcher in single-select mode.
+        pickMedia =
+                registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                    // Callback is invoked after the user selects a media item or closes the
+                    // photo picker.
+                    if (uri != null) {
+//                        TODO: upload image to db
+                        Log.d("PhotoPicker", "Selected URI: " + uri);
+                        image_uri = uri;
+                        imageView.setImageURI(image_uri);
+                    } else {
+                        Log.d("PhotoPicker", "No media selected");
+                    }
+                });
+
     }
 
     private void setupOnClickListener()
@@ -69,6 +100,10 @@ public class CreateProductActivity extends AppCompatActivity {
         upload_img_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Launch the photo picker and let the user choose only images.
+                pickMedia.launch(new PickVisualMediaRequest.Builder()
+                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                        .build());
 
             }
         });
@@ -82,14 +117,54 @@ public class CreateProductActivity extends AppCompatActivity {
                 quantity_et.setText("");
                 unit_et.setText("");
                 category_et.setText("");
+                image_uri = null;
+                imageView.setImageURI(null);
             }
         });
 
         complete_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                SubmitProduct();
             }
         });
+    }
+    private boolean checkProductAlreadyExists()
+    {
+        return false;
+    }
+
+    private boolean checkCleanInput()
+    {
+        if (id_et.getText().length() == 0 || name_et.getText().length() == 0 || price_et.getText().length() == 0 ||
+                quantity_et.getText().length() == 0 || unit_et.getText().length() == 0 || category_et.getText().length() == 0 ||
+                image_uri == null ||
+                containsNumber(String.valueOf(name_et.getText()))  ||
+                containsNumber(String.valueOf(unit_et.getText())) || containsNumber(String.valueOf(category_et.getText()))
+        )
+            return false;
+        return true;
+    }
+
+    private void SubmitProduct()
+    {
+        if (!checkCleanInput())
+        {
+            Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Product product = new Product(String.valueOf(id_et.getText()),String.valueOf(name_et.getText()),
+                String.valueOf(category_et.getText()),Double.parseDouble(String.valueOf(price_et.getText())),
+                String.valueOf(unit_et.getText()), Integer.valueOf(String.valueOf(quantity_et.getText())),
+                "");
+//        TODO: update imageURL to real uri
+        Log.d("SubmitProduct", "SubmitProduct: " + product.toString());
+
+    }
+
+    private boolean containsNumber(String s)
+    {
+        return s.matches(".*\\d.*");
     }
 }

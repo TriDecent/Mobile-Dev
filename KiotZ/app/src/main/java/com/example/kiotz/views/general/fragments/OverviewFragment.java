@@ -21,8 +21,10 @@ import com.example.kiotz.ViewInventoryActivity;
 import com.example.kiotz.authentication.Authenticator;
 import com.example.kiotz.database.FireBaseService;
 import com.example.kiotz.database.dto.EmployeeSerializer;
+import com.example.kiotz.database.dto.ReceiptSerializer;
 import com.example.kiotz.inventory.Inventory;
 import com.example.kiotz.models.Employee;
+import com.example.kiotz.models.Receipt;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
@@ -31,6 +33,7 @@ import com.example.kiotz.views.managers.activities.DailyStatistics;
 import com.example.kiotz.views.managers.activities.ViewInformationEmployeeActivity;
 import com.example.kiotz.views.managers.data.App;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -53,8 +56,10 @@ public class OverviewFragment extends Fragment {
 
     private InventoryViewModel<Employee> employeeViewModel;
     private List<Employee> employees = new ArrayList<>();
+    private List<Receipt> receiptList;
     private CompletableFuture<Void> employeesLoadedFuture;
-
+    InventoryViewModel<Receipt> receiptViewModel;
+    TextView tvRevenueValue, tvOrderValue, tvProfitValue, tvDayMonth;
     public OverviewFragment() {
         // Required empty public constructor
     }
@@ -88,7 +93,10 @@ public class OverviewFragment extends Fragment {
         setupViewModel();
 
         employeesLoadedFuture = loadEmployees()
-                .thenRunAsync(this::getInformationCurrentUser);
+                .thenCompose(aVoid -> loadReceipt())
+                .thenRunAsync(this::getInformationCurrentUser)
+                .thenRun(this::initVariables)
+                .thenRun(this::updateStatisticTab);
 
     }
 
@@ -199,9 +207,16 @@ public class OverviewFragment extends Fragment {
     private void setupViewModel() {
         var employeeInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new EmployeeSerializer())));
         employeeViewModel = InventoryViewModelFactory.getInstance().getViewModel(employeeInventory, Employee.class);
+
+        var receiptInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new ReceiptSerializer())));
+        receiptViewModel = InventoryViewModelFactory.getInstance().getViewModel(receiptInventory, Receipt.class);
     }
     private CompletableFuture<Void> loadEmployees() {
         return employeeViewModel.getAll().thenAccept(fetchedEmployees->employees=new ArrayList<>(fetchedEmployees));
+    }
+
+    private CompletableFuture<Void> loadReceipt() {
+        return receiptViewModel.getAll().thenAccept(fetched_receipts  -> receiptList = new ArrayList<>(fetched_receipts));
     }
 
 
@@ -232,7 +247,28 @@ public class OverviewFragment extends Fragment {
 
     }
 
+    private void initVariables()
+    {
+        tvRevenueValue = getView().findViewById(R.id.tvRevenueValue);
+        tvOrderValue = getView().findViewById(R.id.tvOrderValue);
+        tvProfitValue = getView().findViewById(R.id.tvProfitValue);
+        tvDayMonth = getView().findViewById(R.id.tvDayMonth);
 
+    }
+
+    private void updateStatisticTab()
+    {
+        LocalDateTime current_localDateTime = LocalDateTime.now();
+        requireActivity().runOnUiThread(() -> {
+            tvDayMonth.setText(current_localDateTime.getDayOfWeek() + ", " +
+                    current_localDateTime.getDayOfMonth() + "/" +
+                    current_localDateTime.getMonthValue() + "/" +
+                    current_localDateTime.getYear());
+        });
+
+//        TODO: update revenue, order and profit
+
+    }
 
 
 
