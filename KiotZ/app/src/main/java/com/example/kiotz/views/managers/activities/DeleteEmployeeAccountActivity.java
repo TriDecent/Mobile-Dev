@@ -1,10 +1,11 @@
 package com.example.kiotz.views.managers.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kiotz.R;
+import com.example.kiotz.adapters.DeleteEmployeesAdapter;
 import com.example.kiotz.adapters.EmployeesAdapter;
+import com.example.kiotz.adapters.IItemFragment;
 import com.example.kiotz.authentication.Authenticator;
 import com.example.kiotz.database.FireBaseService;
 import com.example.kiotz.database.dto.EmployeeSerializer;
@@ -27,35 +30,37 @@ import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import com.example.kiotz.views.managers.data.App;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class ViewInformationEmployeeActivity extends AppCompatActivity {
+public class DeleteEmployeeAccountActivity extends AppCompatActivity implements IItemFragment {
 
     private TextView tvEmployeeCount,tvEmployeeName,tvEmployeePosition;
     private ImageView imgSortByName;
     private RecyclerView recyclerViewEmployee;
+
     private InventoryViewModel<Employee> employeeViewModel;
+
     private List<Employee> listEmployee;
-    private EmployeesAdapter adapter;
+
+    private DeleteEmployeesAdapter adapter;
     private boolean isAscendingSort=true;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_view_information_employee);
+        setContentView(R.layout.activity_delete_employee_account);
         setupWindowInsets();
+
         initializeViews();
         setupStatusBar();
-
         setupViewModel();
         loadEmployees()
                 .thenRun(this::updateEmployeeCount)
                 .thenRun(this::setupAdapter)
-                .thenRun(this::setupObservers)
-                .thenRun(this::setupSortButton);
-
+                .thenRun(this::setupObservers);
 
     }
 
@@ -69,12 +74,13 @@ public class ViewInformationEmployeeActivity extends AppCompatActivity {
 
     private void initializeViews() {
         tvEmployeeCount = findViewById(R.id.tv_employee_count);
-        tvEmployeeName = findViewById(R.id.tv_status_bar_employee_name);
-        tvEmployeePosition = findViewById(R.id.tv_status_bar_position);
-        imgSortByName = findViewById(R.id.iv_employee_sort_by_name);
-        recyclerViewEmployee = findViewById(R.id.rv_employees);
+        tvEmployeeName = findViewById(R.id.tv_status_bar_employee_name_delete);
+        tvEmployeePosition = findViewById(R.id.tv_status_bar_position_delete);
+        imgSortByName = findViewById(R.id.iv_employee_sort_by_name_delete);
+        recyclerViewEmployee = findViewById(R.id.rv_employees_delete);
         recyclerViewEmployee.setLayoutManager(new LinearLayoutManager(this));
         listEmployee=new ArrayList<>();
+
     }
 
     private void setupStatusBar() {
@@ -147,30 +153,30 @@ public class ViewInformationEmployeeActivity extends AppCompatActivity {
                 .findFirst()
                 .orElse(null);
 
-        adapter = new EmployeesAdapter(this, sessionEmployee, listEmployee, null);
+        //adapter = new EmployeesAdapter(this, sessionEmployee, listEmployee, null);
+        //recyclerViewEmployee.setAdapter(adapter);
+
+        adapter=new DeleteEmployeesAdapter(this,listEmployee,this);
         recyclerViewEmployee.setAdapter(adapter);
     }
 
-    private void sortEmployeeByName(){
-        var comparator= Comparator.comparing(
-                Employee::Name,
-                Comparator.nullsFirst(String::compareTo)
-        );
-        listEmployee.sort(isAscendingSort?comparator:comparator.reversed());
-        isAscendingSort=!isAscendingSort;
-        adapter.notifyDataSetChanged();
+
+    @Override
+    public void onItemClick(int position) {
+        Employee employee=listEmployee.get(position);
+
+        new AlertDialog.Builder(this)
+                .setTitle("Confirm delete")
+                .setMessage("Are you sure you want to delete this account?")
+                .setPositiveButton("Yes",(dialog,which)->{
+                            employeeViewModel.delete(employee);
+                            Toast.makeText(this,"Delete account success",Toast.LENGTH_SHORT).show();
+                        })
+                .setNegativeButton("No",(dialog,which)->{
+                    dialog.dismiss();
+                })
+                .show();
+
     }
-
-    private void setupSortButton(){
-        imgSortByName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sortEmployeeByName();
-            }
-        });
-    }
-
-
-
 
 }

@@ -20,6 +20,7 @@ import com.example.kiotz.R;
 import com.example.kiotz.adapters.IItemFragment;
 import com.example.kiotz.adapters.ItemFragmentManagerAdapter;
 import com.example.kiotz.models.ItemFragment;
+import com.example.kiotz.views.managers.activities.DeleteEmployeeAccountActivity;
 import com.example.kiotz.views.managers.activities.ViewInformationEmployeeActivity;
 import com.example.kiotz.views.managers.data.App;
 
@@ -121,14 +122,16 @@ public class EmployeeManagerFragment extends Fragment implements IItemFragment {
             startActivity(i);
 
         }
+        else if(position==1){
+            Intent i=new Intent(getContext(), DeleteEmployeeAccountActivity.class);
+            startActivity(i);
+        }
         else if(position==2){
             App app=(App) requireActivity().getApplication();
             Intent i = new Intent(getContext(), ViewInformationEmployeeActivity.class);
-            i.putExtra("Name",app.getName());
-            i.putExtra("Position",app.getPosition());
             startActivity(i);
         }
-        else if(position==3){
+        else{
             Intent i = new Intent(getContext(), EmployeesView.class);
             startActivity(i);
         }

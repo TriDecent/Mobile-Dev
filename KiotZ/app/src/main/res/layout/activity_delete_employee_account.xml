@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.managers.activities.ViewInformationEmployeeActivity">
+    tools:context=".views.managers.activities.DeleteEmployeeAccountActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintViewAccount"
@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_status_bar_employee_name"
+            android:id="@+id/tv_status_bar_employee_name_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -38,19 +38,18 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_status_bar_position"
+            android:id="@+id/tv_status_bar_position_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:text="Manager"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/tv_status_bar_employee_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_status_bar_employee_name" />
+            app:layout_constraintStart_toStartOf="@id/tv_status_bar_employee_name_delete"
+            app:layout_constraintTop_toBottomOf="@id/tv_status_bar_employee_name_delete" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <View
         android:id="@+id/highlightBar"
@@ -73,14 +72,14 @@
         android:textColor="@color/md_theme_scrim"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_employee_sort_by_name"
-        app:layout_constraintEnd_toStartOf="@+id/iv_employee_sort_by_name"
-        app:layout_constraintTop_toTopOf="@+id/iv_employee_sort_by_name">
+        app:layout_constraintBottom_toBottomOf="@+id/iv_employee_sort_by_name_delete"
+        app:layout_constraintEnd_toStartOf="@+id/iv_employee_sort_by_name_delete"
+        app:layout_constraintTop_toTopOf="@+id/iv_employee_sort_by_name_delete">
 
     </TextView>
 
     <ImageView
-        android:id="@+id/iv_employee_sort_by_name"
+        android:id="@+id/iv_employee_sort_by_name_delete"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginRight="15dp"
@@ -103,9 +102,8 @@
         app:layout_constraintStart_toStartOf="@+id/highlightBar"
         app:layout_constraintTop_toTopOf="@+id/highlightBar" />
 
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_employees"
+        android:id="@+id/rv_employees_delete"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -117,6 +115,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/highlightBar"
-        tools:listitem="@layout/item_employee_view" />
+        tools:listitem="@layout/item_employee_delete" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

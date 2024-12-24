@@ -11,22 +11,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kiotz.R;
-import com.example.kiotz.models.ItemFragment;
+import com.example.kiotz.models.Employee;
 
 import java.util.List;
 
-public class ItemFragmentManagerAdapter extends RecyclerView.Adapter<ItemFragmentManagerAdapter.MyViewHolder> {
+public class DeleteEmployeesAdapter extends RecyclerView.Adapter<DeleteEmployeesAdapter.MyViewHolder> {
 
 
     private final Context context;
-    private final List<ItemFragment> itemFragmentList;
+    private final List<Employee> employees;
+
     private final IItemFragment iItemFragment;
 
-
-
-    public ItemFragmentManagerAdapter(Context context, List<ItemFragment> itemFragments,IItemFragment iItemFragment) {
+    public DeleteEmployeesAdapter(Context context, List<Employee> employees,IItemFragment iItemFragment) {
         this.context = context;
-        this.itemFragmentList = itemFragments;
+        this.employees = employees;
         this.iItemFragment=iItemFragment;
     }
 
@@ -35,32 +34,34 @@ public class ItemFragmentManagerAdapter extends RecyclerView.Adapter<ItemFragmen
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //return null;
         LayoutInflater layoutInflater=LayoutInflater.from(context);
-        View view=layoutInflater.inflate(R.layout.item_fragment,parent,false);
-        return new ItemFragmentManagerAdapter.MyViewHolder(view,this.iItemFragment);
+        View view=layoutInflater.inflate(R.layout.item_employee_delete,parent,false);
+        return new MyViewHolder(view,iItemFragment);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        ItemFragment currentItem=itemFragmentList.get(position);
-        holder.tvTitle.setText(currentItem.getTitle());
-        holder.image.setImageResource(currentItem.getImage());
+
+        Employee currentEmployee=employees.get(position);
+        holder.tvID.setText(currentEmployee.ID());
+        holder.tvName.setText(currentEmployee.Name());
 
     }
 
     @Override
     public int getItemCount() {
-        return itemFragmentList.size();
+        return employees.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tvTitle;
-        ImageView image;
+        private  ImageView imageViewAvatar,imageViewRecycle;
+        private  TextView tvID, tvName;
+
         public MyViewHolder(@NonNull View itemView,IItemFragment iItemFragment) {
             super(itemView);
-            bindingView();
+            bindingViews(itemView);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            imageViewRecycle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(iItemFragment!=null){
@@ -68,18 +69,21 @@ public class ItemFragmentManagerAdapter extends RecyclerView.Adapter<ItemFragmen
                         if(position!=RecyclerView.NO_POSITION){
                             iItemFragment.onItemClick(position);
                         }
-
                     }
+
+
                 }
             });
 
         }
 
-        public void bindingView(){
-            tvTitle=itemView.findViewById(R.id.tv_item_fragment);
-            image=itemView.findViewById(R.id.imageView_item_fragment);
+
+        private void bindingViews(View v){
+            imageViewAvatar=v.findViewById(R.id.iv_employee_avatar_delete);
+            imageViewRecycle=v.findViewById(R.id.imageViewRecycleBin);
+            tvID=v.findViewById(R.id.tv_employee_id_delete);
+            tvName=v.findViewById(R.id.tv_employee_name_delete);
+
         }
     }
-
-
 }

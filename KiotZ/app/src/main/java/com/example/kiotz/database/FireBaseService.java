@@ -11,6 +11,8 @@ import com.example.kiotz.database.dto.ISerializer;
 import com.example.kiotz.database.dto.ProductSerializer;
 import com.example.kiotz.database.dto.ReceiptSerializer;
 import com.example.kiotz.models.IIdentifiable;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -74,6 +76,8 @@ public class FireBaseService<T extends IIdentifiable> implements IDataBaseServic
                             future.completeExceptionally(databaseError.toException());
                         } else {
                             future.complete(null);
+
+
                         }
                     });
                 }
@@ -84,6 +88,8 @@ public class FireBaseService<T extends IIdentifiable> implements IDataBaseServic
                 future.completeExceptionally(databaseError.toException());
             }
         });
+
+
         return future;
     }
 
@@ -176,4 +182,6 @@ public class FireBaseService<T extends IIdentifiable> implements IDataBaseServic
 
         return future;
     }
+
+
 }
