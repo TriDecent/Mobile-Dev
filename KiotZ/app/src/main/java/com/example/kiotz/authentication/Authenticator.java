@@ -2,6 +2,8 @@ package com.example.kiotz.authentication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+import android.util.Pair;
 
 import com.example.kiotz.models.UserCredentials;
 import com.example.kiotz.views.general.activities.LoginActivity;
@@ -9,13 +11,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.functions.FirebaseFunctions;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class Authenticator {
     private static Authenticator instance;
     private final FirebaseAuth mAuth;
+    private final FirebaseFunctions functions;
 
     private Authenticator() {
         this.mAuth = FirebaseAuth.getInstance();
+        this.functions = FirebaseFunctions.getInstance();
     }
 
     public static synchronized Authenticator getInstance() {
@@ -46,6 +55,30 @@ public class Authenticator {
                     }
                     listener.onComplete(task);
                 });
+    }
+
+    public CompletableFuture<Pair<Boolean, String>> deleteAccount(String uid) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("userId", uid);
+
+        var future = new CompletableFuture<Pair<Boolean, String>>();
+
+        functions
+                .getHttpsCallable("deleteUser")
+                .call(data)
+                .addOnSuccessListener(result -> {
+                    Map<String, Object> resultData = (Map<String, Object>) result.getData();
+                    boolean success = (boolean) resultData.get("isSuccess");
+                    String error = (String) resultData.get("error");
+
+                    future.complete(new Pair<>(success, error));
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Authenticator", "Failed to call function", e);
+                    future.complete(new Pair<>(false, e.getMessage()));
+                });
+
+        return future;
     }
 
     public String getCurrentUserId() {
