@@ -1,6 +1,7 @@
 package com.example.kiotz.views.general.activities;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -26,9 +27,9 @@ public class CreateProductActivity extends AppCompatActivity {
     private  EditText price_et;
     private  EditText quantity_et;
     private  EditText unit_et;
-    private  EditText category;
+    private  EditText category_et;
     private Button upload_img_bt;
-    private Button create_more_bt;
+    private Button discard_bt;
     private Button complete_bt;
 
     @Override
@@ -41,7 +42,7 @@ public class CreateProductActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        initVariables();
         setupViewModel();
     }
 
@@ -57,9 +58,38 @@ public class CreateProductActivity extends AppCompatActivity {
         price_et = findViewById(R.id.editTextSellingPrice);
         quantity_et = findViewById(R.id.editTextQuantily);
         unit_et = findViewById(R.id.editUnit);
-        category = findViewById(R.id.editTextCategory);
+        category_et = findViewById(R.id.editTextCategory);
         upload_img_bt = findViewById(R.id.buttonUploadImg);
-        create_more_bt = findViewById(R.id.buttonCreateMore);
+        discard_bt = findViewById(R.id.buttonDiscard);
         complete_bt = findViewById(R.id.buttonComplete);
+    }
+
+    private void setupOnClickListener()
+    {
+        upload_img_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        discard_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                id_et.setText("");
+                name_et.setText("");
+                price_et.setText("");
+                quantity_et.setText("");
+                unit_et.setText("");
+                category_et.setText("");
+            }
+        });
+
+        complete_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 }
