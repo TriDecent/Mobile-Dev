@@ -105,7 +105,33 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
     }
 
     private void showDeleteConfirmationDialog(Employee willBeDeletedEmployee) {
-       
+        new AlertDialog.Builder(context)
+                .setTitle("Confirm Delete")
+                .setMessage(
+                        "Are you sure to delete the employee id " +
+                                willBeDeletedEmployee.ID() +
+                                " and " + (willBeDeletedEmployee.Gender() == Gender.FEMALE ? "her" : "his") +
+                                " account?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    var authenticator = Authenticator.getInstance();
+                    authenticator.deleteAccount(willBeDeletedEmployee.ID())
+                            .thenAccept(result -> {
+                                if (result.first) {
+                                    employeeViewModel.delete(willBeDeletedEmployee).thenRun(() ->
+                                            Toast.makeText(context,
+                                                    "Employee and account deleted successfully",
+                                                    Toast.LENGTH_SHORT).show());
+
+                                } else {
+                                    Toast.makeText(context,
+                                            "Failed to delete account: " + result.second,
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                })
+                .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
     }
 
     private void setupViewDetailsClickListener(MyViewHolder holder) {
