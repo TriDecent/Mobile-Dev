@@ -33,8 +33,9 @@ public class RegisterActivity extends AppCompatActivity {
     TextView tvSignIn;
     Button btnRegister;
 
-    TextInputEditText etEmail;
-    TextInputEditText etPassword;
+    TextInputEditText tietEmail;
+    TextInputEditText tietPassword;
+    TextInputEditText tietName;
 
     ProgressBar pbSignUp;
     Authenticator authenticator;
@@ -55,8 +56,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         tvSignIn = findViewById(R.id.tv_sign_in);
         btnRegister = findViewById(R.id.btn_register);
-        etEmail = findViewById(R.id.et_sign_up_email);
-        etPassword = findViewById(R.id.et_sign_up_password);
+        tietEmail = findViewById(R.id.et_sign_up_email);
+        tietPassword = findViewById(R.id.et_sign_up_password);
+        tietName = findViewById(R.id.et_sign_up_username);
 
         pbSignUp = findViewById(R.id.pb_sign_up);
         authenticator = Authenticator.getInstance();
@@ -73,17 +75,18 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(v -> {
             pbSignUp.setVisibility(ProgressBar.VISIBLE);
 
-            String email = Objects.requireNonNull(etEmail.getText()).toString();
-            String password = Objects.requireNonNull(etPassword.getText()).toString();
+            String email = Objects.requireNonNull(tietEmail.getText()).toString();
+            String password = Objects.requireNonNull(tietPassword.getText()).toString();
+            String name = Objects.requireNonNull(tietName.getText()).toString();
 
             if (TextUtils.isEmpty(email)) {
-                etEmail.setError("Email is required");
+                tietEmail.setError("Email is required");
                 pbSignUp.setVisibility(ProgressBar.GONE);
                 return;
             }
 
             if (TextUtils.isEmpty(password)) {
-                etPassword.setError("Password is required");
+                tietPassword.setError("Password is required");
                 pbSignUp.setVisibility(ProgressBar.GONE);
                 return;
             }
@@ -93,11 +96,15 @@ public class RegisterActivity extends AppCompatActivity {
             authenticator.register(userCredentials, task -> {
                 pbSignUp.setVisibility(ProgressBar.GONE);
                 if (task.isSuccessful()) {
-                    var employeeId = authenticator.getCurrentUserId();
-                    employeeViewModel.add(new Employee(employeeId, email, null, null, null, false));
-                    Toast.makeText(this, "Account created.", Toast.LENGTH_SHORT).show();
+                    var employeeId = Objects.requireNonNull(task.getResult().getUser()).getUid();
+                    var newEmployee = new Employee(employeeId, email, name, null, null, false);
+                    employeeViewModel
+                            .add(newEmployee)
+                            .thenRun(() ->
+                                    Toast.makeText(this, "Account created.", Toast.LENGTH_SHORT).show());
                 } else {
-                    Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Account creation failed. Please try again. " +
+                            "Your email may already be in use.", Toast.LENGTH_SHORT).show();
                 }
             });
         });
