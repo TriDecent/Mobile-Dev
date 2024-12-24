@@ -49,10 +49,10 @@ public class ViewInventoryActivity extends AppCompatActivity implements IRecycle
 
     private void test(){
         products=new ArrayList<>();
-        products.add(new Product("MH001","Hao Hao noodles","Food",2500,"package",3000,"path/QRCode","/path/to/img1"));
-        products.add(new Product("MH002","Coca Cola","Beverage",9000,"bottle",5000,"path/QRCode","/path/to/img2"));
-        products.add(new Product("MH003","Pepsi","Beverage",9000,"bottle",10000,"path/QRCode","/path/to/img3"));
-        products.add(new Product("MH004","Milo","Milk",8000,"bottle",10000,"path/QRCode","/path/to/img4"));
+        products.add(new Product("MH001","Hao Hao noodles","Food",2500,"package",3000,"/path/to/img1"));
+        products.add(new Product("MH002","Coca Cola","Beverage",9000,"bottle",5000,"/path/to/img2"));
+        products.add(new Product("MH003","Pepsi","Beverage",9000,"bottle",10000,"/path/to/img3"));
+        products.add(new Product("MH004","Milo","Milk",8000,"bottle",10000,"/path/to/img4"));
 
 
 
