@@ -13,29 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kiotz.R;
 import com.example.kiotz.models.Product;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 public class ProductsAdapterEmployee extends RecyclerView.Adapter<ProductsAdapterEmployee.MyViewHolder> {
     private final Context context;
-    private final List<Product> tempProductList; // Must change after implementing the database
+    private final List<Product> products;
 
-    public ProductsAdapterEmployee(Context context) {
+    public ProductsAdapterEmployee(Context context, List<Product> products) {
         this.context = context;
-
-        tempProductList = Arrays.asList(
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1, "/path/to/img1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/img1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/img1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece",1, "/path/to/img1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/img1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/img1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/img1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece",1, "/path/to/img1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/img1"),
-                new Product("1211", "RITZ: Original Cracker", "Electronics", 10, "Piece", 1,"/path/to/img1")
-        );
+        this.products = products;
     }
 
     @NonNull
@@ -48,19 +35,19 @@ public class ProductsAdapterEmployee extends RecyclerView.Adapter<ProductsAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ProductsAdapterEmployee.MyViewHolder holder, int position) {
-        if (tempProductList == null) return;
+        if (products == null) return;
 
-        var currentStudent = tempProductList.get(position);
+        var currentStudent = products.get(position);
         holder.bindData(currentStudent);
     }
 
     @Override
     public int getItemCount() {
-        return tempProductList.size();
+        return products.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tvId, tvName, tvPrice;
+        private final TextView tvId, tvName, tvPrice, tvQuantity;
         private final CardView cvStudent;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -68,6 +55,7 @@ public class ProductsAdapterEmployee extends RecyclerView.Adapter<ProductsAdapte
             tvId = itemView.findViewById(R.id.tv_product_id);
             tvName = itemView.findViewById(R.id.tv_product_name);
             tvPrice = itemView.findViewById(R.id.tv_product_price);
+            tvQuantity = itemView.findViewById(R.id.tv_product_quantity);
             cvStudent = itemView.findViewById(R.id.cv_contact);
         }
 
@@ -75,6 +63,7 @@ public class ProductsAdapterEmployee extends RecyclerView.Adapter<ProductsAdapte
             tvId.setText(String.format(Locale.getDefault(), "SP%s", product.ID()));
             tvName.setText(String.format(Locale.getDefault(), "%s", product.Name()));
             tvPrice.setText(String.format(Locale.getDefault(), "$%s", product.Price()));
+            tvQuantity.setText(String.format(Locale.getDefault(), "Quantity: %s", product.Quantity()));
         }
     }
 }

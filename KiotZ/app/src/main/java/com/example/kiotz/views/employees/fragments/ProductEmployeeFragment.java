@@ -8,10 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.kiotz.adapters.ProductsAdapterEmployee;
 
 import com.example.kiotz.R;
 
@@ -74,9 +70,9 @@ public class ProductEmployeeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        ProductsAdapterEmployee productsAdapter=new ProductsAdapterEmployee(view.getContext());
-        RecyclerView recyclerViewProduct=view.findViewById(R.id.recycleViewProductEmployee);
-        recyclerViewProduct.setAdapter(productsAdapter);
-        recyclerViewProduct.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        //        ProductsAdapterEmployee productsAdapter=new ProductsAdapterEmployee(view.getContext());
+        //        RecyclerView recyclerViewProduct=view.findViewById(R.id.recycleViewProductEmployee);
+        //        recyclerViewProduct.setAdapter(productsAdapter);
+        //        recyclerViewProduct.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
 }

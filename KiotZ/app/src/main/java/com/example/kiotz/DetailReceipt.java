@@ -148,8 +148,8 @@ public class DetailReceipt extends AppCompatActivity {
 
     private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        productAdapter = new ProductsAdapterEmployee(this);
-        recyclerView.setAdapter(productAdapter);
+        //        productAdapter = new ProductsAdapterEmployee(this);
+        //        recyclerView.setAdapter(productAdapter);
 //        TODO: pass in real product list after sample product data is inserted
     }
 
