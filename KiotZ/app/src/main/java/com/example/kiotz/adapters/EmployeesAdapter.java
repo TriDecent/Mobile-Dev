@@ -9,22 +9,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kiotz.R;
+import com.example.kiotz.authentication.Authenticator;
 import com.example.kiotz.enums.Gender;
 import com.example.kiotz.models.Employee;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.views.dialogs.EmployeeDetailsDialog;
 import com.example.kiotz.views.managers.activities.DetailEmployeeInforActivity;
-import com.example.kiotz.views.managers.activities.ViewInformationEmployeeActivity;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyViewHolder> {
     private final Context context;
@@ -51,59 +52,88 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         var selectedEmployee = employees.get(position);
         holder.bindData(selectedEmployee);
+        setupClickListeners(holder, selectedEmployee);
+        setEmployeeAvatar(holder, selectedEmployee);
+    }
 
-        if(employeeViewModel!=null){
-            holder.cvEmployee.setOnClickListener(v -> {
-                var dialog = new EmployeeDetailsDialog(context, selectedEmployee, currentSessionEmployee);
-                dialog.show();
-
-                dialog.setOnEmployeeUpdateListener(updatedEmployee ->
-                        employeeViewModel
-                                .update(selectedEmployee, updatedEmployee)
-                                .thenRun(() -> {
-
-                                    // the ones below is not needed because we used the observer in the EmployeesView class
-                                    // to listen for changes in the list of employees
-                                    // just put here for reference
-
-                                    // employees.set(position, updatedEmployee);
-                                    // notifyItemChanged(position);
-                                }));
-            });
+    private void setupClickListeners(MyViewHolder holder, Employee selectedEmployee) {
+        if (employeeViewModel != null) {
+            setupEditClickListener(holder, selectedEmployee);
+            setupDeleteClickListener(holder, selectedEmployee);
+        } else {
+            setupViewDetailsClickListener(holder);
         }
-        else{
+    }
 
-            holder.cvEmployee.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int i=holder.getAdapterPosition();
-                    if(i!=RecyclerView.NO_POSITION){
-                        Employee selectedEmployee=employees.get(i);
-                        if(selectedEmployee!=null){
-                            Intent intent=new Intent(context, DetailEmployeeInforActivity.class);
-                            intent.putExtra("dataEmployee",selectedEmployee);
-                            startActivity(context,intent,null);
-                        }
-                    }
+    private void setupEditClickListener(MyViewHolder holder, Employee selectedEmployee) {
+        holder.cvEmployee.setOnClickListener(v -> {
+            var dialog = new EmployeeDetailsDialog(context, selectedEmployee, currentSessionEmployee);
+            dialog.show();
+            dialog.setOnEmployeeUpdateListener(updatedEmployee ->
+                    employeeViewModel
+                            .update(selectedEmployee, updatedEmployee)
+                            .thenRun(() -> {
+                                // the ones below is not needed
+                                // because I used the observer in the EmployeesView class
+                                // to listen for changes in the list of employees
+                                // just put here for reference
 
+                                // employees.set(position, updatedEmployee);
+                                // notifyItemChanged(position);
+                            }));
+        });
+    }
+
+    private void setupDeleteClickListener(MyViewHolder holder, Employee selectedEmployee) {
+        holder.cvEmployee.setOnLongClickListener(v -> {
+            if (selectedEmployee == currentSessionEmployee) {
+                showCannotDeleteOwnAccountDialog();
+            } else {
+                showDeleteConfirmationDialog(selectedEmployee);
+            }
+            return true;
+        });
+    }
+
+    private void showCannotDeleteOwnAccountDialog() {
+        new AlertDialog.Builder(context)
+                .setTitle("Not Available")
+                .setMessage("You cannot remove your own account")
+                .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
+    }
+
+    private void showDeleteConfirmationDialog(Employee willBeDeletedEmployee) {
+       
+    }
+
+    private void setupViewDetailsClickListener(MyViewHolder holder) {
+        holder.cvEmployee.setOnClickListener(v -> {
+            int position = holder.getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Employee selectedEmployee = employees.get(position);
+                if (selectedEmployee != null) {
+                    navigateToDetails(selectedEmployee);
                 }
-            });
+            }
+        });
+    }
 
-        }
+    private void navigateToDetails(Employee employee) {
+        Intent intent = new Intent(context, DetailEmployeeInforActivity.class);
+        intent.putExtra("dataEmployee", employee);
+        startActivity(context, intent, null);
+    }
 
-
-
-        if (selectedEmployee.IsAdmin()) {
+    private void setEmployeeAvatar(MyViewHolder holder, Employee employee) {
+        if (employee.IsAdmin()) {
             holder.ivEmployee.setImageResource(R.drawable.ic_manager);
-            return;
-        }
-
-        if (selectedEmployee.Gender() == Gender.FEMALE) {
+        } else if (employee.Gender() == Gender.FEMALE) {
             holder.ivEmployee.setImageResource(R.drawable.ic_female_employee);
-            return;
+        } else {
+            holder.ivEmployee.setImageResource(R.drawable.ic_male_employee);
         }
-
-        holder.ivEmployee.setImageResource(R.drawable.ic_male_employee);
     }
 
     @Override
