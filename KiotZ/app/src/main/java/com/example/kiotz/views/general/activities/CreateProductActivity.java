@@ -27,6 +27,8 @@ import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.time.LocalDateTime;
+
 public class CreateProductActivity extends AppCompatActivity {
     private InventoryViewModel<Product> productViewModel;
     private EditText id_et;
@@ -39,7 +41,7 @@ public class CreateProductActivity extends AppCompatActivity {
     private Button discard_bt;
     private Button complete_bt;
     ShapeableImageView imageView;
-    Uri image_uri;
+    Uri local_image_uri;
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +88,12 @@ public class CreateProductActivity extends AppCompatActivity {
                     if (uri != null) {
 //                        TODO: upload image to db
                         Log.d("PhotoPicker", "Selected URI: " + uri);
-                        image_uri = uri;
-                        imageView.setImageURI(image_uri);
+                        local_image_uri = uri;
+                        imageView.setImageURI(local_image_uri);
                     } else {
                         Log.d("PhotoPicker", "No media selected");
                         imageView.setImageURI(null);
-                        image_uri = null;
+                        local_image_uri = null;
                     }
                 });
 
@@ -133,7 +135,7 @@ public class CreateProductActivity extends AppCompatActivity {
         quantity_et.setText("");
         unit_et.setText("");
         category_et.setText("");
-        image_uri = null;
+        local_image_uri = null;
         imageView.setImageURI(null);
     }
 
@@ -146,7 +148,7 @@ public class CreateProductActivity extends AppCompatActivity {
     {
         if (id_et.getText().length() == 0 || name_et.getText().length() == 0 || price_et.getText().length() == 0 ||
                 quantity_et.getText().length() == 0 || unit_et.getText().length() == 0 || category_et.getText().length() == 0 ||
-                image_uri == null ||
+                local_image_uri == null ||
                 containsNumber(String.valueOf(name_et.getText()))  ||
                 containsNumber(String.valueOf(unit_et.getText())) || containsNumber(String.valueOf(category_et.getText()))
         )
@@ -161,14 +163,19 @@ public class CreateProductActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show();
             return;
         }
+        LocalDateTime localDateTime = LocalDateTime.now();
+        //upload image
+        productViewModel.uploadImage(local_image_uri, String.valueOf(name_et.getText()) + localDateTime.toString()).thenAccept(remote_uri -> {
+            Product product = new Product(String.valueOf(id_et.getText()),String.valueOf(name_et.getText()),
+                    String.valueOf(category_et.getText()),Double.parseDouble(String.valueOf(price_et.getText())),
+                    String.valueOf(unit_et.getText()), Integer.valueOf(String.valueOf(quantity_et.getText())),
+                    remote_uri);
+                    productViewModel.add(product);
+                    Log.d("SubmitProduct", "SubmitProduct: " + product.toString());
+                    Log.d("RemoteUri",remote_uri);
+        });
 
-        Product product = new Product(String.valueOf(id_et.getText()),String.valueOf(name_et.getText()),
-                String.valueOf(category_et.getText()),Double.parseDouble(String.valueOf(price_et.getText())),
-                String.valueOf(unit_et.getText()), Integer.valueOf(String.valueOf(quantity_et.getText())),
-                "");
 //        TODO: update imageURL to real uri
-        Log.d("SubmitProduct", "SubmitProduct: " + product.toString());
-        productViewModel.add(product);
         discardInformation();
         Toast.makeText(this, "Product added", Toast.LENGTH_SHORT).show();
     }
