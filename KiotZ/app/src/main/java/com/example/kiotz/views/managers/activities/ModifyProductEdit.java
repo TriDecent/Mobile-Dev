@@ -1,4 +1,4 @@
-package com.example.kiotz.views.general.activities;
+package com.example.kiotz.views.managers.activities;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,7 +27,10 @@ import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import com.google.android.material.imageview.ShapeableImageView;
 
-public class CreateProductActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
+
+public class ModifyProductEdit extends AppCompatActivity {
     private InventoryViewModel<Product> productViewModel;
     private EditText id_et;
     private  EditText name_et;
@@ -40,12 +43,15 @@ public class CreateProductActivity extends AppCompatActivity {
     private Button complete_bt;
     ShapeableImageView imageView;
     Uri image_uri;
+    ArrayList<Product> productArrayList;
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
+    public final static String MODIFY_PRODUCT_INTENT_KEY = "MODIFY_PRODUCT_ITEM_ID";
+    Product productToEdit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_create_product);
+        setContentView(R.layout.activity_modify_product_edit);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -53,13 +59,21 @@ public class CreateProductActivity extends AppCompatActivity {
         });
         initVariables();
         setupViewModel();
-        registerPhotoPicker();
-        setupOnClickListener();
+        loadProductList().thenRun(this::setupOnClickListener)
+                .thenRun(this::loadProductToEdit)
+                .thenRun(this::adaptDataToViews)
+                .thenRun(this::registerPhotoPicker);
+
     }
 
     private void setupViewModel() {
         var employeeInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new ProductSerializer())));
         productViewModel = InventoryViewModelFactory.getInstance().getViewModel(employeeInventory, Product.class);
+    }
+
+    private CompletableFuture<Void> loadProductList() {
+        return productViewModel.getAll().thenAccept(fetchedProduct ->
+                runOnUiThread(() -> productArrayList = new ArrayList<>(fetchedProduct)));
     }
 
     private  void initVariables()
@@ -139,6 +153,7 @@ public class CreateProductActivity extends AppCompatActivity {
 
     private boolean checkProductAlreadyExists()
     {
+//        TODO: check if product already exists
         return false;
     }
 
@@ -168,13 +183,43 @@ public class CreateProductActivity extends AppCompatActivity {
                 "");
 //        TODO: update imageURL to real uri
         Log.d("SubmitProduct", "SubmitProduct: " + product.toString());
-        productViewModel.add(product);
+        productViewModel.update(productToEdit, product);
         discardInformation();
-        Toast.makeText(this, "Product added", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Product edited", Toast.LENGTH_SHORT).show();
     }
 
     private boolean containsNumber(String s)
     {
         return s.matches(".*\\d.*");
+    }
+
+    private void loadProductToEdit()
+    {
+        String product_to_edit_id;
+        Bundle bundle = getIntent().getExtras();
+        assert bundle != null;
+        product_to_edit_id = bundle.getString(MODIFY_PRODUCT_INTENT_KEY);
+
+        for (Product i: productArrayList) {
+            if (i.ID().equals(product_to_edit_id))
+            {
+                productToEdit = i;
+                return;
+            }
+        }
+    }
+
+    private void adaptDataToViews()
+    {
+        if (productToEdit == null)
+            return;
+        id_et.setText(productToEdit.ID());
+        name_et.setText(productToEdit.Name());
+        price_et.setText(String.valueOf(productToEdit.Price()));
+        quantity_et.setText(String.valueOf(productToEdit.Quantity()));
+        unit_et.setText(String.valueOf(productToEdit.Unit()));
+        category_et.setText(productToEdit.Category());
+        image_uri = Uri.parse(productToEdit.imageURL());
+        imageView.setImageURI(image_uri);
     }
 }

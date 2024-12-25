@@ -70,8 +70,8 @@ public class DailyStatistics extends AppCompatActivity {
                 .thenRun(this::setupRecyclerView)
                 .thenRun(this::calculateTotalIncome)
                 .thenRun(this::displayTotalReceipt)
-                .thenRun(this::setupSearchView)
-                .thenRun(this::setupObservers);
+                .thenRun(this::setupSearchView);
+//                .thenRun(this::setupObservers);
     }
 
     private void getExtras()
@@ -220,49 +220,7 @@ public class DailyStatistics extends AppCompatActivity {
         });
     }
 
-    private void setupObservers() {
-        receiptViewModel.getObservableAddedItem().observe(this, addedReceipt -> {
-            if (receiptList.stream().anyMatch(e -> e.ID().equals(addedReceipt.ID()))) {
-                return;
-            }
 
-            receiptList.add(addedReceipt);
-            receiptAdapter.notifyItemInserted(receiptList.size() - 1);
-            calculateTotalIncome();
-            displayTotalReceipt();
-
-        });
-
-        receiptViewModel.getObservableDeletedItem().observe(this, pair -> {
-            int position = pair.first;
-            var deletedReceipt = pair.second;
-
-            if (receiptList.stream().noneMatch(e -> e.ID().equals(deletedReceipt.ID()))) {
-                return;
-            }
-
-            receiptList.remove(position);
-            receiptAdapter.notifyItemRemoved(position);
-            calculateTotalIncome();
-            displayTotalReceipt();
-        });
-
-        receiptViewModel.getObservableUpdatedItem().observe(this, pair -> {
-            var position = pair.first;
-            var updatedReceipt = pair.second;
-
-            var employeeNeedsToBeUpdated = receiptList.get(position);
-
-            if (employeeNeedsToBeUpdated.equals(updatedReceipt)) {
-                return;
-            }
-
-            receiptList.set(position, updatedReceipt);
-            receiptAdapter.notifyItemChanged(position);
-            calculateTotalIncome();
-            displayTotalReceipt();
-        });
-    }
 
 
     class ReceiptSortByPrice implements Comparator<Receipt> {
