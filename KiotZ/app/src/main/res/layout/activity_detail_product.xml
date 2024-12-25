@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailProductActivity">
+    tools:context=".views.managers.activities.ViewInformationEmployeeActivity$DetailProductActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/statusDetailProduct"
@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_username"
+            android:id="@+id/tv_username_detail_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -39,15 +39,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_position"
+            android:id="@+id/tv_position_detail_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:text="Manager"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/tv_username"
-            app:layout_constraintTop_toBottomOf="@id/tv_username" />
+            app:layout_constraintStart_toStartOf="@id/tv_username_detail_product"
+            app:layout_constraintTop_toBottomOf="@id/tv_username_detail_product" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -139,7 +139,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@id/id_receipt_header_tv"
+                android:id="@+id/tv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -151,35 +151,35 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/receipt_id_tv"
+                android:id="@+id/tvIdDetailProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="MG001"
                 android:textSize="16sp"
                 android:layout_marginStart="150dp"
-                app:layout_constraintStart_toStartOf="@id/id_receipt_header_tv"
-                app:layout_constraintTop_toTopOf="@id/id_receipt_header_tv" />
+                app:layout_constraintStart_toStartOf="@id/tv1"
+                app:layout_constraintTop_toTopOf="@id/tv1" />
 
             <TextView
-                android:id="@id/receipt_date_header_tv"
+                android:id="@+id/tv2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:text="Name: "
                 android:textSize="16sp"
                 android:textStyle="bold|italic"
-                app:layout_constraintStart_toStartOf="@id/id_receipt_header_tv"
-                app:layout_constraintTop_toBottomOf="@id/id_receipt_header_tv" />
+                app:layout_constraintStart_toStartOf="@id/tv1"
+                app:layout_constraintTop_toBottomOf="@id/tv1" />
 
             <TextView
-                android:id="@+id/receipt_date_tv"
+                android:id="@+id/tvNameDetailProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
                 android:text="Hao Hao noodles"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/receipt_id_tv"
-                app:layout_constraintTop_toTopOf="@id/receipt_date_header_tv" />
+                app:layout_constraintStart_toStartOf="@id/tvIdDetailProduct"
+                app:layout_constraintTop_toTopOf="@id/tv2" />
 
             <TextView
                 android:id="@+id/tv4"
@@ -189,8 +189,8 @@
                 android:text="Selling Price: "
                 android:textSize="16sp"
                 android:textStyle="bold|italic"
-                app:layout_constraintStart_toStartOf="@id/receipt_date_header_tv"
-                app:layout_constraintTop_toBottomOf="@id/receipt_date_header_tv" />
+                app:layout_constraintStart_toStartOf="@id/tv2"
+                app:layout_constraintTop_toBottomOf="@id/tv2" />
 
             <TextView
                 android:id="@+id/tvSellingPriceDetail"
@@ -198,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:text="3.000 VND"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/receipt_id_tv"
+                app:layout_constraintStart_toStartOf="@+id/tvIdDetailProduct"
                 app:layout_constraintTop_toTopOf="@id/tv4" />
 
             <TextView
@@ -262,7 +262,7 @@
                 app:layout_constraintTop_toBottomOf="@id/linedDetailProduct2" />
 
             <TextView
-                android:id="@+id/receipt_total_price_tv"
+                android:id="@+id/tvTotalDetailProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="300"
@@ -282,7 +282,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv7" />
 
             <TextView
-                android:id="@+id/receipt_customer_name_tv"
+                android:id="@+id/tvSoldDetailProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="120"
@@ -302,7 +302,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv8" />
 
             <TextView
-                android:id="@+id/receipt_customer_phone_tv"
+                android:id="@+id/tvRemainingDetailProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="65dp"

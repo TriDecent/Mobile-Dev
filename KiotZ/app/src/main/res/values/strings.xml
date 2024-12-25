@@ -39,4 +39,8 @@
 
     <string name="employee_name" />
     <string name="position" />
+
+    <string name="price_format">%s VND</string>
+    <string name="unit_format"> %s</string>
+    <string name="category_format">Category: %s</string>
 </resources>

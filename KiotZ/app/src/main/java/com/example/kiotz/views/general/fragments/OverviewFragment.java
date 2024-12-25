@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import com.example.kiotz.AccountCreationActivity;
 import com.example.kiotz.EmployeesView;
 import com.example.kiotz.R;
-import com.example.kiotz.ViewInventoryActivity;
 import com.example.kiotz.authentication.Authenticator;
 import com.example.kiotz.database.FireBaseService;
 import com.example.kiotz.database.dto.EmployeeSerializer;
@@ -150,7 +148,7 @@ public class OverviewFragment extends Fragment {
         cardViewViewInventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(v.getContext(), ViewInventoryActivity.class);
+                Intent i=new Intent(v.getContext(), ViewInformationEmployeeActivity.ViewInventoryActivity.class);
                 startActivity(i);
             }
         });

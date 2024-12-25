@@ -1,6 +1,8 @@
 package com.example.kiotz.views.managers.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,13 +14,18 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.kiotz.R;
 import com.example.kiotz.adapters.EmployeesAdapter;
+import com.example.kiotz.adapters.IRecycleManagerDetail;
+import com.example.kiotz.adapters.ProductsAdapterManager;
 import com.example.kiotz.authentication.Authenticator;
 import com.example.kiotz.database.FireBaseService;
 import com.example.kiotz.database.dto.EmployeeSerializer;
+import com.example.kiotz.database.dto.ProductSerializer;
 import com.example.kiotz.inventory.Inventory;
 import com.example.kiotz.models.Employee;
+import com.example.kiotz.models.Product;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
@@ -157,5 +164,213 @@ public class ViewInformationEmployeeActivity extends AppCompatActivity {
 
     private void setupSortButton() {
         imgSortByName.setOnClickListener(v -> sortEmployeeByName());
+    }
+
+    public static class ViewInventoryActivity extends AppCompatActivity implements IRecycleManagerDetail {
+
+        RecyclerView recyclerViewProduct;
+        ProductsAdapterManager adapterManager;
+        List<Product> products;
+
+        TextView tvUserName,tvPosition;
+
+        InventoryViewModel<Product> productViewModel;
+
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            EdgeToEdge.enable(this);
+            setContentView(R.layout.activity_view_inventory);
+            ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+                return insets;
+            });
+
+
+            bindingView();
+            setupProductViewModel();
+            setupStatusBar();
+            fetchDataProduct()
+                    .thenRun(this::setupObservers)
+                    .thenRun(this::setupAdapter);
+
+
+        }
+
+
+
+        private void bindingView(){
+            recyclerViewProduct=findViewById(R.id.recycleViewProductManager);
+            tvUserName=findViewById(R.id.tv_username);
+            tvPosition=findViewById(R.id.tv_position);
+            recyclerViewProduct.setLayoutManager(new LinearLayoutManager(this));
+        }
+
+
+        private void setupProductViewModel(){
+            var productInventory=new Inventory<>(new Repository<>(new FireBaseService<>(new ProductSerializer())));
+            productViewModel= InventoryViewModelFactory.getInstance().getViewModel(productInventory,Product.class);
+
+        }
+
+        private void setupObservers(){
+            productViewModel.getObservableAddedItem().observe(this,addedProduct->{
+                if(products.stream().anyMatch(p ->p.ID().equals(addedProduct.ID()))){
+                    return;
+                }
+                products.add(addedProduct);
+                adapterManager.notifyItemChanged(products.size()-1);
+            });
+
+            productViewModel.getObservableDeletedItem().observe(this,pair->{
+                int position=pair.first;
+                var deletedProduct=pair.second;
+
+                if(products.stream().noneMatch(p-> p.ID().equals(deletedProduct.ID()))){
+                    return;
+                }
+
+                products.remove(position);
+                adapterManager.notifyItemRemoved(position);
+
+            });
+
+            productViewModel.getObservableUpdatedItem().observe(this,pair->{
+                var position=pair.first;
+                var updatedProduct=pair.second;
+
+                var productNeedsToBeUpdated=products.get(position);
+                if(productNeedsToBeUpdated.equals(updatedProduct)){
+                    return;
+                }
+                products.set(position,updatedProduct);
+                adapterManager.notifyItemChanged(position);
+            });
+        }
+
+        private void setupAdapter(){
+            adapterManager=new ProductsAdapterManager(this,products,this);
+            recyclerViewProduct.setAdapter(adapterManager);
+        }
+
+        private CompletableFuture<Void> fetchDataProduct(){
+            return productViewModel.getAll().thenAccept(data->{
+                runOnUiThread(()->products=new ArrayList<>(data));
+            });
+        }
+
+        private void setupStatusBar() {
+            App app = (App) getApplication();
+            tvUserName.setText(app.getName());
+            tvPosition.setText(app.getPosition());
+        }
+        @Override
+        public void onItemClick(int position) {
+            Product selectedProduct=products.get(position);
+            Intent intent = new Intent(this, DetailProductActivity.class);
+            intent.putExtra("selected_product", selectedProduct);
+            startActivity(intent);
+
+
+        }
+
+
+    }
+
+    public static class DetailProductActivity extends AppCompatActivity  {
+
+        ImageView imageViewSwap,imageProduct;
+        TextView tvID,tvName,tvSelling,tvUnit,tvCategory,tvTotal,tvSold;
+        TextView tvRemaining,tvRevenue,tvProfit,tvUserName,tvPosition;
+        boolean isDisplayImg=true;
+        public final static String DETAIL_PRODUCT_ITEM_KEY = "DETAIL_PRODUCT_INTENT_KEY";
+
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            EdgeToEdge.enable(this);
+            setContentView(R.layout.activity_detail_product);
+            ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+                return insets;
+            });
+
+            bindingView();
+            setupStatusBar();
+            getData();
+            setListenerSwapButton();
+
+        }
+
+
+        private void bindingView(){
+
+            tvUserName=findViewById(R.id.tv_username_detail_product);
+            tvPosition=findViewById(R.id.tv_position_detail_product);
+            imageViewSwap=findViewById(R.id.swap);
+            imageProduct=findViewById(R.id.imageDetailProduct);
+            tvID=findViewById(R.id.tvIdDetailProduct);
+            tvName=findViewById(R.id.tvNameDetailProduct);
+            tvSelling=findViewById(R.id.tvSellingPriceDetail);
+            tvUnit=findViewById(R.id.tvUnitDetailProduct);
+            tvCategory=findViewById(R.id.tvCategoryDetailProduct);
+            tvTotal=findViewById(R.id.tvTotalDetailProduct);
+            tvSold=findViewById(R.id.tvSoldDetailProduct);
+            tvRemaining=findViewById(R.id.tvRemainingDetailProduct);
+            tvRevenue=findViewById(R.id.tvRevenueDetailProduct);
+            tvProfit=findViewById(R.id.tvProfitDetailProduct);
+
+        }
+        private void getData(){
+
+            Intent intent=getIntent();
+            Product selectedProduct=intent.getParcelableExtra("selected_product");
+            if(selectedProduct!=null){
+                setImage(selectedProduct.imageURL());
+                tvID.setText(selectedProduct.ID());
+                tvName.setText(selectedProduct.Name());
+                tvSelling.setText(this.getString(R.string.price_format,String.valueOf(selectedProduct.Price())));
+                tvUnit.setText(this.getString(R.string.unit_format,selectedProduct.Unit()));
+                tvCategory.setText(selectedProduct.Category());
+                tvTotal.setText(String.valueOf(selectedProduct.Quantity()));
+
+            }
+
+
+        }
+
+        private void setImage(String urlImage){
+            Glide.with(this)
+                    .load(urlImage)
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.img_error)
+                    .into(imageProduct);
+        }
+
+        private void setupStatusBar() {
+            App app = (App) getApplication();
+            tvUserName.setText(app.getName());
+            tvPosition.setText(app.getPosition());
+        }
+
+        private void setListenerSwapButton(){
+            imageViewSwap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(isDisplayImg){
+                        //imageProduct.setImageResource(data.barCode());
+                        isDisplayImg=false;
+                    }
+                    else {
+                        //imageProduct.setImageResource(data.Image());
+                        isDisplayImg=true;
+                    }
+                }
+            });
+        }
     }
 }
