@@ -16,15 +16,16 @@ import com.example.kiotz.models.CustomProduct;
 import com.example.kiotz.models.Product;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductsAdapterManager extends RecyclerView.Adapter<ProductsAdapterManager.MyViewHolder> {
 
     private Context context;
-    private ArrayList<Product> products;
+    private List<Product> products;
 
     IRecycleManagerDetail iRecycleManagerDetail;
 
-    public ProductsAdapterManager(Context context, ArrayList<Product> products,IRecycleManagerDetail iRecycleManagerDetail) {
+    public ProductsAdapterManager(Context context, List<Product> products,IRecycleManagerDetail iRecycleManagerDetail) {
         this.context = context;
         this.products = products;
         this.iRecycleManagerDetail=iRecycleManagerDetail;
