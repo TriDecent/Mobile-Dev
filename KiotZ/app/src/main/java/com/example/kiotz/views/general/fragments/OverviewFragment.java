@@ -94,6 +94,7 @@ public class OverviewFragment extends Fragment {
 
         employeesLoadedFuture = loadEmployees()
                 .thenCompose(aVoid -> loadReceipt())
+                .thenRun(this::filterReceipt)
                 .thenRunAsync(this::getInformationCurrentUser)
                 .thenRun(this::initVariables)
                 .thenRun(this::updateStatisticTab);
@@ -256,14 +257,40 @@ public class OverviewFragment extends Fragment {
 
     }
 
+    private void filterReceipt()
+    {
+        ArrayList<Receipt> receipts_filter = new ArrayList<Receipt>();
+        LocalDateTime current_localDateTime = LocalDateTime.now();
+
+        for (Receipt i: receiptList) {
+            if (i.DateTime().toLocalDate().isEqual(current_localDateTime.toLocalDate()))
+            {
+                receipts_filter.add(i);
+            }
+
+        }
+        receiptList = receipts_filter;
+
+    }
+
     private void updateStatisticTab()
     {
         LocalDateTime current_localDateTime = LocalDateTime.now();
+        Double revenue = (double) 0;
+        for (Receipt i: receiptList) {
+//            TODO: handle revenue
+            revenue = revenue + i.TotalPrice();
+        }
+        Double finalRevenue = revenue;
         requireActivity().runOnUiThread(() -> {
             tvDayMonth.setText(current_localDateTime.getDayOfWeek() + ", " +
                     current_localDateTime.getDayOfMonth() + "/" +
                     current_localDateTime.getMonthValue() + "/" +
                     current_localDateTime.getYear());
+
+            tvRevenueValue.setText(String.valueOf(finalRevenue));
+
+            tvOrderValue.setText(receiptList.size());
         });
 
 //        TODO: update revenue, order and profit
