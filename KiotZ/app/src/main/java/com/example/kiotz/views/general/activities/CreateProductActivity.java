@@ -165,26 +165,26 @@ public class CreateProductActivity extends AppCompatActivity {
         }
         LocalDateTime localDateTime = LocalDateTime.now();
         //upload image
-//        productViewModel.uploadImage(local_image_uri, String.valueOf(name_et.getText()) + localDateTime.toString()).thenAccept(remote_uri -> {
-//            Product product = new Product(String.valueOf(id_et.getText()),String.valueOf(name_et.getText()),
-//                    String.valueOf(category_et.getText()),Double.parseDouble(String.valueOf(price_et.getText())),
-//                    String.valueOf(unit_et.getText()), Integer.valueOf(String.valueOf(quantity_et.getText())),
-//                    remote_uri);
-//                    productViewModel.add(product);
-//                    Log.d("SubmitProduct", "SubmitProduct: " + product.toString());
-//                    Log.d("RemoteUri",remote_uri);
-//        });
-//        TODO: replace local uri with remote uri
-        Product product = new Product(String.valueOf(id_et.getText()),String.valueOf(name_et.getText()),
-                String.valueOf(category_et.getText()),Double.parseDouble(String.valueOf(price_et.getText())),
-                String.valueOf(unit_et.getText()), Integer.valueOf(String.valueOf(quantity_et.getText())),
-                local_image_uri.toString());
-        productViewModel.add(product);
-        Log.d("SubmitProduct", "SubmitProduct: " + product.toString());
-        Log.d("RemoteUri",local_image_uri.toString());
+        productViewModel.uploadImage(local_image_uri, String.valueOf(name_et.getText()) + localDateTime.toString()).thenAccept(remote_uri -> {
+            Product product = new Product(String.valueOf(id_et.getText()),String.valueOf(name_et.getText()),
+                    String.valueOf(category_et.getText()),Double.parseDouble(String.valueOf(price_et.getText())),
+                    String.valueOf(unit_et.getText()), Integer.valueOf(String.valueOf(quantity_et.getText())),
+                    remote_uri);
+                    productViewModel.add(product);
+                    Log.d("SubmitProduct", "SubmitProduct: " + product.toString());
+                    Log.d("RemoteUri",remote_uri);
+                    discardInformation();
+        });
+////        TODO: replace local uri with remote uri
+//        Product product = new Product(String.valueOf(id_et.getText()),String.valueOf(name_et.getText()),
+//                String.valueOf(category_et.getText()),Double.parseDouble(String.valueOf(price_et.getText())),
+//                String.valueOf(unit_et.getText()), Integer.valueOf(String.valueOf(quantity_et.getText())),
+//                local_image_uri.toString());
+//        productViewModel.add(product);
+//        Log.d("SubmitProduct", "SubmitProduct: " + product.toString());
+//        Log.d("RemoteUri",local_image_uri.toString());
 
 //        TODO: update imageURL to real uri
-        discardInformation();
         Toast.makeText(this, "Product added", Toast.LENGTH_SHORT).show();
     }
 
