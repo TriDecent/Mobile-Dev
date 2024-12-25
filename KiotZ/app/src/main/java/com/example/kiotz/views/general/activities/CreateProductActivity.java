@@ -139,10 +139,6 @@ public class CreateProductActivity extends AppCompatActivity {
         imageView.setImageURI(null);
     }
 
-    private boolean checkProductAlreadyExists()
-    {
-        return false;
-    }
 
     private boolean checkCleanInput()
     {
@@ -156,28 +152,47 @@ public class CreateProductActivity extends AppCompatActivity {
         return true;
     }
 
-    private void SubmitProduct()
-    {
-        if (!checkCleanInput())
-        {
+    private void SubmitProduct() {
+        if (!checkCleanInput()) {
             Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show();
             return;
         }
-        LocalDateTime localDateTime = LocalDateTime.now();
-        //upload image
-        productViewModel.uploadImage(local_image_uri, String.valueOf(name_et.getText()) + localDateTime.toString()).thenAccept(remote_uri -> {
-            Product product = new Product(String.valueOf(id_et.getText()),String.valueOf(name_et.getText()),
-                    String.valueOf(category_et.getText()),Double.parseDouble(String.valueOf(price_et.getText())),
-                    String.valueOf(unit_et.getText()), Integer.valueOf(String.valueOf(quantity_et.getText())),
-                    remote_uri);
-                    productViewModel.add(product);
-                    Log.d("SubmitProduct", "SubmitProduct: " + product.toString());
-                    Log.d("RemoteUri",remote_uri);
-                    discardInformation();
-        });
 
-        Toast.makeText(this, "Product added", Toast.LENGTH_SHORT).show();
+        String productId = id_et.getText().toString();
+
+        // Check if product exists
+        productViewModel.getById(productId).thenAccept(existingProduct -> {
+            if (existingProduct != null) {
+                runOnUiThread(() -> Toast.makeText(this, "ID already exists", Toast.LENGTH_SHORT).show());
+            }
+
+            else {
+                LocalDateTime localDateTime = LocalDateTime.now();
+
+                productViewModel.uploadImage(local_image_uri, String.valueOf(name_et.getText()) + localDateTime.toString())
+                        .thenAccept(remote_uri -> {
+                            Product product = new Product(
+                                    productId,
+                                    name_et.getText().toString(),
+                                    category_et.getText().toString(),
+                                    Double.parseDouble(price_et.getText().toString()),
+                                    unit_et.getText().toString(),
+                                    Integer.parseInt(quantity_et.getText().toString()),
+                                    remote_uri
+                            );
+                            productViewModel.add(product).thenRun(() -> {
+                                Log.d("SubmitProduct", "SubmitProduct: " + product.toString());
+                                runOnUiThread(() -> Toast.makeText(this, "Product added", Toast.LENGTH_SHORT).show());
+                                discardInformation();
+                            });
+                        });
+            }
+        }).exceptionally(ex -> {
+            runOnUiThread(() -> Toast.makeText(this, "An error occurred", Toast.LENGTH_SHORT).show());
+            return null;
+        });
     }
+
 
     private boolean containsNumber(String s)
     {
