@@ -27,7 +27,6 @@ public class ViewInventoryActivity extends AppCompatActivity implements IRecycle
 
     ArrayList<DetailProduct> dataDetail;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +68,7 @@ public class ViewInventoryActivity extends AppCompatActivity implements IRecycle
     public void onItemClick(int position) {
        Intent intent=new Intent(ViewInventoryActivity.this,DetailProductActivity.class);
        DetailProduct detailProduct=dataDetail.get(position);
-       intent.putExtra("data",detailProduct);
+       intent.putExtra(DetailProductActivity.DETAIL_PRODUCT_ITEM_KEY,detailProduct);
        startActivity(intent);
 
     }

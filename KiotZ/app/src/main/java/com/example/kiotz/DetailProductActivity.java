@@ -20,6 +20,7 @@ public class DetailProductActivity extends AppCompatActivity  {
     TextView tvRemaining,tvRevenue,tvProfit;
     boolean isDisplayImg=true;
     DetailProduct data;
+    public final static String DETAIL_PRODUCT_ITEM_KEY = "DETAIL_PRODUCT_INTENT_KEY";
 
 
     @Override
