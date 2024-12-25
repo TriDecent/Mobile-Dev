@@ -114,14 +114,10 @@
         android:layout_width="250dp"
         android:layout_height="1dp"
         android:layout_marginTop="15dp"
-
         android:background="@color/md_theme_onBackground"
         app:layout_constraintEnd_toEndOf="@id/constraintImgDetailProduct"
         app:layout_constraintStart_toStartOf="@id/constraintImgDetailProduct"
-        app:layout_constraintTop_toBottomOf="@id/constraintImgDetailProduct"
-
-        />
-
+        app:layout_constraintTop_toBottomOf="@id/constraintImgDetailProduct" />
 
     <ScrollView
         android:id="@+id/background_scrollview_details_invoice"
@@ -136,8 +132,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
-
         app:layout_constraintTop_toBottomOf="@id/linedDetailProduct1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -162,7 +156,8 @@
                 android:layout_height="wrap_content"
                 android:text="MG001"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/receipt_date_tv"
+                android:layout_marginStart="150dp"
+                app:layout_constraintStart_toStartOf="@id/id_receipt_header_tv"
                 app:layout_constraintTop_toTopOf="@id/id_receipt_header_tv" />
 
             <TextView
@@ -180,32 +175,11 @@
                 android:id="@+id/receipt_date_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="0dp"
                 android:text="Hao Hao noodles"
                 android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@id/receipt_date_header_tv"
+                app:layout_constraintStart_toStartOf="@id/receipt_id_tv"
                 app:layout_constraintTop_toTopOf="@id/receipt_date_header_tv" />
-
-            <TextView
-                android:id="@id/employee_header_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:text="Cost of capital: "
-                android:textSize="16sp"
-                android:textStyle="bold|italic"
-                app:layout_constraintStart_toStartOf="@id/receipt_date_header_tv"
-                app:layout_constraintTop_toBottomOf="@id/receipt_date_header_tv" />
-
-            <TextView
-                android:id="@+id/employee_name_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="2.200 VND"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@id/employee_header_tv"
-                app:layout_constraintTop_toTopOf="@id/employee_header_tv" />
 
             <TextView
                 android:id="@+id/tv4"
@@ -215,9 +189,8 @@
                 android:text="Selling Price: "
                 android:textSize="16sp"
                 android:textStyle="bold|italic"
-                app:layout_constraintStart_toStartOf="@id/employee_header_tv"
-
-                app:layout_constraintTop_toBottomOf="@id/employee_header_tv" />
+                app:layout_constraintStart_toStartOf="@id/receipt_date_header_tv"
+                app:layout_constraintTop_toBottomOf="@id/receipt_date_header_tv" />
 
             <TextView
                 android:id="@+id/tvSellingPriceDetail"
@@ -225,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:text="3.000 VND"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/employee_name_tv"
+                app:layout_constraintStart_toStartOf="@+id/receipt_id_tv"
                 app:layout_constraintTop_toTopOf="@id/tv4" />
 
             <TextView
@@ -245,7 +218,7 @@
                 android:layout_height="wrap_content"
                 android:text="Pack"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/employee_name_tv"
+                app:layout_constraintStart_toStartOf="@+id/tvSellingPriceDetail"
                 app:layout_constraintTop_toTopOf="@id/tv5" />
 
             <TextView
@@ -257,9 +230,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold|italic"
                 app:layout_constraintStart_toStartOf="@id/tv5"
-                app:layout_constraintTop_toBottomOf="@id/tv5"
-
-                />
+                app:layout_constraintTop_toBottomOf="@id/tv5" />
 
             <TextView
                 android:id="@+id/tvCategoryDetailProduct"
@@ -267,10 +238,8 @@
                 android:layout_height="wrap_content"
                 android:text="Food"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/employee_name_tv"
-                app:layout_constraintTop_toTopOf="@id/tv6"
-
-                />
+                app:layout_constraintStart_toStartOf="@+id/tvSellingPriceDetail"
+                app:layout_constraintTop_toTopOf="@id/tv6" />
 
             <View
                 android:id="@+id/linedDetailProduct2"
@@ -279,9 +248,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@color/md_theme_onBackground"
                 app:layout_constraintStart_toStartOf="@id/tv6"
-                app:layout_constraintTop_toBottomOf="@id/tv6"
-
-                />
+                app:layout_constraintTop_toBottomOf="@id/tv6" />
 
             <TextView
                 android:id="@+id/tv7"
@@ -292,9 +259,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold|italic"
                 app:layout_constraintStart_toStartOf="@id/tv6"
-                app:layout_constraintTop_toBottomOf="@id/linedDetailProduct2"
-
-                />
+                app:layout_constraintTop_toBottomOf="@id/linedDetailProduct2" />
 
             <TextView
                 android:id="@+id/receipt_total_price_tv"
@@ -302,7 +267,7 @@
                 android:layout_height="wrap_content"
                 android:text="300"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/receipt_customer_phone_tv"
+                app:layout_constraintStart_toStartOf="@id/tvSellingPriceDetail"
                 app:layout_constraintTop_toTopOf="@id/tv7" />
 
             <TextView
@@ -314,9 +279,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold|italic"
                 app:layout_constraintStart_toStartOf="@id/tv7"
-                app:layout_constraintTop_toBottomOf="@id/tv7"
-
-                />
+                app:layout_constraintTop_toBottomOf="@id/tv7" />
 
             <TextView
                 android:id="@+id/receipt_customer_name_tv"
@@ -324,7 +287,7 @@
                 android:layout_height="wrap_content"
                 android:text="120"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/receipt_customer_phone_tv"
+                app:layout_constraintStart_toStartOf="@id/tvSellingPriceDetail"
                 app:layout_constraintTop_toTopOf="@id/tv8" />
 
             <TextView
@@ -336,19 +299,19 @@
                 android:textSize="16sp"
                 android:textStyle="bold|italic"
                 app:layout_constraintStart_toStartOf="@id/tv8"
-                app:layout_constraintTop_toBottomOf="@id/tv8"
-
-                />
+                app:layout_constraintTop_toBottomOf="@id/tv8" />
 
             <TextView
                 android:id="@+id/receipt_customer_phone_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="65dp"
                 android:text="180"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/tv9"
-                app:layout_constraintTop_toTopOf="@id/tv9" />
+                app:layout_constraintTop_toTopOf="@id/tv9"
+
+                />
 
             <TextView
                 android:id="@+id/tv10"
@@ -367,7 +330,7 @@
                 android:layout_height="wrap_content"
                 android:text="360.000 VNĐ"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/receipt_customer_phone_tv"
+                app:layout_constraintStart_toStartOf="@id/tvSellingPriceDetail"
                 app:layout_constraintTop_toTopOf="@id/tv10" />
 
             <TextView
@@ -390,12 +353,10 @@
                 android:text="-390.000 VNĐ"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv11"
-                app:layout_constraintStart_toStartOf="@id/receipt_customer_phone_tv"
+                app:layout_constraintStart_toStartOf="@id/tvSellingPriceDetail"
                 app:layout_constraintTop_toTopOf="@id/tv11" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </ScrollView>
 
