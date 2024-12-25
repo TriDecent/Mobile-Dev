@@ -33,6 +33,7 @@ import com.example.kiotz.views.managers.activities.DailyStatistics;
 import com.example.kiotz.views.managers.activities.ViewInformationEmployeeActivity;
 import com.example.kiotz.views.managers.data.App;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -281,7 +282,9 @@ public class OverviewFragment extends Fragment {
 //            TODO: handle revenue
             revenue = revenue + i.TotalPrice();
         }
-        Double finalRevenue = revenue;
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###,###");
+        Double finalRevenue = Double.valueOf(decimalFormat.format(revenue));
+        String order_n = String.valueOf(receiptList.size());
         requireActivity().runOnUiThread(() -> {
             tvDayMonth.setText(current_localDateTime.getDayOfWeek() + ", " +
                     current_localDateTime.getDayOfMonth() + "/" +
@@ -290,7 +293,7 @@ public class OverviewFragment extends Fragment {
 
             tvRevenueValue.setText(String.valueOf(finalRevenue));
 
-            tvOrderValue.setText(receiptList.size());
+            tvOrderValue.setText(order_n);
         });
 
 //        TODO: update revenue, order and profit

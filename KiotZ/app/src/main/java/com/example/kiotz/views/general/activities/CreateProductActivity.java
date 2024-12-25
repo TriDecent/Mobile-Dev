@@ -90,6 +90,8 @@ public class CreateProductActivity extends AppCompatActivity {
                         imageView.setImageURI(image_uri);
                     } else {
                         Log.d("PhotoPicker", "No media selected");
+                        imageView.setImageURI(null);
+                        image_uri = null;
                     }
                 });
 
