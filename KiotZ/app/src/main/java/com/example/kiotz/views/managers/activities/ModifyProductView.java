@@ -1,5 +1,6 @@
 package com.example.kiotz.views.managers.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -64,8 +65,9 @@ public class ModifyProductView extends AppCompatActivity implements IRecycleMana
 //        DetailProduct detailProduct=dataDetail.get(position);
 //        intent.putExtra("data",detailProduct);
 //        startActivity(intent);
-//        TODO: event to show edit layout
-
+        Intent intent = new Intent(this, ModifyProductEdit.class);
+        intent.putExtra(ModifyProductEdit.MODIFY_PRODUCT_INTENT_KEY, dataDetail.get(position));
+        startActivity(intent);
     }
 
     private void createDataDetailTest(){
