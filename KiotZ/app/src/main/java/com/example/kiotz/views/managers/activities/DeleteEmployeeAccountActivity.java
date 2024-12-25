@@ -169,8 +169,22 @@ public class DeleteEmployeeAccountActivity extends AppCompatActivity implements 
                 .setTitle("Confirm delete")
                 .setMessage("Are you sure you want to delete this account?")
                 .setPositiveButton("Yes",(dialog,which)->{
-                            employeeViewModel.delete(employee);
-                            Toast.makeText(this,"Delete account success",Toast.LENGTH_SHORT).show();
+                            var authenticator = Authenticator.getInstance();
+                            authenticator.deleteAccount(employee.ID())
+                                    .thenAccept(result->{
+                                        if(result.first){
+                                            employeeViewModel.delete(employee).thenRun(()->{
+                                                Toast.makeText(this,
+                                                        "Employee and account deleted successfully",
+                                                        Toast.LENGTH_SHORT).show();
+                                            });
+                                        }else {
+                                            Toast.makeText(this,
+                                                    "Failed to delete account: " + result.second,
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
                         })
                 .setNegativeButton("No",(dialog,which)->{
                     dialog.dismiss();
