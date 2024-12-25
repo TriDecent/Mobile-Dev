@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.kiotz.R;
 import com.example.kiotz.models.CustomProduct;
 import com.example.kiotz.models.Product;
@@ -44,12 +45,17 @@ public class ProductsAdapterManager extends RecyclerView.Adapter<ProductsAdapter
     public void onBindViewHolder(@NonNull ProductsAdapterManager.MyViewHolder holder, int position) {
 
         Product currentProduct=products.get(position);
-        //holder.imageViewProduct.setImageResource(currentProduct.Image());
-        holder.imageViewProduct.setImageResource(R.drawable.img_test2);
+        //holder.imageViewProduct.setImageResource(R.drawable.img_test2);
         holder.textViewID.setText(currentProduct.ID());
         holder.textViewName.setText(currentProduct.Name());
         holder.textViewPrice.setText(String.valueOf(currentProduct.Price())+" VND");
         holder.textViewCategory.setText(currentProduct.Category());
+
+        Glide.with(holder.imageViewProduct.getContext())
+                .load(currentProduct.imageURL())
+                .placeholder(R.drawable.loading)
+                .error(R.drawable.img_error)
+                .into(holder.imageViewProduct);
 
     }
 
