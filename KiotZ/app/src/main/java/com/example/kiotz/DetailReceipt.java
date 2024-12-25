@@ -57,11 +57,10 @@ public class DetailReceipt extends AppCompatActivity {
         });
         initVariables();
         setupViewModel();
-        loadReceipt()
-                .thenCompose(aVoid -> loadEmployee())
-                .thenCompose(aVoid -> loadProduct())
-                .thenRun(this::findReceipt)
-                .thenRun(this::findEmployee)
+
+        loadProduct()
+                .thenCompose(avoid -> findReceipt())
+                .thenCompose(avoid -> findEmployee())
                 .thenRun(this::updateView)
                 .thenRun(this::setupRecyclerView);
     }
@@ -80,27 +79,15 @@ public class DetailReceipt extends AppCompatActivity {
 
         }
 
-        private void findReceipt()
-        {
-            String Receipt_id = getIntent().getStringExtra(ReceiptAdapter.RECEIPT_ID_TO_VIEW_DETAILS_KEY);
-            for (Receipt item : receiptList) {
-                if (item.ID().equals(Receipt_id))
-                {
-                    receipt = item;
-                    return;
-                }
-            }
-        }
+    private CompletableFuture<Void> findReceipt() {
+        String receiptId = getIntent().getStringExtra(ReceiptAdapter.RECEIPT_ID_TO_VIEW_DETAILS_KEY);
+        return receiptViewModel.getById(receiptId).thenAccept(fetched_receipt -> receipt = fetched_receipt);
+    }
 
-        private void findEmployee()
+
+    private CompletableFuture<Void> findEmployee()
         {
-            for (Employee item : employeeArrayList) {
-                if (item.ID().equals(receipt.EmployeeId()))
-                {
-                    employee = item;
-                    return;
-                }
-            }
+            return employeeViewModel.getById(receipt.EmployeeId()).thenAccept(fetched_receipt -> employee = fetched_receipt);
         }
 
         private void setupViewModel() {
@@ -114,15 +101,8 @@ public class DetailReceipt extends AppCompatActivity {
             productViewModel = InventoryViewModelFactory.getInstance().getViewModel(productInventory, Product.class);
         }
 
-        private CompletableFuture<Void> loadReceipt() {
-            return receiptViewModel.getAll().thenAccept(fetched_receipts ->
-                    runOnUiThread(() -> receiptList = new ArrayList<>(fetched_receipts)));
-        }
 
-        private CompletableFuture<Void> loadEmployee() {
-            return employeeViewModel.getAll().thenAccept(fetched_employee ->
-                    runOnUiThread(() -> employeeArrayList = new ArrayList<>(fetched_employee)));
-        }
+
 
         private CompletableFuture<Void> loadProduct()
         {

@@ -60,8 +60,9 @@ public class ViewInventoryActivity extends AppCompatActivity implements IRecycle
 
 
 
-
     }
+
+
 
     private void bindingView(){
         recyclerViewProduct=findViewById(R.id.recycleViewProductManager);
