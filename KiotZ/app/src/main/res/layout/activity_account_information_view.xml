@@ -65,7 +65,7 @@
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal|center_vertical"
         android:lineSpacingExtra="-8sp"
-        android:text="Create account"
+        android:text="Account Infos"
         android:textAllCaps="true"
         android:textColor="@color/md_theme_scrim"
         android:textSize="22sp"
@@ -79,7 +79,7 @@
         android:id="@+id/tvHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create account for the employee"
+        android:text="View account's details"
         android:textColor="@color/md_theme_secondary"
         android:textSize="12dp"
         android:textStyle="italic"
@@ -108,55 +108,78 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_email"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="Email: "
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAccount" />
+
+        <EditText
+            android:id="@+id/et_pasword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="38dp"
             android:layout_marginEnd="8dp"
-            android:hint="Email:"
-            android:textColorHint="@color/md_theme_onSurface"
-            app:boxBackgroundColor="@color/md_theme_secondaryContainer"
-            app:helperText="Please enter email"
+            android:hint="Email"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvEmail"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tvAccount"
-            app:layout_constraintTop_toBottomOf="@id/tvAccount"
-            app:prefixTextColor="@color/md_theme_scrim"
-            app:startIconDrawable="@drawable/email_icon">
+            app:layout_constraintStart_toEndOf="@+id/tvEmail"
+            app:layout_constraintTop_toTopOf="@id/tvEmail"
+            android:inputType="none"
+            android:enabled="false"
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="15sp" />
-        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_password"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            />
+
+        <TextView
+            android:id="@+id/tv_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="Password:"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@id/tvEmail"
+            app:layout_constraintTop_toBottomOf="@id/tvEmail"
+
+            />
+
+        <EditText
+            android:id="@+id/et_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginEnd="8dp"
             android:hint="Password"
-            android:textColorHint="@color/md_theme_onSurface"
-            app:boxBackgroundColor="@color/md_theme_secondaryContainer"
-            app:endIconMode="password_toggle"
-            app:helperText="Please enter password"
+            android:inputType="none"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_password"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tvAccount"
-            app:layout_constraintTop_toBottomOf="@id/til_email"
-            app:prefixTextColor="@color/md_theme_scrim"
-            app:startIconDrawable="@drawable/password_icon">
+            app:layout_constraintStart_toStartOf="@+id/et_pasword"
+            app:layout_constraintTop_toTopOf="@+id/tv_password"
+            android:enabled="false"
+            android:text="********"
+            />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:textSize="15sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/btn_change_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="Change password"
+            android:textAllCaps="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_password"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -203,12 +226,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:hint="Enter employee name"
+            android:hint="Employee name"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/tvFullName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvFullName"
-            app:layout_constraintTop_toTopOf="@id/tvFullName" />
+            app:layout_constraintTop_toTopOf="@id/tvFullName"
+            android:inputType="none"
+            android:enabled="false"
+
+            />
 
         <TextView
             android:id="@+id/tv_employee_date"
@@ -226,13 +253,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:hint="Enter employee date"
-            android:inputType="date"
+            android:hint="Employee date"
+            android:inputType="none"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_employee_date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/et_employee_name"
-            app:layout_constraintTop_toTopOf="@+id/tv_employee_date" />
+            app:layout_constraintTop_toTopOf="@+id/tv_employee_date"
+            android:enabled="false"
+
+            />
 
         <RadioGroup
             android:id="@+id/rg_account_creation_position"
@@ -251,14 +281,18 @@
                 android:id="@+id/rb_account_creation_manager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Manager" />
+                android:text="Manager"
+                android:enabled="false"
+                />
 
             <RadioButton
                 android:id="@+id/rb_account_creation_employee"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Employee" />
+                android:text="Employee"
+                android:enabled="false"
+                />
         </RadioGroup>
 
         <RadioGroup
@@ -269,20 +303,25 @@
             android:checkedButton="@id/rb_account_creation_male"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@+id/tv_employee_date"
-            app:layout_constraintTop_toBottomOf="@+id/tv_employee_date">
+            app:layout_constraintTop_toBottomOf="@+id/tv_employee_date"
+            >
 
             <RadioButton
                 android:id="@+id/rb_account_creation_male"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Male" />
+                android:text="Male"
+                android:enabled="false"
+                />
 
             <RadioButton
                 android:id="@+id/rb_account_creation_female"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
-                android:text="Female" />
+                android:text="Female"
+                android:enabled="false"
+                />
         </RadioGroup>
 
 

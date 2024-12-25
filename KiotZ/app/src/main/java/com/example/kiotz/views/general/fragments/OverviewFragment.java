@@ -279,9 +279,11 @@ public class OverviewFragment extends Fragment {
         LocalDateTime current_localDateTime = LocalDateTime.now();
         Double revenue = (double) 0;
         for (Receipt i: receiptList) {
-//            TODO: handle revenue
+//            TODO: handle profit
             revenue = revenue + i.TotalPrice();
         }
+
+
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###,###");
         Double finalRevenue = Double.valueOf(decimalFormat.format(revenue));
         String order_n = String.valueOf(receiptList.size());
