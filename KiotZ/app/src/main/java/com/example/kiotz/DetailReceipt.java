@@ -12,7 +12,9 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.kiotz.adapters.IRecycleManagerDetail;
 import com.example.kiotz.adapters.ProductsAdapterEmployee;
+import com.example.kiotz.adapters.ProductsAdapterManager;
 import com.example.kiotz.adapters.ReceiptAdapter;
 import com.example.kiotz.database.FireBaseService;
 import com.example.kiotz.database.dto.EmployeeSerializer;
@@ -29,9 +31,10 @@ import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class DetailReceipt extends AppCompatActivity {
+public class DetailReceipt extends AppCompatActivity implements IRecycleManagerDetail {
 
     TextView receipt_id_tv,receipt_date_tv,employee_name_tv,receipt_total_price_tv,receipt_customer_name_tv,receipt_customer_phone_tv;
     InventoryViewModel<Receipt> receiptViewModel;
@@ -39,7 +42,7 @@ public class DetailReceipt extends AppCompatActivity {
     InventoryViewModel<Product> productViewModel;
     RecyclerView recyclerView;
     Receipt receipt;
-    ProductsAdapterEmployee productAdapter;
+    ProductsAdapterManager productAdapter;
     ArrayList<Employee> employeeArrayList;
     ArrayList<Product> productArrayList;
     ArrayList<Receipt> receiptList;
@@ -128,9 +131,28 @@ public class DetailReceipt extends AppCompatActivity {
 
     private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //        productAdapter = new ProductsAdapterEmployee(this);
-        //        recyclerView.setAdapter(productAdapter);
-//        TODO: pass in real product list after sample product data is inserted
+        List<Product> productList = new ArrayList<Product>();
+        CompletableFuture<Void> fetchProducts = CompletableFuture.runAsync(() -> {
+            for (String productId : receipt.ProductIds()) {
+                try {
+                    Product product = productViewModel.getById(productId).get();
+                    productList.add(product);
+                }
+                catch (Exception e) {
+
+                }
+            }
+        });
+
+        fetchProducts.thenRun(() -> {
+
+                productAdapter = new ProductsAdapterManager(this,productList, this);
+                recyclerView.setAdapter(productAdapter);
+        });
     }
 
+    @Override
+    public void onItemClick(int position) {
+//      do nothing because it only shows a list of products
+    }
 }
