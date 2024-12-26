@@ -68,8 +68,8 @@ public class AccountCreationActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.tiet_password);
         etName = findViewById(R.id.et_employee_name);
         etDate = findViewById(R.id.et_employee_date);
-        rbManager = findViewById(R.id.rb_account_creation_manager);
-        rbMale = findViewById(R.id.rb_account_creation_male);
+        rbManager = findViewById(R.id.rb_account_manager);
+        rbMale = findViewById(R.id.rb_account_male);
         btnCreateAccount = findViewById(R.id.btn_create_account);
         pbCreateAccount = findViewById(R.id.pb_create_account);
         tvEmployeeName = findViewById(R.id.tv_status_bar_account_creation_employee_name);

@@ -121,7 +121,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvAccount" />
 
         <EditText
-            android:id="@+id/et_pasword"
+            android:id="@+id/et_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="38dp"
@@ -161,25 +161,25 @@
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_password"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/et_pasword"
+            app:layout_constraintStart_toStartOf="@+id/et_email"
             app:layout_constraintTop_toTopOf="@+id/tv_password"
             android:enabled="false"
             android:text="********"
             />
 
-        <Button
-            android:id="@+id/btn_change_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
-            android:text="Change password"
-            android:textAllCaps="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_password"
-            />
+<!--        <Button-->
+<!--            android:id="@+id/btn_change_password"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="15dp"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:text="Change password"-->
+<!--            android:textAllCaps="true"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tv_password"-->
+<!--            />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -190,7 +190,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/bgframe"
         android:padding="5dp"
@@ -271,14 +271,14 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
-            android:checkedButton="@id/rb_account_creation_employee"
+            android:checkedButton="@id/rb_account_employee"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rg_account_creation_gender">
 
             <RadioButton
-                android:id="@+id/rb_account_creation_manager"
+                android:id="@+id/rb_account_manager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Manager"
@@ -286,7 +286,7 @@
                 />
 
             <RadioButton
-                android:id="@+id/rb_account_creation_employee"
+                android:id="@+id/rb_account_employee"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -300,14 +300,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:checkedButton="@id/rb_account_creation_male"
+            android:checkedButton="@id/rb_account_male"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@+id/tv_employee_date"
             app:layout_constraintTop_toBottomOf="@+id/tv_employee_date"
             >
 
             <RadioButton
-                android:id="@+id/rb_account_creation_male"
+                android:id="@+id/rb_account_male"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Male"
@@ -315,7 +315,7 @@
                 />
 
             <RadioButton
-                android:id="@+id/rb_account_creation_female"
+                android:id="@+id/rb_account_female"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
@@ -327,18 +327,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/btn_create_account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="create an account > "
-        android:textAllCaps="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraintDetailInfor" />
+
 
     <ProgressBar
         android:id="@+id/pb_create_account"

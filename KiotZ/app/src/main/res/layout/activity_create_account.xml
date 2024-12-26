@@ -241,20 +241,20 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
-            android:checkedButton="@id/rb_account_creation_employee"
+            android:checkedButton="@id/rb_account_employee"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rg_account_creation_gender">
 
             <RadioButton
-                android:id="@+id/rb_account_creation_manager"
+                android:id="@+id/rb_account_manager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Manager" />
 
             <RadioButton
-                android:id="@+id/rb_account_creation_employee"
+                android:id="@+id/rb_account_employee"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -266,19 +266,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:checkedButton="@id/rb_account_creation_male"
+            android:checkedButton="@id/rb_account_male"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@+id/tv_employee_date"
             app:layout_constraintTop_toBottomOf="@+id/tv_employee_date">
 
             <RadioButton
-                android:id="@+id/rb_account_creation_male"
+                android:id="@+id/rb_account_male"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Male" />
 
             <RadioButton
-                android:id="@+id/rb_account_creation_female"
+                android:id="@+id/rb_account_female"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"

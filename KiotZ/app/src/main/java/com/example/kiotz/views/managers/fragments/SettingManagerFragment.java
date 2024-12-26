@@ -20,6 +20,7 @@ import com.example.kiotz.adapters.IItemFragment;
 import com.example.kiotz.adapters.ItemFragmentManagerAdapter;
 import com.example.kiotz.authentication.Authenticator;
 import com.example.kiotz.models.ItemFragment;
+import com.example.kiotz.views.general.activities.AccountInformationView;
 import com.example.kiotz.views.general.activities.LoginActivity;
 import com.example.kiotz.views.managers.data.App;
 
@@ -127,5 +128,10 @@ public class SettingManagerFragment extends Fragment implements IItemFragment {
             requireActivity().finish();
         }
 
+        if (position == 0)
+        {
+            Intent intent = new Intent(getContext(), AccountInformationView.class);
+            startActivity(intent);
+        }
     }
 }
