@@ -24,6 +24,7 @@ import com.example.kiotz.models.Receipt;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
+import com.example.kiotz.views.managers.data.App;
 
 import java.text.DecimalFormat;
 import java.time.DayOfWeek;
@@ -40,6 +41,7 @@ public class DailyStatistics extends AppCompatActivity {
     ArrayList<Receipt> receiptList;
     ArrayList<Receipt> temp_copy_list;
     TextView sum_money_tv_from15, daily_receipt_count, sort_by_tv_form16,statistic_title_tv,daily_sum_money_tv_from15;
+    TextView tvUsername,tvPosition;
     SearchView search_sv_form16;
     int sort_type;
     ReceiptAdapter receiptAdapter;
@@ -64,6 +66,7 @@ public class DailyStatistics extends AppCompatActivity {
         getExtras();
         setupViewModel();
         setupSortButton();
+        setupStatusBar();
         loadReceipt()
                 .thenRun(this::copyReceiptList)
                 .thenRun(this::AdaptViewToTimeRange)
@@ -155,6 +158,12 @@ public class DailyStatistics extends AppCompatActivity {
         }
     }
 
+    private void setupStatusBar(){
+        App app=(App) getApplication();
+        tvUsername.setText(app.getName());
+        tvPosition.setText(app.getPosition());
+    }
+
     private void initVariable() {
         change_sort_order_bt = findViewById(R.id.iv_sort_by_employee_name);
         recycler_view = findViewById(R.id.recycler_view_rv);
@@ -165,6 +174,9 @@ public class DailyStatistics extends AppCompatActivity {
         daily_sum_money_tv_from15 = findViewById(R.id.daily_sum_money_tv_from15);
         search_sv_form16 = findViewById(R.id.search_sv_form16);
         temp_copy_list = new ArrayList<Receipt>();
+        tvUsername=findViewById(R.id.tvNameMonthStatistic);
+        tvPosition=findViewById(R.id.tvPositionMonthStatistic);
+
     }
 
     private void setupRecyclerView() {

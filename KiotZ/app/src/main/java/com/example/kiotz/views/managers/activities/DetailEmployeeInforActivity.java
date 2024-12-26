@@ -53,18 +53,21 @@ public class DetailEmployeeInforActivity extends AppCompatActivity {
         Intent intent=getIntent();
         Employee employee=(Employee) intent.getSerializableExtra("dataEmployee");
         if(employee!=null){
-            tvID.setText(employee.ID());
-            tvName.setText(employee.Name());
-            tvEmail.setText(employee.Email());
-            tvGender.setText(employee.Gender().toString());
-            tvDate.setText(employee.Date());
+            tvID.setText(employee.ID()!=null?employee.ID():"");
+            tvName.setText(employee.Name()!=null?employee.Name():"");
+            tvEmail.setText(employee.Email()!=null?employee.Email():"");
+            tvGender.setText(employee.Gender()!=null?employee.Gender().toString():null);
+            tvDate.setText(employee.Date()!=null?employee.Date():null);
             tvPosition.setText(employee.IsAdmin()?"Manager":"Employee");
-            setImageViewRole(employee.Gender().toString(),employee.IsAdmin()?"Manager":"Employee");
+            setImageViewRole(employee.Gender()!=null?employee.Gender().toString():null,employee.IsAdmin()?"Manager":"Employee");
 
         }
     }
 
     private void setImageViewRole(String Gender,String position){
+        if(Gender==null){
+            return;
+        }
         if(position.equals("Manager")){
             if(Gender.equals("MALE")){
                 imageViewRole.setImageResource(R.drawable.ic_manager);
