@@ -81,6 +81,33 @@ public class Authenticator {
         return future;
     }
 
+    public CompletableFuture<Pair<Boolean, String>> changePassword(String newPassword) {
+        if (!isValidPassword(newPassword)) {
+            return CompletableFuture.completedFuture(
+                    new Pair<>(false, "Password must be at least 6 characters")
+            );
+        }
+
+        var future = new CompletableFuture<Pair<Boolean, String>>();
+        var currentUser = mAuth.getCurrentUser();
+
+        if (currentUser == null) {
+            return CompletableFuture.completedFuture(
+                    new Pair<>(false, "No user is currently signed in")
+            );
+        }
+
+        currentUser.updatePassword(newPassword)
+                .addOnSuccessListener(unused -> future.complete(new Pair<>(true, null)))
+                .addOnFailureListener(e -> future.complete(new Pair<>(false, e.getMessage())));
+
+        return future;
+    }
+
+    private boolean isValidPassword(String password) {
+        return password != null && password.length() >= 6;
+    }
+
     public String getCurrentUserId() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         return currentUser != null ? currentUser.getUid() : null;
