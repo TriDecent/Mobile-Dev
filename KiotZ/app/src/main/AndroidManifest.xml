@@ -58,13 +58,13 @@
             android:name=".AccountCreationActivity"
             android:exported="false" />
         <activity
-            android:name=".views.managers.activities.ViewInformationEmployeeActivity$DetailProductActivity"
+            android:name=".views.managers.activities.DetailProductActivity"
             android:exported="false" />
         <activity
             android:name=".EmployeesView"
             android:exported="false" />
         <activity
-            android:name=".views.managers.activities.ViewInformationEmployeeActivity$ViewInventoryActivity"
+            android:name=".views.managers.activities.ViewInventoryActivity"
             android:exported="false" />
         <activity
             android:name=".views.general.activities.LoginActivity"

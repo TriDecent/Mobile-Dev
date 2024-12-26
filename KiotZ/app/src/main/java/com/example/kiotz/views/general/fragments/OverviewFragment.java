@@ -29,6 +29,7 @@ import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import com.example.kiotz.views.general.activities.CreateProductActivity;
 import com.example.kiotz.views.managers.activities.DailyStatistics;
 import com.example.kiotz.views.managers.activities.ViewInformationEmployeeActivity;
+import com.example.kiotz.views.managers.activities.ViewInventoryActivity;
 import com.example.kiotz.views.managers.data.App;
 
 import java.text.DecimalFormat;
@@ -148,7 +149,7 @@ public class OverviewFragment extends Fragment {
         cardViewViewInventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(v.getContext(), ViewInformationEmployeeActivity.ViewInventoryActivity.class);
+                Intent i=new Intent(v.getContext(), ViewInventoryActivity.class);
                 startActivity(i);
             }
         });

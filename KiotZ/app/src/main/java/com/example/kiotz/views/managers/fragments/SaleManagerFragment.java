@@ -19,6 +19,7 @@ import com.example.kiotz.adapters.IItemFragment;
 import com.example.kiotz.adapters.ItemFragmentManagerAdapter;
 import com.example.kiotz.models.ItemFragment;
 import com.example.kiotz.views.managers.activities.ViewInformationEmployeeActivity;
+import com.example.kiotz.views.managers.activities.ViewInventoryActivity;
 import com.example.kiotz.views.managers.data.App;
 
 import java.util.ArrayList;
@@ -116,7 +117,7 @@ public class SaleManagerFragment extends Fragment implements IItemFragment {
     @Override
     public void onItemClick(int position) {
         if(position==2){
-            Intent intent=new Intent(getContext(), ViewInformationEmployeeActivity.ViewInventoryActivity.class);
+            Intent intent=new Intent(getContext(), ViewInventoryActivity.class);
             startActivity(intent);
         }
 
