@@ -89,7 +89,6 @@ public class DailyStatistics extends AppCompatActivity {
     {
         if (Time_range_from_extras == 0)
             return;
-//        TODO: if no intent is pasaed, set it as a general time date for the user to pick
         ArrayList<Receipt> receipts_filter = new ArrayList<Receipt>();
         LocalDateTime current_localDateTime = LocalDateTime.now();
         switch (Time_range_from_extras)
@@ -123,7 +122,6 @@ public class DailyStatistics extends AppCompatActivity {
 
 
               for (Receipt i: receiptList) {
-                        Log.d("This is weird",i.DateTime().toString());
                     if ((!i.DateTime().toLocalDate().isBefore(first_day_of_week)) &&
                             (!i.DateTime().toLocalDate().isAfter(current_localDateTime.toLocalDate())))
                     {
@@ -167,11 +165,11 @@ public class DailyStatistics extends AppCompatActivity {
     private void initVariable() {
         change_sort_order_bt = findViewById(R.id.iv_sort_by_employee_name);
         recycler_view = findViewById(R.id.recycler_view_rv);
-        sum_money_tv_from15 = findViewById(R.id.sum_money_tv_from15);
-        daily_receipt_count = findViewById(R.id.daily_receipt_count_tv_form16);
+        sum_money_tv_from15 = findViewById(R.id.product_sold_tv);
+        daily_receipt_count = findViewById(R.id.daily_receipt_count_tv);
         sort_by_tv_form16 = findViewById(R.id.sort_by_tv_form16);
-        statistic_title_tv = findViewById(R.id.statistic_title_tv);
-        daily_sum_money_tv_from15 = findViewById(R.id.daily_sum_money_tv_from15);
+        statistic_title_tv = findViewById(R.id.product_sold_title_tv);
+        daily_sum_money_tv_from15 = findViewById(R.id.product_sold_tv_header);
         search_sv_form16 = findViewById(R.id.search_sv_form16);
         temp_copy_list = new ArrayList<Receipt>();
         tvUsername=findViewById(R.id.tvNameMonthStatistic);
@@ -222,11 +220,6 @@ public class DailyStatistics extends AppCompatActivity {
 
                     }
                         break;
-//                    case 3:
-//                    {
-//                        sort_by_tv_form16.setText("case thứ 3 (case index 2)");
-//                    }
-//                        break;
                 }
             }
         });
@@ -235,7 +228,7 @@ public class DailyStatistics extends AppCompatActivity {
 
 
 
-    class ReceiptSortByPrice implements Comparator<Receipt> {
+    static class ReceiptSortByPrice implements Comparator<Receipt> {
 
         // Used for sorting in ascending order of total amount
         public int compare(Receipt a, Receipt b){
@@ -247,7 +240,7 @@ public class DailyStatistics extends AppCompatActivity {
         }
     }
 
-    class ReceiptSortByDateNew implements Comparator<Receipt> {
+    static class ReceiptSortByDateNew implements Comparator<Receipt> {
 
         // Used for sorting in ascending order of total amount
         public int compare(Receipt a, Receipt b){
@@ -255,7 +248,7 @@ public class DailyStatistics extends AppCompatActivity {
         }
     }
 
-    class ReceiptSortByDateOld implements Comparator<Receipt> {
+    static class ReceiptSortByDateOld implements Comparator<Receipt> {
 
         // Used for sorting in ascending order of total amount
         public int compare(Receipt a, Receipt b){
