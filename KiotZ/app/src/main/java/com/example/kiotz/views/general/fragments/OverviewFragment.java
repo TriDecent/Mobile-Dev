@@ -60,7 +60,7 @@ public class OverviewFragment extends Fragment {
     private List<Receipt> receiptList;
     private CompletableFuture<Void> employeesLoadedFuture;
     InventoryViewModel<Receipt> receiptViewModel;
-    TextView tvRevenueValue, tvOrderValue, tvProfitValue, tvDayMonth;
+    TextView tvRevenueValue, tvOrderValue, tvProductSoldValue, tvDayMonth;
     public OverviewFragment() {
         // Required empty public constructor
     }
@@ -99,6 +99,10 @@ public class OverviewFragment extends Fragment {
                 .thenRunAsync(this::getInformationCurrentUser)
                 .thenRun(this::initVariables)
                 .thenRun(this::updateStatisticTab);
+//                .exceptionally(ex -> {
+//                    Log.e("DEBUG", "Error in loading data: ", ex);
+//                    return null;
+//                });
 
     }
 
@@ -262,7 +266,7 @@ public class OverviewFragment extends Fragment {
     {
         tvRevenueValue = getView().findViewById(R.id.tvRevenueValue);
         tvOrderValue = getView().findViewById(R.id.tvOrderValue);
-        tvProfitValue = getView().findViewById(R.id.tvProfitValue);
+        tvProductSoldValue = getView().findViewById(R.id.tvProductSoldValue);
         tvDayMonth = getView().findViewById(R.id.tvDayMonth);
 
     }
@@ -287,25 +291,33 @@ public class OverviewFragment extends Fragment {
     {
         LocalDateTime current_localDateTime = LocalDateTime.now();
         Double revenue = (double) 0;
+        int product_sold_count = 0;
         for (Receipt i: receiptList) {
-//            TODO: handle profit
             revenue = revenue + i.TotalPrice();
+
+            for (String product_id : i.ProductIds())
+            {
+                product_sold_count = product_sold_count + 1;
+            }
         }
 
 
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###,###");
-        Double finalRevenue = Double.valueOf(decimalFormat.format(revenue));
+        String formattedRevenue = decimalFormat.format(revenue); // Format for display
         String order_n = String.valueOf(receiptList.size());
+        int finalProductSoldCount = product_sold_count;
+
         requireActivity().runOnUiThread(() -> {
             tvDayMonth.setText(current_localDateTime.getDayOfWeek() + ", " +
                     current_localDateTime.getDayOfMonth() + "/" +
                     current_localDateTime.getMonthValue() + "/" +
                     current_localDateTime.getYear());
 
-            tvRevenueValue.setText(String.valueOf(finalRevenue));
-
+            tvRevenueValue.setText(formattedRevenue); // Display formatted revenue
             tvOrderValue.setText(order_n);
+            tvProductSoldValue.setText(String.valueOf(finalProductSoldCount));
         });
+
 
 //        TODO: update revenue, order and profit
 

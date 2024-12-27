@@ -1,6 +1,7 @@
 package com.example.kiotz.views.general.activities;
 
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
@@ -31,6 +32,7 @@ public class AccountInformationView extends AppCompatActivity {
     Employee current_employee;
     EditText et_email, et_password, et_employee_name, et_employee_date;
     RadioButton rb_account_male, rb_account_female, rb_account_manager, rb_account_employee;
+    Button btn_change_password_bt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +83,7 @@ public class AccountInformationView extends AppCompatActivity {
         rb_account_female = findViewById(R.id.rb_account_female);
         rb_account_manager = findViewById(R.id.rb_account_manager);
         rb_account_employee = findViewById(R.id.rb_account_employee);
+        btn_change_password_bt = findViewById(R.id.btn_change_password_bt);
     }
 
     private void adaptViewsToFetchedData()
