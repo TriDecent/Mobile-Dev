@@ -113,7 +113,6 @@ public class DetailReceipt extends AppCompatActivity implements IRecycleManagerD
         List<CompletableFuture<Void>> futures = new ArrayList<>();
         for (String id : IdProducts) {
                 CompletableFuture<Void> future = productViewModel.getById(id)
-                        //.thenAccept(products::add);
                           .thenAccept(product -> {
                               if(product!=null){
                                   products.add(product);
