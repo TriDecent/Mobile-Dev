@@ -28,6 +28,7 @@ import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import com.example.kiotz.views.general.activities.CreateProductActivity;
 import com.example.kiotz.views.managers.activities.DailyStatistics;
+import com.example.kiotz.views.managers.activities.EmployeeStatisticToday;
 import com.example.kiotz.views.managers.activities.ProductSold;
 import com.example.kiotz.views.managers.activities.ViewInformationEmployeeActivity;
 import com.example.kiotz.views.managers.activities.ViewInventoryActivity;
@@ -217,6 +218,14 @@ public class OverviewFragment extends Fragment {
             }
         });
 
+        CardView cardViewTimeStatistic = view.findViewById(R.id.cardViewTimeStatistic);
+        cardViewTimeStatistic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), EmployeeStatisticToday.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void setupViewModel() {
