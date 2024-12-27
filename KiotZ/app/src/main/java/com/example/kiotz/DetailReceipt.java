@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kiotz.adapters.IRecycleManagerDetail;
+import com.example.kiotz.adapters.ProductInReceiptAdapter;
 import com.example.kiotz.adapters.ProductsAdapterManager;
 import com.example.kiotz.adapters.ReceiptAdapter;
 import com.example.kiotz.database.FireBaseService;
@@ -22,6 +23,7 @@ import com.example.kiotz.database.dto.ProductSerializer;
 import com.example.kiotz.database.dto.ReceiptSerializer;
 import com.example.kiotz.inventory.Inventory;
 import com.example.kiotz.models.Employee;
+import com.example.kiotz.models.ItemReceipt;
 import com.example.kiotz.models.Product;
 import com.example.kiotz.models.Receipt;
 import com.example.kiotz.repositories.Repository;
@@ -32,7 +34,10 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -50,6 +55,10 @@ public class DetailReceipt extends AppCompatActivity implements IRecycleManagerD
     ArrayList<Receipt> receiptList;
     Employee employee;
     List<Product> products;
+
+    List<ItemReceipt> itemReceipts;
+
+    ProductInReceiptAdapter adapter;
 
     List<CompletableFuture<Product>> futureProducts = new ArrayList<>();
 //    ArrayList<Product> tempProductList = new ArrayList<Product>();
@@ -73,11 +82,21 @@ public class DetailReceipt extends AppCompatActivity implements IRecycleManagerD
 //                .thenRun(this::updateView)
 //                .thenRun(this::setupRecyclerView);
 
+//        findReceipt()
+//                .thenCompose(avoid -> findEmployee())
+//                .thenCompose(avoid->findProducts())
+//                .thenRun(this::updateView)
+//                .thenRun(this::setupRecyclerView);
+
         findReceipt()
                 .thenCompose(avoid -> findEmployee())
                 .thenCompose(avoid->findProducts())
+                .thenRun(this::convertListProductToListItemReceipt)
                 .thenRun(this::updateView)
                 .thenRun(this::setupRecyclerView);
+
+
+
 
 
 
@@ -192,8 +211,49 @@ public class DetailReceipt extends AppCompatActivity implements IRecycleManagerD
 //                recyclerView.setAdapter(productAdapter);
 //        });
 
-        productAdapter=new ProductsAdapterManager(this,products,this);
-        recyclerView.setAdapter(productAdapter);
+//        productAdapter=new ProductsAdapterManager(this,products,this);
+//        recyclerView.setAdapter(productAdapter);
+
+        adapter=new ProductInReceiptAdapter(this,itemReceipts);
+        recyclerView.setAdapter(adapter);
+
+    }
+
+
+    private void convertListProductToListItemReceipt(){
+        Map<String,Integer> map=new HashMap<>();
+        for(int i=0;i<products.size();i++){
+            if(map.containsKey(products.get(i).ID())){
+                continue;
+            }
+            map.put(products.get(i).ID(),1);
+            if(i==products.size()-1){
+                continue;
+            }
+            for(int j=i+1;j<products.size();j++){
+                if(products.get(i).ID().equals(products.get(j).ID())){
+                    int count=0;
+                    if(map.get(products.get(i).ID())!=null){
+                        count=map.get(products.get(i).ID());
+                    }
+                    count++;
+                    map.put(products.get(i).ID(),count);
+
+                }
+            }
+        }
+        itemReceipts=new ArrayList<>();
+
+        for(String id:map.keySet()){
+            Optional<Product> productOptional = products.stream()
+                    .filter(product -> product.ID().equals(id))
+                    .findFirst();
+            if(productOptional.isPresent()){
+                Product product=productOptional.get();
+                itemReceipts.add(new ItemReceipt(product.imageURL(),product.Name(),product.ID(),product.Price(),map.get(id)));
+
+            }
+        }
     }
 
 
