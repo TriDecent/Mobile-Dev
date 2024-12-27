@@ -1,22 +1,29 @@
 package com.example.kiotz.views.managers.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kiotz.R;
+import com.example.kiotz.adapters.CustomEmployeesAdapter;
 import com.example.kiotz.adapters.EmployeesAdapter;
+import com.example.kiotz.adapters.IRecycleManagerDetail;
+import com.example.kiotz.authentication.Authenticator;
 import com.example.kiotz.database.FireBaseService;
 import com.example.kiotz.database.dto.EmployeeSerializer;
 import com.example.kiotz.database.dto.ReceiptSerializer;
 import com.example.kiotz.inventory.Inventory;
 import com.example.kiotz.models.Employee;
+import com.example.kiotz.models.EmployeeTotalAmountSold;
 import com.example.kiotz.models.Receipt;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
@@ -37,8 +44,9 @@ public class EmployeeStatisticToday extends AppCompatActivity {
     InventoryViewModel<Receipt> receiptViewModel;
     ArrayList<Receipt> receiptList;
     ArrayList<Employee> employeeArrayList;
-    ArrayList<EmployeeTotalAmountSold> employeeTotalAmountSold;
+    ArrayList<EmployeeTotalAmountSold> employeeTotalAmountSold = new ArrayList<>();
     ArrayList<Employee> employees_display = new ArrayList<>();
+    Employee sessionEmployee;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +66,9 @@ public class EmployeeStatisticToday extends AppCompatActivity {
                 .thenRun(this::filterReceipt)
                 .thenRun(this::filterEmployee)
                 .thenRun(this::sumEmployeeSold)
-                .thenCompose(aVoid  -> sortEmployeeToTotalSold());
+                .thenCompose(aVoid  -> sortEmployeeToTotalSold())
+                .thenRun(this::setupRecyclerView)
+                .thenRun(this::adaptViewsToData);
         ;
     }
 
@@ -125,39 +135,20 @@ public class EmployeeStatisticToday extends AppCompatActivity {
         tvPosition.setText(app.getPosition());
     }
 
-    static class EmployeeTotalAmountSold
-    {
-        private String employeeID;
-        private double totalAmount;
+//    @Override
+//    public void onItemClick(int position) {
+//        for (EmployeeTotalAmountSold i: employeeTotalAmountSold) {
+//            if (i.getEmployeeID().equals(employees_display.get(position).ID()))
+//            Toast.makeText(this, "Employee sold " + String.valueOf(i.getTotalAmount()) + " in total", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
-        EmployeeTotalAmountSold(String employeeID, double totalAmount)
-        {
-            this.totalAmount = totalAmount;
-            this.employeeID = employeeID;
-        }
 
-        public String getEmployeeID()
-        {
-            return employeeID;
-        }
 
-        public double getTotalAmount() {
-            return totalAmount;
-        }
-
-        public void setEmployeeID(String employeeID) {
-            this.employeeID = employeeID;
-        }
-
-        public void setTotalAmount(double totalAmount) {
-            this.totalAmount = totalAmount;
-        }
-    }
-
-    static class EmployeeSortByTotalAmountSold implements Comparator<EmployeeStatisticToday.EmployeeTotalAmountSold> {
+    static class EmployeeSortByTotalAmountSold implements Comparator<EmployeeTotalAmountSold> {
 
         // Used for sorting in ascending order of total amount
-        public int compare(EmployeeStatisticToday.EmployeeTotalAmountSold a, EmployeeStatisticToday.EmployeeTotalAmountSold b){
+        public int compare(EmployeeTotalAmountSold a, EmployeeTotalAmountSold b){
             if (a.getTotalAmount() > b.getTotalAmount())
                 return -1;
             else if (a.getTotalAmount() < b.getTotalAmount())
@@ -184,28 +175,44 @@ public class EmployeeStatisticToday extends AppCompatActivity {
 
         }
 
-        private CompletableFuture<Void> sortEmployeeToTotalSold() {
+    private CompletableFuture<Void> sortEmployeeToTotalSold() {
 
-            List<CompletableFuture<Void>> futures = new ArrayList<>();
-            for (EmployeeTotalAmountSold i : employeeTotalAmountSold) {
-                CompletableFuture<Void> future = employeeViewModel.getById(i.getEmployeeID())
-                        .thenAccept(employee -> {
+        List<CompletableFuture<Employee>> futures = new ArrayList<>();
+
+        // Fetch employee data while maintaining order
+        for (EmployeeTotalAmountSold item : employeeTotalAmountSold) {
+            CompletableFuture<Employee> future = employeeViewModel.getById(item.getEmployeeID());
+            futures.add(future);
+        }
+
+        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                .thenRun(() -> {
+                    employees_display.clear(); // Ensure no leftovers
+                    for (int i = 0; i < employeeTotalAmountSold.size(); i++) {
+
+                            // Add employees in the order of `employeeTotalAmountSold`
+                            Employee employee = futures.get(i).join();
                             if (employee != null) {
                                 employees_display.add(employee);
                             }
-                        });
-                futures.add(future);
+
+                    }
+                });
+    }
 
 
-            }
-                return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
-        }
 
-        private void setupRecyclerView()
+    private void setupRecyclerView()
         {
-//            EmployeesAdapter employeesAdapter = new EmployeesAdapter(this,)
-//            TODO: adapt recyclerview to its list
+            recycler_view_rv.setLayoutManager(new LinearLayoutManager(this));
+            CustomEmployeesAdapter employeesAdapter = new CustomEmployeesAdapter(this,employees_display,employeeTotalAmountSold);
+            recycler_view_rv.setAdapter(employeesAdapter);
+
         }
 
-
+    private void adaptViewsToData()
+    {
+        daily_employee_count_tv.setText(String.valueOf(employees_display.size()));
+        receipt_sold_value_tv.setText(String.valueOf(receiptList.size()));
+    }
 }
