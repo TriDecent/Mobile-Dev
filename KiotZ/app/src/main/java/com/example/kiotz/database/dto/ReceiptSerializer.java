@@ -52,5 +52,8 @@ public class ReceiptSerializer implements ISerializer<Receipt> {
                 productIds,
                 totalPrice != null ? totalPrice : 0.0
         );
+
     }
+
+
 }

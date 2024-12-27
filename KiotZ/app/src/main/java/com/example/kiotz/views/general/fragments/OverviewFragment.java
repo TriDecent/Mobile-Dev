@@ -31,6 +31,7 @@ import com.example.kiotz.views.managers.activities.DailyStatistics;
 import com.example.kiotz.views.managers.activities.EmployeeStatisticToday;
 import com.example.kiotz.views.managers.activities.ModifyProductView;
 import com.example.kiotz.views.managers.activities.ProductSold;
+import com.example.kiotz.views.managers.activities.StatisticInvoicesTodayActivity;
 import com.example.kiotz.views.managers.activities.ViewInformationEmployeeActivity;
 import com.example.kiotz.views.managers.activities.ViewInventoryActivity;
 import com.example.kiotz.views.managers.data.App;
@@ -176,6 +177,15 @@ public class OverviewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), EmployeesView.class);
+                startActivity(i);
+            }
+        });
+
+        CardView cardViewInvoiceTodayAnalyst=view.findViewById(R.id.cardViewInvoice);
+        cardViewInvoiceTodayAnalyst.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), StatisticInvoicesTodayActivity.class);
                 startActivity(i);
             }
         });
