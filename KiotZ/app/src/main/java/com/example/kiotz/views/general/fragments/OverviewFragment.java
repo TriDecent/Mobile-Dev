@@ -29,6 +29,7 @@ import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import com.example.kiotz.views.general.activities.CreateProductActivity;
 import com.example.kiotz.views.managers.activities.DailyStatistics;
 import com.example.kiotz.views.managers.activities.EmployeeStatisticToday;
+import com.example.kiotz.views.managers.activities.ModifyProductView;
 import com.example.kiotz.views.managers.activities.ProductSold;
 import com.example.kiotz.views.managers.activities.StatisticInvoicesTodayActivity;
 import com.example.kiotz.views.managers.activities.ViewInformationEmployeeActivity;
@@ -233,6 +234,15 @@ public class OverviewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), EmployeeStatisticToday.class);
+                startActivity(i);
+            }
+        });
+
+        CardView cardViewModifyInventory = view.findViewById(R.id.cardViewModifyInventory);
+        cardViewModifyInventory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), ModifyProductView.class);
                 startActivity(i);
             }
         });

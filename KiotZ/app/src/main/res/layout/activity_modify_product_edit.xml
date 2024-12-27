@@ -97,7 +97,7 @@
         android:id="@+id/buttonUploadImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Upload Image"
+        android:text="Replace Image"
         app:layout_constraintTop_toBottomOf="@id/product_img_siv"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

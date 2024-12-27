@@ -64,7 +64,7 @@ public  class ViewInventoryActivity extends AppCompatActivity implements IRecycl
 
 
     private void bindingView(){
-        recyclerViewProduct=findViewById(R.id.recycleViewProductManager);
+        recyclerViewProduct=findViewById(R.id.recycleView_rv);
         tvUserName=findViewById(R.id.tv_username);
         tvPosition=findViewById(R.id.tv_position);
         recyclerViewProduct.setLayoutManager(new LinearLayoutManager(this));
