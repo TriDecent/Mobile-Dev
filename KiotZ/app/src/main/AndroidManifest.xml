@@ -83,7 +83,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Trigger Google Play services to install the backported photo picker module. -->
+        </activity>
+        <activity
+            android:name=".views.managers.activities.ModifyProductEdit"
+            android:exported="false" />
+        <!-- Trigger Google Play services to install the backported photo picker module. -->
         <service
             android:name="com.google.android.gms.metadata.ModuleDependencies"
             android:enabled="false"

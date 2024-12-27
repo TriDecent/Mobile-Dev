@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.managers.activities.ViewInformationEmployeeActivity$ViewInventoryActivity">
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/status"
@@ -73,7 +73,7 @@
 
     </TextView>
 
-    <SearchView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleViewProductManager"
+        android:id="@+id/recycleView_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/search"
