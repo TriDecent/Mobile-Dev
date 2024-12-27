@@ -16,4 +16,6 @@ public record Receipt(String ID, LocalDateTime DateTime, String EmployeeId, Stri
     public IIdentifiable withId(String id) {
         return new Receipt(id, DateTime, CustomerName, EmployeeId, CustomerPhone, ProductIds, TotalPrice);
     }
+
+
 }

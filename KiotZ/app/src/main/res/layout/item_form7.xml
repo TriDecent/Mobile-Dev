@@ -26,15 +26,27 @@
             android:padding="10dp">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="X"
+                app:layout_constraintEnd_toStartOf="@id/tv_product_quantity"
+                app:layout_constraintTop_toTopOf="@id/tv_product_quantity"
+                app:layout_constraintBottom_toBottomOf="@id/tv_product_quantity"
+                android:layout_marginEnd="5dp"
+
+                />
+
+            <TextView
                 android:id="@+id/tv_product_quantity"
-                android:layout_width="51dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="10000"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
                 android:textColor="#45664C"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_product_id" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                 />
 
             <TextView
                 android:id="@+id/tv_product_id"
