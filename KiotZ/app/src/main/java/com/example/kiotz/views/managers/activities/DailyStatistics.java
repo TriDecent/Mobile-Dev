@@ -171,8 +171,8 @@ public class DailyStatistics extends AppCompatActivity {
         daily_sum_money_tv_from15 = findViewById(R.id.product_sold_tv_header);
         search_sv_form16 = findViewById(R.id.search_sv_form16);
         temp_copy_list = new ArrayList<Receipt>();
-        tvUsername=findViewById(R.id.tvNameMonthStatistic);
-        tvPosition=findViewById(R.id.tvPositionMonthStatistic);
+        tvUsername=findViewById(R.id.tvUsername);
+        tvPosition=findViewById(R.id.tvPosition);
 
     }
 

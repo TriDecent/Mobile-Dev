@@ -73,8 +73,8 @@ public class ProductSold extends AppCompatActivity implements IRecycleManagerDet
         daily_receipt_count_tv = findViewById(R.id.daily_employee_count_tv);
         product_sold_tv = findViewById(R.id.receipt_sold_value_tv);
         recycler_view = findViewById(R.id.recycler_view_rv);
-        tvUsername=findViewById(R.id.tvNameMonthStatistic);
-        tvPosition=findViewById(R.id.tvPositionMonthStatistic);
+        tvUsername=findViewById(R.id.tvUsername);
+        tvPosition=findViewById(R.id.tvPosition);
     }
 
     private void setupViewModel() {
