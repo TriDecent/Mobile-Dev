@@ -87,12 +87,13 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@id/high_ligh_bar_form16"
         app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
+        app:layout_constraintRight_toRightOf="@id/high_ligh_bar_form16"
         app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
         android:text="100"
         android:textColor="@color/md_theme_primary"
         android:textStyle="bold"
         android:textSize="16sp"
-        android:layout_marginStart="25dp"
+        android:layout_marginEnd="60dp"
         android:layout_marginBottom="20dp"
         >
 
@@ -106,7 +107,7 @@
         app:layout_constraintLeft_toRightOf="@id/daily_employee_count_tv"
         app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
         app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
-        android:text="hóa đơn"
+        android:text="nhân viên"
         android:textColor="@color/md_theme_scrim"
         android:textStyle="bold"
         android:textSize="16sp"
@@ -124,12 +125,12 @@
         app:layout_constraintLeft_toLeftOf="@id/high_ligh_bar_form16"
         app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
         app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
-        android:text="Tổng doanh thu trong ngày"
+        android:text="Số hóa đơn bán trong ngày:"
         android:textColor="@color/md_theme_primary"
         android:textStyle="bold"
         android:textSize="16sp"
         android:layout_marginTop="25dp"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="60dp"
         >
 
     </TextView>
@@ -141,88 +142,24 @@
         app:layout_constraintLeft_toRightOf="@id/product_sold_tv_header"
         app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
         app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
-        android:text="200.000.000₫"
+        android:text="1000"
         android:textColor="@color/md_theme_tertiary"
         android:textStyle="bold"
         android:textSize="16sp"
         android:layout_marginTop="25dp"
-        android:layout_marginStart="30dp"
-        >
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/sort_tv_form16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="140dp"
-        android:text="Sắp xếp theo"
-        android:textColor="@color/md_theme_scrim"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
-        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
-        app:layout_constraintRight_toLeftOf="@id/sort_by_tv_form16"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="20dp"
-        >
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/sort_by_tv_form16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:text="cũ nhất"
-        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
-        app:layout_constraintRight_toRightOf="@id/high_ligh_bar_form16"
-        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
-        android:textStyle="bold"
-        android:textColor="@color/md_theme_primary"
-        android:layout_marginEnd="35dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="5dp"
         >
 
     </TextView>
 
 
-
-    <ImageView
-        android:id="@+id/iv_sort_by_employee_name"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/sort_icon"
-        app:layout_constraintTop_toBottomOf="@id/rectangle_2_form16"
-        app:layout_constraintRight_toRightOf="@id/high_ligh_bar_form16"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="10dp"
-        >
-
-    </ImageView>
-
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search_sv_form16"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/bg_staff_list_form14"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintTop_toBottomOf="@id/high_ligh_bar_form16"
-        android:layout_marginTop="10dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-
-        >
-
-    </androidx.appcompat.widget.SearchView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/search_sv_form16"
+        app:layout_constraintTop_toBottomOf="@id/high_ligh_bar_form16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -241,7 +178,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25sp"
-        android:text="Daily Statistics"
+        android:text="Employee Statistics"
         android:textStyle="bold"
         android:textColor="@color/md_theme_scrim"
         app:layout_constraintTop_toBottomOf="@id/rectangle_2_form16"

@@ -1,8 +1,6 @@
 package com.example.kiotz.views.managers.activities;
 
 import android.os.Bundle;
-import android.util.ArrayMap;
-import android.util.Pair;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,11 +70,11 @@ public class ProductSold extends AppCompatActivity implements IRecycleManagerDet
 
     private void initVariables()
     {
-        daily_receipt_count_tv = findViewById(R.id.daily_receipt_count_tv);
-        product_sold_tv = findViewById(R.id.product_sold_tv);
+        daily_receipt_count_tv = findViewById(R.id.daily_employee_count_tv);
+        product_sold_tv = findViewById(R.id.receipt_sold_value_tv);
         recycler_view = findViewById(R.id.recycler_view_rv);
-        tvUsername=findViewById(R.id.tvNameMonthStatistic);
-        tvPosition=findViewById(R.id.tvPositionMonthStatistic);
+        tvUsername=findViewById(R.id.tvUsername);
+        tvPosition=findViewById(R.id.tvPosition);
     }
 
     private void setupViewModel() {

@@ -1,7 +1,6 @@
 package com.example.kiotz.views.managers.activities;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import androidx.appcompat.widget.SearchView;
@@ -165,15 +164,15 @@ public class DailyStatistics extends AppCompatActivity {
     private void initVariable() {
         change_sort_order_bt = findViewById(R.id.iv_sort_by_employee_name);
         recycler_view = findViewById(R.id.recycler_view_rv);
-        sum_money_tv_from15 = findViewById(R.id.product_sold_tv);
-        daily_receipt_count = findViewById(R.id.daily_receipt_count_tv);
+        sum_money_tv_from15 = findViewById(R.id.receipt_sold_value_tv);
+        daily_receipt_count = findViewById(R.id.daily_employee_count_tv);
         sort_by_tv_form16 = findViewById(R.id.sort_by_tv_form16);
-        statistic_title_tv = findViewById(R.id.product_sold_title_tv);
+        statistic_title_tv = findViewById(R.id.daily_employee_statistic_title_tv);
         daily_sum_money_tv_from15 = findViewById(R.id.product_sold_tv_header);
         search_sv_form16 = findViewById(R.id.search_sv_form16);
         temp_copy_list = new ArrayList<Receipt>();
-        tvUsername=findViewById(R.id.tvNameMonthStatistic);
-        tvPosition=findViewById(R.id.tvPositionMonthStatistic);
+        tvUsername=findViewById(R.id.tvUsername);
+        tvPosition=findViewById(R.id.tvPosition);
 
     }
 

@@ -70,7 +70,7 @@
         android:layout_height="60dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/product_sold_title_tv"
+        app:layout_constraintTop_toBottomOf="@id/daily_employee_statistic_title_tv"
         android:background="@drawable/bg_search_rounded_form5"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
@@ -80,7 +80,7 @@
     </View>
 
     <TextView
-        android:id="@+id/daily_receipt_count_tv"
+        android:id="@+id/daily_employee_count_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@id/high_ligh_bar_form16"
@@ -101,7 +101,7 @@
         android:id="@+id/staff_tv_form16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/daily_receipt_count_tv"
+        app:layout_constraintLeft_toRightOf="@id/daily_employee_count_tv"
         app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
         app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
         android:text="nhân viên"
@@ -133,7 +133,7 @@
     </TextView>
 
     <TextView
-        android:id="@+id/product_sold_tv"
+        android:id="@+id/receipt_sold_value_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@id/product_sold_tv_header"
@@ -232,7 +232,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
-        android:id="@+id/product_sold_title_tv"
+        android:id="@+id/daily_employee_statistic_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25sp"

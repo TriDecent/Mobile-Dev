@@ -23,6 +23,7 @@ import com.example.kiotz.models.Employee;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.views.dialogs.EmployeeDetailsDialog;
 import com.example.kiotz.views.managers.activities.DetailEmployeeInforActivity;
+import com.example.kiotz.views.managers.activities.EmployeeStatisticToday;
 
 import java.util.List;
 import java.util.Locale;
@@ -32,6 +33,7 @@ public class EmployeesAdapter extends RecyclerView.Adapter<EmployeesAdapter.MyVi
     private final Employee currentSessionEmployee;
     private final List<Employee> employees;
     private final InventoryViewModel<Employee> employeeViewModel;
+
 
     public EmployeesAdapter(Context context, Employee currentSessionEmployee, List<Employee> employees, InventoryViewModel<Employee> employeeViewModel) {
         this.context = context;

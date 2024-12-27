@@ -20,6 +20,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".views.managers.activities.EmployeeStatisticToday"
+            android:exported="false" />
+        <activity
             android:name=".views.managers.activities.StatisticInvoicesTodayActivity"
             android:exported="false" />
         <activity

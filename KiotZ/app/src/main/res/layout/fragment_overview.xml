@@ -700,15 +700,15 @@
                                     android:layout_width="25dp"
                                     android:layout_height="25dp"
                                     android:layout_gravity="center_horizontal"
-                                    android:src="@drawable/producttime" />
+                                    android:src="@drawable/employee_daily_statistic_ic" />
 
                                 <TextView
                                     android:id="@+id/tvTimeStatistic"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:text="Times"
-                                    android:textSize="12sp" />
+                                    android:text="Employees"
+                                    android:textSize="11sp" />
 
 
                             </LinearLayout>
