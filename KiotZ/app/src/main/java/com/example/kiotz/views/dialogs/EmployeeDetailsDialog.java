@@ -34,6 +34,7 @@ public class EmployeeDetailsDialog {
         View dialogView = inflater.inflate(R.layout.employee_view_dialog, null);
         builder.setView(dialogView);
 
+
         tvDialogId = dialogView.findViewById(R.id.tv_dialog_id);
         tvDialogName = dialogView.findViewById(R.id.tv_dialog_name);
         tvDialogEmail = dialogView.findViewById(R.id.tv_dialog_email);

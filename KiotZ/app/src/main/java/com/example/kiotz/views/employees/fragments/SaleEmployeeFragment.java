@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.example.kiotz.views.dialogs.SaleDialog;
 import com.google.zxing.Result;
 import android.Manifest;
 import com.example.kiotz.R;
@@ -139,6 +140,8 @@ public class SaleEmployeeFragment extends Fragment {
                             @Override
                             public void run() {
                                 Toast.makeText(requireContext(), result.getText(), Toast.LENGTH_SHORT).show();
+                                SaleDialog saleDialog=new SaleDialog(requireContext(),null);
+                                saleDialog.show();
                                 isTurn = false;
                             }
                         });

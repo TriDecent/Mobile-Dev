@@ -111,6 +111,7 @@ public class StatisticInvoicesTodayActivity extends AppCompatActivity {
 
     private void copyListReceiptToday(){
         receiptListTodayBackUp=new ArrayList<>();
+
         for(Receipt receipt: receiptListToday){
             receiptListTodayBackUp.add(new Receipt(receipt.ID(),receipt.DateTime(),receipt.EmployeeId(),receipt.CustomerName(),receipt.CustomerPhone(),receipt.ProductIds(),receipt.TotalPrice()));
         }
@@ -157,7 +158,7 @@ public class StatisticInvoicesTodayActivity extends AppCompatActivity {
         tvInvoices.setText(String.valueOf(receiptListToday.size()));
 
         double totalRevenue=0;
-        for(Receipt receipt: receiptList){
+        for(Receipt receipt: receiptListToday){
             totalRevenue+=receipt.TotalPrice();
         }
 
