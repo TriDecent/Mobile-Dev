@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -25,6 +26,7 @@ import com.example.kiotz.models.Product;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
+import com.example.kiotz.views.managers.data.App;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.time.LocalDateTime;
@@ -43,6 +45,7 @@ public class CreateProductActivity extends AppCompatActivity {
     ShapeableImageView imageView;
     Uri local_image_uri;
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
+    TextView tv_username, tv_position;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +60,7 @@ public class CreateProductActivity extends AppCompatActivity {
         setupViewModel();
         registerPhotoPicker();
         setupOnClickListener();
+        setupStatusBar();
     }
 
     private void setupViewModel() {
@@ -76,6 +80,8 @@ public class CreateProductActivity extends AppCompatActivity {
         discard_bt = findViewById(R.id.buttonDiscard);
         complete_bt = findViewById(R.id.buttonComplete);
         imageView = findViewById(R.id.product_img_siv);
+        tv_username = findViewById(R.id.tv_username);
+        tv_position = findViewById(R.id.tv_position);
     }
 
     private void registerPhotoPicker()
@@ -197,5 +203,11 @@ public class CreateProductActivity extends AppCompatActivity {
     private boolean containsNumber(String s)
     {
         return s.matches(".*\\d.*");
+    }
+
+    private void setupStatusBar(){
+        App app=(App) getApplication();
+        tv_username.setText(app.getName());
+        tv_position.setText(app.getPosition());
     }
 }

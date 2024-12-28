@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.kiotz.R;
+import com.example.kiotz.ReceiptFragmentEmployee;
 import com.example.kiotz.views.employees.fragments.ProductEmployeeFragment;
 import com.example.kiotz.views.employees.fragments.SaleEmployeeFragment;
 import com.example.kiotz.views.general.fragments.SettingsFragment;
@@ -53,7 +54,7 @@ public class GeneralEmployeeActivity extends AppCompatActivity {
 
     private void setupFragmentClasses() {
         fragmentClasses.put(R.id.SaleEmployee, SaleEmployeeFragment.class);
-        fragmentClasses.put(R.id.ProductsEmployee, ProductEmployeeFragment.class);
+        fragmentClasses.put(R.id.ReceiptsEmployee, ReceiptFragmentEmployee.class);
         fragmentClasses.put(R.id.SettingsEmployee, SettingsFragment.class);
     }
 

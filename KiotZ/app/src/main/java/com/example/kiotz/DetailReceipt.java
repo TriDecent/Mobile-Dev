@@ -29,6 +29,7 @@ import com.example.kiotz.models.Receipt;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
+import com.example.kiotz.views.managers.data.App;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -43,14 +44,12 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class DetailReceipt extends AppCompatActivity implements IRecycleManagerDetail {
 
-    TextView receipt_id_tv,receipt_date_tv,employee_name_tv,receipt_total_price_tv,receipt_customer_name_tv,receipt_customer_phone_tv;
+    TextView receipt_id_tv,receipt_date_tv,employee_name_tv,receipt_total_price_tv,receipt_customer_name_tv,receipt_customer_phone_tv, tv_username, tv_position;
     InventoryViewModel<Receipt> receiptViewModel;
     InventoryViewModel<Employee> employeeViewModel;
     InventoryViewModel<Product> productViewModel;
     RecyclerView recyclerView;
     Receipt receipt;
-    ProductsAdapterManager productAdapter;
-    ArrayList<Employee> employeeArrayList;
     ArrayList<Product> productArrayList;
     ArrayList<Receipt> receiptList;
     Employee employee;
@@ -61,7 +60,6 @@ public class DetailReceipt extends AppCompatActivity implements IRecycleManagerD
     ProductInReceiptAdapter adapter;
 
     List<CompletableFuture<Product>> futureProducts = new ArrayList<>();
-//    ArrayList<Product> tempProductList = new ArrayList<Product>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,18 +74,7 @@ public class DetailReceipt extends AppCompatActivity implements IRecycleManagerD
         setupViewModel();
 
 
-//        loadProduct()
-//                .thenCompose(avoid -> findReceipt())
-//                .thenCompose(avoid -> findEmployee())
-//                .thenRun(this::updateView)
-//                .thenRun(this::setupRecyclerView);
-
-//        findReceipt()
-//                .thenCompose(avoid -> findEmployee())
-//                .thenCompose(avoid->findProducts())
-//                .thenRun(this::updateView)
-//                .thenRun(this::setupRecyclerView);
-
+        setupStatusBar();
         findReceipt()
                 .thenCompose(avoid -> findEmployee())
                 .thenCompose(avoid->findProducts())
@@ -113,8 +100,8 @@ public class DetailReceipt extends AppCompatActivity implements IRecycleManagerD
             receipt_customer_name_tv = findViewById(R.id.receipt_customer_name_tv);
             receipt_customer_phone_tv = findViewById(R.id.receipt_customer_phone_tv);
             recyclerView = findViewById(R.id.recycler_view_products);
-
-            //placeholder product list
+            tv_username = findViewById(R.id.tv_username);
+            tv_position = findViewById(R.id.tv_position);
 
 
         }
@@ -192,28 +179,6 @@ public class DetailReceipt extends AppCompatActivity implements IRecycleManagerD
 
     private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        List<Product> productList = new ArrayList<Product>();
-//        CompletableFuture<Void> fetchProducts = CompletableFuture.runAsync(() -> {
-//            for (String productId : receipt.ProductIds()) {
-//                try {
-//                    Product product = productViewModel.getById(productId).get();
-//                    productList.add(product);
-//                }
-//                catch (Exception e) {
-//
-//                }
-//            }
-//        });
-//
-//        fetchProducts.thenRun(() -> {
-//
-//                productAdapter = new ProductsAdapterManager(this,productList, this);
-//                recyclerView.setAdapter(productAdapter);
-//        });
-
-//        productAdapter=new ProductsAdapterManager(this,products,this);
-//        recyclerView.setAdapter(productAdapter);
-
         adapter=new ProductInReceiptAdapter(this,itemReceipts);
         recyclerView.setAdapter(adapter);
 
@@ -256,7 +221,11 @@ public class DetailReceipt extends AppCompatActivity implements IRecycleManagerD
         }
     }
 
-
+    private void setupStatusBar(){
+        App app=(App) getApplication();
+        tv_username.setText(app.getName());
+        tv_position.setText(app.getPosition());
+    }
 
 
     @Override

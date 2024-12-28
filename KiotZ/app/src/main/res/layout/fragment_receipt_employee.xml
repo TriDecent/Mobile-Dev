@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.managers.activities.StatisticInvoicesTodayActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/statusStatisticInvoicesToday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bginfor"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_avatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="7dp"
+            android:src="@drawable/avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_username_invoice_statistic_today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="Nguyễn Ngô Hải Nam"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/img_avatar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_position_invoice_statistic_today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="Manager"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tv_username_invoice_statistic_today"
+            app:layout_constraintTop_toBottomOf="@id/tv_username_invoice_statistic_today" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tvInvoiceStatisticToday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:text="Invoices Statistics Today"
+        android:textStyle="bold"
+        android:textColor="@color/md_theme_scrim"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/statusStatisticInvoicesToday"
+        />
+
+    <ImageView
+        android:id="@+id/imageViewChangeFilter"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/sort_icon"
+        app:layout_constraintTop_toTopOf="@+id/tvInvoiceStatisticToday"
+        app:layout_constraintStart_toEndOf="@+id/tvInvoiceStatisticToday"
+        android:layout_marginStart="20dp"
+        />
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvInvoiceStatisticToday"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bginfor"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        >
+
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10/10/2024"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="15dp"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/tvNumberInvoices"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" invoices"
+            app:layout_constraintStart_toEndOf="@+id/tvNumberInvoicesContent"
+            android:layout_marginStart="5dp"
+            app:layout_constraintTop_toTopOf="@+id/tvNumberInvoicesContent"
+            app:layout_constraintBottom_toBottomOf="@+id/tvNumberInvoicesContent"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:id="@+id/tvNumberInvoicesContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30"
+            android:textColor="@color/md_theme_secondary"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tvDate"
+            app:layout_constraintTop_toBottomOf="@id/tvDate"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="10dp"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/tvRevenueFromInvoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Revenue: "
+            app:layout_constraintTop_toTopOf="@+id/tvNumberInvoices"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintEnd_toStartOf="@+id/tvRevenueFromInvoiceContent"
+            app:layout_constraintBottom_toBottomOf="@+id/tvNumberInvoicesContent"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:id="@+id/tvRevenueFromInvoiceContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="200.000 VND"
+            app:layout_constraintTop_toTopOf="@+id/tvNumberInvoices"
+            android:layout_marginEnd="15dp"
+            android:textColor="@color/md_theme_secondary"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/tvNumberInvoicesContent"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/tvFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sort by: "
+            app:layout_constraintTop_toTopOf="@id/tvDate"
+            app:layout_constraintEnd_toStartOf="@id/tvFilterContent"
+            android:layout_marginEnd="5dp"
+            android:textSize="16sp"
+
+            />
+
+        <TextView
+            android:id="@+id/tvFilterContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="most revenue"
+            android:textColor="@color/md_theme_secondary"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="@id/tvDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="15dp"
+            android:textSize="16sp"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <SearchView
+        android:id="@+id/searchInvoiceStatisticToday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/constraint1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:background="@drawable/bginfor"
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleViewStatisticInvoiceToday"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/searchInvoiceStatisticToday"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/bginfor"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
