@@ -17,14 +17,16 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.kiotz.adapters.ReceiptAdapter;
+import com.example.kiotz.authentication.Authenticator;
 import com.example.kiotz.database.FireBaseService;
+import com.example.kiotz.database.dto.EmployeeSerializer;
 import com.example.kiotz.database.dto.ReceiptSerializer;
 import com.example.kiotz.inventory.Inventory;
+import com.example.kiotz.models.Employee;
 import com.example.kiotz.models.Receipt;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
-import com.example.kiotz.views.managers.activities.StatisticInvoicesTodayActivity;
 import com.example.kiotz.views.managers.data.App;
 
 import java.time.LocalDate;
@@ -46,10 +48,13 @@ public class ReceiptFragmentEmployee extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private InventoryViewModel<Receipt> receiptViewModel;
+    private InventoryViewModel<Employee> employeeInventoryViewModel;
+
     private RecyclerView recyclerView;
 
     private ReceiptAdapter adapter;
     private List<Receipt> receiptList;
+    private List<Employee> employees;
     private List<Receipt> receiptListToday;
 
     private List<Receipt> receiptListTodayBackUp;
@@ -106,7 +111,8 @@ public class ReceiptFragmentEmployee extends Fragment {
         setupStatusBar();
 
         loadReceipt()
-                .thenRun(this::prepareReceiptListToday)
+                .thenCompose(aVoid -> loadEmployee())
+                .thenRun(this::prepareReceiptListCurrentEmployeeToday)
                 .thenRun(this::setupObservers)
                 .thenRun(this::setupAdapter)
                 .thenRun(this::setContentForTextView)
@@ -138,6 +144,7 @@ public class ReceiptFragmentEmployee extends Fragment {
     }
 
     private void setupStatusBar(){
+        // TODO: fix null
         App app=(App) requireActivity().getApplication();
         tvUsername.setText(app.getName());
         tvPosition.setText(app.getPosition());
@@ -206,6 +213,8 @@ public class ReceiptFragmentEmployee extends Fragment {
         var receiptInventory=new Inventory<>(new Repository<>(new FireBaseService<>(new ReceiptSerializer())));
         receiptViewModel= InventoryViewModelFactory.getInstance().getViewModel(receiptInventory,Receipt.class);
 
+        var employeeInventory =new Inventory<>(new Repository<>(new FireBaseService<>(new EmployeeSerializer())));
+        employeeInventoryViewModel= InventoryViewModelFactory.getInstance().getViewModel(employeeInventory,Employee.class);
     }
 
     private CompletableFuture<Void> loadReceipt(){
@@ -213,12 +222,27 @@ public class ReceiptFragmentEmployee extends Fragment {
                 requireActivity().runOnUiThread(()->receiptList=new ArrayList<>(fetchReceipt)));
     }
 
-    private void prepareReceiptListToday(){
+    private CompletableFuture<Void> loadEmployee(){
+        return employeeInventoryViewModel.getAll().thenAccept(fetched_employee->
+                requireActivity().runOnUiThread(()->employees=new ArrayList<>(fetched_employee)));
+    }
+
+    private void prepareReceiptListCurrentEmployeeToday(){
         receiptListToday=new ArrayList<>();
         LocalDate currentDay=LocalDate.now();
-        //String currentDayString=currentDay.getYear()+"-"+currentDay.getMonthValue()+"-"+currentDay.getDayOfMonth();
+        // get current employee
+        var authenticator = Authenticator.getInstance();
+        var userId = authenticator.getCurrentUserId();
+        Employee sessionEmployee = employees.stream()
+                .filter(e -> e.ID().equals(userId))
+                .findFirst()
+                .orElse(null);
+
+
         for(Receipt receipt:receiptList){
-            if(receipt.DateTime().toLocalDate().equals(currentDay)){
+            if(receipt.DateTime().toLocalDate().equals(currentDay)
+                && receipt.EmployeeId().equals(sessionEmployee.ID())
+            ){
                 receiptListToday.add(new Receipt(receipt.ID(),receipt.DateTime(),receipt.EmployeeId(),receipt.CustomerName(),receipt.CustomerPhone(),receipt.ProductIds(),receipt.TotalPrice()));
             }
         }
@@ -292,7 +316,7 @@ public class ReceiptFragmentEmployee extends Fragment {
 
         @Override
         public int compare(Receipt o1, Receipt o2) {
-            return -o1.DateTime().compareTo(o2.DateTime());
+            return o1.DateTime().compareTo(o2.DateTime());
         }
     }
 
@@ -300,7 +324,7 @@ public class ReceiptFragmentEmployee extends Fragment {
 
         @Override
         public int compare(Receipt o1, Receipt o2) {
-            return o1.DateTime().compareTo(o2.DateTime());
+            return -o1.DateTime().compareTo(o2.DateTime());
         }
     }
 
