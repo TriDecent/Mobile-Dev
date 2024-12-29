@@ -4,8 +4,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,7 @@ public class ModifyProductEdit extends AppCompatActivity {
     private Button upload_img_bt;
     private Button discard_bt;
     private Button complete_bt;
+    private boolean isProgressShowing = false;
     ShapeableImageView imageView;
     TextView tv_username, tv_position;
     String product_to_edit_ID;
@@ -51,6 +54,7 @@ public class ModifyProductEdit extends AppCompatActivity {
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     public final static String MODIFY_PRODUCT_INTENT_KEY = "MODIFY_PRODUCT_ITEM_ID";
     Product productToEdit;
+    ViewGroup progressView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,14 +65,15 @@ public class ModifyProductEdit extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        showProgressingView();
         initVariables();
         setupViewModel();
         setupStatusBar();
         loadProductID();
         registerPhotoPicker();
         loadProduct().thenRun(this::setupOnClickListener)
-                .thenRun(this::adaptDataToViews);
-
+                .thenRun(this::adaptDataToViews)
+                .thenRun(this::hideProgressingView);
     }
 
     private void setupViewModel() {
@@ -184,7 +189,7 @@ public class ModifyProductEdit extends AppCompatActivity {
         // Check if product exists
 
 
-
+        showProgressingView();
         LocalDateTime localDateTime = LocalDateTime.now();
 
         productViewModel.uploadImage(local_image_uri, String.valueOf(name_et.getText()) + localDateTime.toString())
@@ -202,6 +207,7 @@ public class ModifyProductEdit extends AppCompatActivity {
 //                                Log.d("SubmitProduct", "SubmitProduct: " + product.toString());
                                 runOnUiThread(() -> Toast.makeText(this, "Product added", Toast.LENGTH_SHORT).show());
                                 discardInformation();
+                                hideProgressingView();
                             });
                         });
 
@@ -244,4 +250,23 @@ public class ModifyProductEdit extends AppCompatActivity {
     {
         return productViewModel.getById(product_to_edit_ID).thenAccept(product -> productToEdit = product);
     }
+
+    public void showProgressingView() {
+
+        if (!isProgressShowing) {
+            isProgressShowing = true;
+            progressView = (ViewGroup) getLayoutInflater().inflate(R.layout.progress_bar, null);
+            View v = this.findViewById(android.R.id.content).getRootView();
+            ViewGroup viewGroup = (ViewGroup) v;
+            viewGroup.addView(progressView);
+        }
+    }
+
+    public void hideProgressingView() {
+        View v = this.findViewById(android.R.id.content).getRootView();
+        ViewGroup viewGroup = (ViewGroup) v;
+        viewGroup.removeView(progressView);
+        isProgressShowing = false;
+    }
+
 }

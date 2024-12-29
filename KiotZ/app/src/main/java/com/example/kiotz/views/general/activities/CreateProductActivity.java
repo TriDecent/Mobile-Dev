@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -43,6 +44,8 @@ public class CreateProductActivity extends AppCompatActivity {
     private Button discard_bt;
     private Button complete_bt;
     ShapeableImageView imageView;
+    private boolean isProgressShowing = false;
+    ViewGroup progressView;
     Uri local_image_uri;
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     TextView tv_username, tv_position;
@@ -174,7 +177,7 @@ public class CreateProductActivity extends AppCompatActivity {
 
             else {
                 LocalDateTime localDateTime = LocalDateTime.now();
-
+                showProgressingView();
                 productViewModel.uploadImage(local_image_uri, String.valueOf(name_et.getText()) + localDateTime.toString())
                         .thenAccept(remote_uri -> {
                             Product product = new Product(
@@ -190,6 +193,7 @@ public class CreateProductActivity extends AppCompatActivity {
                                 Log.d("SubmitProduct", "SubmitProduct: " + product.toString());
                                 runOnUiThread(() -> Toast.makeText(this, "Product added", Toast.LENGTH_SHORT).show());
                                 discardInformation();
+                                hideProgressingView();
                             });
                         });
             }
@@ -209,5 +213,23 @@ public class CreateProductActivity extends AppCompatActivity {
         App app=(App) getApplication();
         tv_username.setText(app.getName());
         tv_position.setText(app.getPosition());
+    }
+
+    public void showProgressingView() {
+
+        if (!isProgressShowing) {
+            isProgressShowing = true;
+            progressView = (ViewGroup) getLayoutInflater().inflate(R.layout.progress_bar, null);
+            View v = this.findViewById(android.R.id.content).getRootView();
+            ViewGroup viewGroup = (ViewGroup) v;
+            viewGroup.addView(progressView);
+        }
+    }
+
+    public void hideProgressingView() {
+        View v = this.findViewById(android.R.id.content).getRootView();
+        ViewGroup viewGroup = (ViewGroup) v;
+        viewGroup.removeView(progressView);
+        isProgressShowing = false;
     }
 }
