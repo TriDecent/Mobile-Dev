@@ -16,6 +16,8 @@ import com.example.kiotz.views.employees.fragments.ReceiptFragmentEmployee;
 import com.example.kiotz.views.employees.fragments.ProductEmployeeFragment;
 import com.example.kiotz.views.employees.fragments.SaleEmployeeFragment;
 import com.example.kiotz.views.general.fragments.SettingsFragment;
+import com.example.kiotz.views.managers.activities.ModifyProductView;
+import com.example.kiotz.views.managers.fragments.SettingManagerFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.HashMap;
@@ -55,7 +57,9 @@ public class GeneralEmployeeActivity extends AppCompatActivity {
     private void setupFragmentClasses() {
         fragmentClasses.put(R.id.SaleEmployee, SaleEmployeeFragment.class);
         fragmentClasses.put(R.id.ReceiptsEmployee, ReceiptFragmentEmployee.class);
-        fragmentClasses.put(R.id.SettingsEmployee, SettingsFragment.class);
+        fragmentClasses.put(R.id.ProductsEmployee, ProductEmployeeFragment.class);
+        fragmentClasses.put(R.id.SettingsEmployee, SettingManagerFragment.class);
+
     }
 
     private void setupBottomNavigationView() {
