@@ -55,6 +55,7 @@ public class ModifyProductEdit extends AppCompatActivity {
     public final static String MODIFY_PRODUCT_INTENT_KEY = "MODIFY_PRODUCT_ITEM_ID";
     Product productToEdit;
     ViewGroup progressView;
+    boolean image_has_changed = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,7 @@ public class ModifyProductEdit extends AppCompatActivity {
         initVariables();
         setupViewModel();
         setupStatusBar();
+        PermissionCheck();
         loadProductID();
         registerPhotoPicker();
         loadProduct().thenRun(this::setupOnClickListener)
@@ -81,6 +83,20 @@ public class ModifyProductEdit extends AppCompatActivity {
         productViewModel = InventoryViewModelFactory.getInstance().getViewModel(employeeInventory, Product.class);
     }
 
+
+    private void PermissionCheck()
+    {
+        App app=(App) getApplication();
+        if(!app.getPosition().equals("Manager"))
+        {
+            id_et.setEnabled(false);
+            name_et.setEnabled(false);
+            price_et.setEnabled(false);
+            unit_et.setEnabled(false);
+            category_et.setEnabled(false);
+            upload_img_bt.setEnabled(false);
+        }
+    }
 
     private  void initVariables()
     {
@@ -110,6 +126,7 @@ public class ModifyProductEdit extends AppCompatActivity {
                         Log.d("PhotoPicker", "Selected URI: " + uri);
                         local_image_uri = uri;
                         imageView.setImageURI(local_image_uri);
+                        image_has_changed = true;
                     } else {
                         Log.d("PhotoPicker", "No media selected");
                         imageView.setImageURI(null);
@@ -149,14 +166,17 @@ public class ModifyProductEdit extends AppCompatActivity {
 
     private void discardInformation()
     {
-        id_et.setText("");
-        name_et.setText("");
-        price_et.setText("");
-        quantity_et.setText("");
-        unit_et.setText("");
-        category_et.setText("");
-        local_image_uri = null;
-        imageView.setImageURI(null);
+//        id_et.setText("");
+//        name_et.setText("");
+//        price_et.setText("");
+//        quantity_et.setText("");
+//        unit_et.setText("");
+//        category_et.setText("");
+//        local_image_uri = null;
+//        imageView.setImageURI(null);
+
+//        restore original data
+        adaptDataToViews();
     }
 
     private void loadProductID()
@@ -178,15 +198,31 @@ public class ModifyProductEdit extends AppCompatActivity {
         return true;
     }
 
+    private boolean checkIfAnyValueHasChanged()
+    {
+        return !(String.valueOf(id_et.getText()).equals(productToEdit.ID()) &&
+                String.valueOf(name_et.getText()).equals(productToEdit.Name()) &&
+                String.valueOf(price_et.getText()).equals(String.valueOf(productToEdit.Price())) &&
+                String.valueOf(quantity_et.getText()).equals(String.valueOf(productToEdit.Quantity())) &&
+                String.valueOf(unit_et.getText()).equals(productToEdit.Unit()) &&
+                String.valueOf(category_et.getText()).equals(productToEdit.Category()) &&
+                !image_has_changed);
+    }
+
     private void SubmitProduct() {
         if (!checkCleanInput()) {
             Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        if (!checkIfAnyValueHasChanged())
+        {
+            Toast.makeText(this, "Nothing changed", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String productId = id_et.getText().toString();
 
-        // Check if product exists
 
 
         showProgressingView();
@@ -205,9 +241,10 @@ public class ModifyProductEdit extends AppCompatActivity {
                             );
                             productViewModel.update(productToEdit,product).thenRun(() -> {
 //                                Log.d("SubmitProduct", "SubmitProduct: " + product.toString());
-                                runOnUiThread(() -> Toast.makeText(this, "Product added", Toast.LENGTH_SHORT).show());
-                                discardInformation();
+                                runOnUiThread(() -> Toast.makeText(this, "Product edited", Toast.LENGTH_SHORT).show());
+//                                discardInformation();
                                 hideProgressingView();
+                                finish();
                             });
                         });
 
