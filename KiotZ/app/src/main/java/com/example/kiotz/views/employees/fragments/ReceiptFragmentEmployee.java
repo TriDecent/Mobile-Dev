@@ -1,4 +1,4 @@
-package com.example.kiotz;
+package com.example.kiotz.views.employees.fragments;
 
 import android.os.Bundle;
 
@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.example.kiotz.R;
 import com.example.kiotz.adapters.ReceiptAdapter;
 import com.example.kiotz.authentication.Authenticator;
 import com.example.kiotz.database.FireBaseService;

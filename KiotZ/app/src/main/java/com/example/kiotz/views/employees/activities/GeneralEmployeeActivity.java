@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.kiotz.R;
-import com.example.kiotz.ReceiptFragmentEmployee;
+import com.example.kiotz.views.employees.fragments.ReceiptFragmentEmployee;
 import com.example.kiotz.views.employees.fragments.ProductEmployeeFragment;
 import com.example.kiotz.views.employees.fragments.SaleEmployeeFragment;
 import com.example.kiotz.views.general.fragments.SettingsFragment;
