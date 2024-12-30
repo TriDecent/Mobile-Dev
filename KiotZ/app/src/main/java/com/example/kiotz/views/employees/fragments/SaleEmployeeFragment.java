@@ -1,5 +1,6 @@
 package com.example.kiotz.views.employees.fragments;
 
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
@@ -9,7 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +24,24 @@ import android.widget.Toast;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.example.kiotz.adapters.AdapterInvoiceSale;
+import com.example.kiotz.database.FireBaseService;
+import com.example.kiotz.database.dto.ProductSerializer;
+import com.example.kiotz.inventory.Inventory;
+import com.example.kiotz.models.Product;
+import com.example.kiotz.models.ProductInvoice;
+import com.example.kiotz.repositories.Repository;
+import com.example.kiotz.viewmodels.InventoryViewModel;
+import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import com.example.kiotz.views.dialogs.SaleDialog;
 import com.google.zxing.Result;
 import android.Manifest;
 import com.example.kiotz.R;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
@@ -49,8 +67,17 @@ public class SaleEmployeeFragment extends Fragment {
     ImageView imageViewTurn;
     private boolean isTurn=false;
 
+    private InventoryViewModel<Product> productViewModel;
 
-    private boolean isFirstTime=true;
+    private List<ProductInvoice> products;
+
+    private AdapterInvoiceSale adapter;
+
+    private RecyclerView recyclerView;
+
+    private ImageView imgComplete;
+
+
 
 
     public SaleEmployeeFragment() {
@@ -89,6 +116,7 @@ public class SaleEmployeeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setupViewModel();
         return inflater.inflate(R.layout.fragment_sale_employee, container, false);
     }
 
@@ -96,12 +124,19 @@ public class SaleEmployeeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        Log.d("TAG","onViewCreated");
         scrollViewInvoice= view.findViewById(R.id.scrollViewInvoice);
         scrollViewInvoice.post(() -> scrollViewInvoice.scrollTo(0, 0));
 
         imageViewTurn=view.findViewById(R.id.imageViewTurnOn);
         scannerView = view.findViewById(R.id.scanner_view);
+        recyclerView=view.findViewById(R.id.recycleViewOverviewInvoice);
+        imgComplete=view.findViewById(R.id.imgComplete);
+
+        products=new ArrayList<>();
+        adapter=new AdapterInvoiceSale(products,requireContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView.setAdapter(adapter);
 
         imageViewTurn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,10 +148,65 @@ public class SaleEmployeeFragment extends Fragment {
                     ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, 1);
 
                 } else {
-
                     // If permission is already granted, start the preview
                     initializeScanner();
+                    Log.d("TAG","initializeScanner onClick");
                 }
+            }
+        });
+
+        imgComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(ProductInvoice p: products){
+                    productViewModel.getById(p.getId())
+                            .thenAccept(product -> {
+                               int quantityRemain=product.Quantity()-p.getQuantity();
+                               Product updateProduct=new Product(product.ID(),product.Name(),product.Category(),product.Price(),product.Unit(),quantityRemain,product.imageURL());
+                               productViewModel.update(product,updateProduct);
+                            });
+                }
+
+//                for(AtomicInteger i = new AtomicInteger(); i.get() <products.size();){
+//                    int finalI = i.get();
+//                    productViewModel.getById(products.get(i.get()).getId())
+//                            .thenAccept(product -> {
+//                                int quantityRemain=product.Quantity()-products.get(finalI).getQuantity();
+//                                Product updateProduct=new Product(product.ID(),product.Name(),product.Category(),product.Price(),product.Unit(),quantityRemain,product.imageURL());
+//                                productViewModel.update(product,updateProduct)
+//                                        .thenRun(()->{
+//                                           i.getAndIncrement();
+//                                        });
+//                            });
+//                }
+
+//                AtomicInteger i = new AtomicInteger();
+//                CompletableFuture<Void> chain = CompletableFuture.completedFuture(null);
+//
+//                while (i.get() < products.size()) {
+//                    int finalI = i.get();
+//                    chain = chain.thenCompose(vo ->
+//                            productViewModel.getById(products.get(finalI).getId())
+//                                    .thenCompose(product -> {
+//                                        int quantityRemain = product.Quantity() - products.get(finalI).getQuantity();
+//                                        Product updateProduct = new Product(product.ID(), product.Name(), product.Category(),
+//                                                product.Price(), product.Unit(), quantityRemain, product.imageURL());
+//                                        return productViewModel.update(product, updateProduct);
+//                                    })
+//                                    .thenRun(i::getAndIncrement)
+//                    );
+//                }
+//
+//
+//                chain.thenRun(() -> {
+//                    System.out.println("All updates completed!");
+//                });
+
+                Toast.makeText(requireContext(),"Sold complete",Toast.LENGTH_SHORT).show();
+                products.clear();
+                adapter.notifyDataSetChanged();
+
+
             }
         });
 
@@ -124,14 +214,9 @@ public class SaleEmployeeFragment extends Fragment {
     }
 
     private void initializeScanner(){
-
-        if(isFirstTime){
-            isFirstTime=false;
-            return;
-        }
         if(!isTurn){
             if(mCodeScanner==null){
-                //mCodeScanner = new CodeScanner(requireContext(), scannerView);
+                Log.d("TAG","mCodeScanner==null");
                 mCodeScanner=new CodeScanner(requireActivity(), scannerView);
                 mCodeScanner.setDecodeCallback(new DecodeCallback() {
                     @Override
@@ -139,39 +224,67 @@ public class SaleEmployeeFragment extends Fragment {
                         requireActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(requireContext(), result.getText(), Toast.LENGTH_SHORT).show();
-                                SaleDialog saleDialog=new SaleDialog(requireContext(),null);
-                                saleDialog.show();
-                                isTurn = false;
+                                String idProduct=result.getText();
+                                ProgressDialog progressDialog = new ProgressDialog(requireContext());
+                                progressDialog.setMessage("Loading product...");
+                                progressDialog.setCancelable(false);
+                                progressDialog.show();
+                                productViewModel.getById(idProduct)
+                                        .thenAccept(product -> {
+                                            progressDialog.dismiss();
+                                            if(product!=null){
+                                                SaleDialog saleDialog=new SaleDialog(requireContext(),product,productInvoice -> {
+                                                    //products.add(productInvoice);
+                                                    addToProducts(productInvoice);
+                                                    adapter.notifyDataSetChanged();
+                                                });
+                                                saleDialog.show();
+
+
+                                            }
+                                            else{
+                                                Toast.makeText(requireContext(),"There is no product with ID as "+result.getText(),Toast.LENGTH_SHORT).show();
+                                            }
+                                            isTurn = false;
+
+                                        });
+
+
                             }
                         });
                     }
                 });
+                isTurn=true;
+                mCodeScanner.startPreview();
+
+
+            }
+            else{
+                isTurn=true;
+                mCodeScanner.startPreview();
             }
 
-            mCodeScanner.startPreview();
-            isTurn=true;
+
         }
         else{
             mCodeScanner.stopPreview();
             isTurn=false;
-
-
         }
-
-
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-
-        if (mCodeScanner == null) {
-            isTurn=false;
-            initializeScanner();
-        } else {
-            mCodeScanner.startPreview();
+        Log.d("TAG","onResume");
+        if (mCodeScanner != null) {
+            //mCodeScanner.startPreview();
+            if(isTurn){
+                mCodeScanner.startPreview();
+            }
+            else{
+                mCodeScanner.stopPreview();
+            }
         }
 
 
@@ -180,15 +293,39 @@ public class SaleEmployeeFragment extends Fragment {
     @Override
     public void onPause() {
        super.onPause();
+        Log.d("TAG","onPause");
         if (mCodeScanner != null) {
+            mCodeScanner.stopPreview();
             mCodeScanner.releaseResources();
-            mCodeScanner = null;
             Toast.makeText(requireContext(), "Camera released", Toast.LENGTH_SHORT).show();
-            isFirstTime=true;
+            Log.d("TAG","onPause != null");
+            isTurn=false;
         }
 
 
     }
+
+
+    private void setupViewModel(){
+        var productInventory= new Inventory<>(new Repository<>(new FireBaseService<>(new ProductSerializer())));
+        productViewModel= InventoryViewModelFactory.getInstance().getViewModel(productInventory,Product.class);
+    }
+
+
+
+    private void addToProducts(ProductInvoice productInvoice){
+        for (ProductInvoice existingProduct : products) {
+            if (existingProduct.equals(productInvoice)) {
+
+                int newQuantity = existingProduct.getQuantity() + productInvoice.getQuantity();
+                existingProduct.setQuantity(newQuantity);
+                return;
+            }
+        }
+        products.add(productInvoice);
+
+    }
+
 
 
 

@@ -28,6 +28,7 @@ import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import com.example.kiotz.views.employees.activities.GeneralEmployeeActivity;
 import com.example.kiotz.views.managers.activities.GeneralManagerActivity;
+import com.example.kiotz.views.managers.data.App;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -122,6 +123,10 @@ public class LoginActivity extends AppCompatActivity {
         employeeViewModel.getById(userId).thenAccept(employee -> {
             if (employee != null) {
                 Intent i;
+                App app= (App) getApplication();
+                app.setName(employee.Name());
+                var position = employee.IsAdmin() ? "Manager" : "Employee";
+                app.setPosition(position);
                 if (employee.IsAdmin()) {
                     i = new Intent(this, GeneralManagerActivity.class);
                 } else {

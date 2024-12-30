@@ -275,10 +275,10 @@ public class OverviewFragment extends Fragment {
                 .orElse(null);
 
         assert sessionEmployee != null;
-        App app=(App) requireActivity().getApplication();
-        app.setName(sessionEmployee.Name());
-        var position = sessionEmployee.IsAdmin() ? "Manager" : "Employee";
-        app.setPosition(position);
+//        App app=(App) requireActivity().getApplication();
+//        app.setName(sessionEmployee.Name());
+//        var position = sessionEmployee.IsAdmin() ? "Manager" : "Employee";
+//        app.setPosition(position);
 
     }
 
