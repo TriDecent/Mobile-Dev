@@ -313,48 +313,7 @@
 
                 />
 
-            <TextView
-                android:id="@+id/tv10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:text="Revenue: "
-                android:textSize="16sp"
-                android:textStyle="bold|italic"
-                app:layout_constraintStart_toStartOf="@id/tv9"
-                app:layout_constraintTop_toBottomOf="@id/tv9" />
 
-            <TextView
-                android:id="@+id/tvRevenueDetailProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="360.000 VNĐ"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/tvSellingPriceDetail"
-                app:layout_constraintTop_toTopOf="@id/tv10" />
-
-            <TextView
-                android:id="@+id/tv11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_marginBottom="15dp"
-                android:text="Profit: "
-                android:textSize="16sp"
-                android:textStyle="bold|italic"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/tv10"
-                app:layout_constraintTop_toBottomOf="@id/tv10" />
-
-            <TextView
-                android:id="@+id/tvProfitDetailProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-390.000 VNĐ"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv11"
-                app:layout_constraintStart_toStartOf="@id/tvSellingPriceDetail"
-                app:layout_constraintTop_toTopOf="@id/tv11" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,12 +1,13 @@
 package com.example.kiotz.views.managers.activities;
 
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -66,8 +67,25 @@ public class DeleteProduct extends AppCompatActivity implements IRecycleManagerD
     @Override
     public void onItemLongClick(int position) {
 //        TODO: show dialog before delete
-        showProgressingView();
-            productViewModel.delete(products.get(position)).thenRun(this::hideProgressingView);
+        AlertDialog alertDialog = new AlertDialog.Builder(DeleteProduct.this).create();
+        alertDialog.setTitle("Comfirm delete");
+        alertDialog.setMessage("Are you sure you want to delete this product?");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        showProgressingView();
+                        productViewModel.delete(products.get(position)).thenRun(DeleteProduct.this::hideProgressingView);
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialog.show();
+
     }
 
     private void bindingView(){
