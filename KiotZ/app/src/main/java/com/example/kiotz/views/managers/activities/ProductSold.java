@@ -144,6 +144,12 @@ public class ProductSold extends AppCompatActivity implements IRecycleManagerDet
             }
     }
 
+    @Override
+    public void onItemLongClick(int position) {
+
+    }
+
+
     static class Product_TimeSold
     {
         private String productID;
@@ -235,4 +241,5 @@ public class ProductSold extends AppCompatActivity implements IRecycleManagerDet
         product_sold_tv.setText(String.valueOf(total_sold));
 
     }
+
 }

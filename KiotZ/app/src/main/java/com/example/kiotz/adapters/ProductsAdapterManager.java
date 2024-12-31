@@ -85,6 +85,18 @@ public class ProductsAdapterManager extends RecyclerView.Adapter<ProductsAdapter
                         iRecycleManagerDetail.onItemClick(position);
                     }
                 }
+
+            });
+
+            cv.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if(iRecycleManagerDetail!=null){
+                        int position=getAdapterPosition();
+                        iRecycleManagerDetail.onItemLongClick(position);
+                    }
+                    return true;
+                }
             });
 
         }

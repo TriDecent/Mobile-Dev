@@ -232,4 +232,9 @@ public class DetailReceipt extends AppCompatActivity implements IRecycleManagerD
     public void onItemClick(int position) {
 //      do nothing because it only shows a list of products
     }
+
+    @Override
+    public void onItemLongClick(int position) {
+
+    }
 }

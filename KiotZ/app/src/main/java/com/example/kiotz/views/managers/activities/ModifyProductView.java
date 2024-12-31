@@ -70,6 +70,11 @@ public class ModifyProductView extends AppCompatActivity implements IRecycleMana
         startActivity(intent);
     }
 
+    @Override
+    public void onItemLongClick(int position) {
+
+    }
+
     private void setupViewModel() {
         var employeeInventory = new Inventory<>(new Repository<>(new FireBaseService<>(new ProductSerializer())));
         productViewModel = InventoryViewModelFactory.getInstance().getViewModel(employeeInventory, Product.class);

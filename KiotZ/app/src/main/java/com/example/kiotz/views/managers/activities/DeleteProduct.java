@@ -2,6 +2,8 @@ package com.example.kiotz.views.managers.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -28,28 +30,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public  class ViewInventoryActivity extends AppCompatActivity implements IRecycleManagerDetail {
-
+public class DeleteProduct extends AppCompatActivity implements IRecycleManagerDetail {
     RecyclerView recyclerViewProduct;
     ProductsAdapterManager adapterManager;
     List<Product> products;
+    ViewGroup progressView;
 
     TextView tvUserName,tvPosition;
-
+    boolean isProgressShowing = false;
     InventoryViewModel<Product> productViewModel;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_view_inventory);
+        setContentView(R.layout.activity_delete_product);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
 
         bindingView();
         setupProductViewModel();
@@ -57,11 +56,19 @@ public  class ViewInventoryActivity extends AppCompatActivity implements IRecycl
         fetchDataProduct()
                 .thenRun(this::setupObservers)
                 .thenRun(this::setupAdapter);
+    }
 
+    @Override
+    public void onItemClick(int position) {
 
     }
 
-
+    @Override
+    public void onItemLongClick(int position) {
+//        TODO: show dialog before delete
+        showProgressingView();
+            productViewModel.delete(products.get(position)).thenRun(this::hideProgressingView);
+    }
 
     private void bindingView(){
         recyclerViewProduct=findViewById(R.id.recycleView_rv);
@@ -73,7 +80,7 @@ public  class ViewInventoryActivity extends AppCompatActivity implements IRecycl
 
     private void setupProductViewModel(){
         var productInventory=new Inventory<>(new Repository<>(new FireBaseService<>(new ProductSerializer())));
-        productViewModel= InventoryViewModelFactory.getInstance().getViewModel(productInventory,Product.class);
+        productViewModel= InventoryViewModelFactory.getInstance().getViewModel(productInventory, Product.class);
 
     }
 
@@ -128,21 +135,22 @@ public  class ViewInventoryActivity extends AppCompatActivity implements IRecycl
         tvUserName.setText(app.getName());
         tvPosition.setText(app.getPosition());
     }
-    @Override
-    public void onItemClick(int position) {
-        Product selectedProduct=products.get(position);
-        Intent intent = new Intent(this, DetailProductActivity.class);
-        intent.putExtra("selected_product", selectedProduct);
-        startActivity(intent);
 
+    public void showProgressingView() {
 
+        if (!isProgressShowing) {
+            isProgressShowing = true;
+            progressView = (ViewGroup) getLayoutInflater().inflate(R.layout.progress_bar, null);
+            View v = this.findViewById(android.R.id.content).getRootView();
+            ViewGroup viewGroup = (ViewGroup) v;
+            viewGroup.addView(progressView);
+        }
     }
 
-    @Override
-    public void onItemLongClick(int position) {
-
+    public void hideProgressingView() {
+        View v = this.findViewById(android.R.id.content).getRootView();
+        ViewGroup viewGroup = (ViewGroup) v;
+        viewGroup.removeView(progressView);
+        isProgressShowing = false;
     }
-
-
 }
-

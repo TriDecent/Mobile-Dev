@@ -144,4 +144,9 @@ public class ProductEmployeeFragment extends Fragment implements IRecycleManager
         intent.putExtra(ModifyProductEdit.MODIFY_PRODUCT_INTENT_KEY, productArrayList.get(position).ID());
         startActivity(intent);
     }
+
+    @Override
+    public void onItemLongClick(int position) {
+
+    }
 }

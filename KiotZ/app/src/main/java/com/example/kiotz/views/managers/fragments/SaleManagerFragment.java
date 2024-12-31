@@ -19,6 +19,7 @@ import com.example.kiotz.adapters.IItemFragment;
 import com.example.kiotz.adapters.ItemFragmentManagerAdapter;
 import com.example.kiotz.models.ItemFragment;
 import com.example.kiotz.views.general.activities.CreateProductActivity;
+import com.example.kiotz.views.managers.activities.DeleteProduct;
 import com.example.kiotz.views.managers.activities.ViewInformationEmployeeActivity;
 import com.example.kiotz.views.managers.activities.ViewInventoryActivity;
 import com.example.kiotz.views.managers.data.App;
@@ -117,15 +118,35 @@ public class SaleManagerFragment extends Fragment implements IItemFragment {
 
     @Override
     public void onItemClick(int position) {
-        if(position==2){
-            Intent intent=new Intent(getContext(), ViewInventoryActivity.class);
-            startActivity(intent);
-        }
-        else if(position==0){
-            Intent intent=new Intent(getContext(), CreateProductActivity.class);
-            startActivity(intent);
-        }
-       
+//        if(position==2){
+//
+//        }
+//        else if(position==0){
+//
+//        }
+       switch (position)
+       {
+           case 0:
+           {
+               Intent intent=new Intent(getContext(), CreateProductActivity.class);
+               startActivity(intent);
+           }
+           break;
+
+           case 1:
+           {
+               Intent intent = new Intent(getContext(), DeleteProduct.class);
+               startActivity(intent);
+           }
+           break;
+
+           case 2:
+           {
+               Intent intent=new Intent(getContext(), ViewInventoryActivity.class);
+               startActivity(intent);
+           }
+           break;
+       }
 
     }
 }
