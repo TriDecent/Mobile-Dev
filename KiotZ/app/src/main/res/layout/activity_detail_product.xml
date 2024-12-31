@@ -255,7 +255,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Total: "
+                android:text="Remaining: "
                 android:textSize="16sp"
                 android:textStyle="bold|italic"
                 app:layout_constraintStart_toStartOf="@id/tv6"
@@ -269,50 +269,6 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tvSellingPriceDetail"
                 app:layout_constraintTop_toTopOf="@id/tv7" />
-
-            <TextView
-                android:id="@+id/tv8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:text="Sold: "
-                android:textSize="16sp"
-                android:textStyle="bold|italic"
-                app:layout_constraintStart_toStartOf="@id/tv7"
-                app:layout_constraintTop_toBottomOf="@id/tv7" />
-
-            <TextView
-                android:id="@+id/tvSoldDetailProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="120"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/tvSellingPriceDetail"
-                app:layout_constraintTop_toTopOf="@id/tv8" />
-
-            <TextView
-                android:id="@+id/tv9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:text="Remaining: "
-                android:textSize="16sp"
-                android:textStyle="bold|italic"
-                app:layout_constraintStart_toStartOf="@id/tv8"
-                app:layout_constraintTop_toBottomOf="@id/tv8" />
-
-            <TextView
-                android:id="@+id/tvRemainingDetailProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="65dp"
-                android:text="180"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@id/tv9"
-                app:layout_constraintTop_toTopOf="@id/tv9"
-
-                />
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

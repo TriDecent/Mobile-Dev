@@ -1,5 +1,6 @@
 package com.example.kiotz.views.managers.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,9 @@ import com.example.kiotz.R;
 import com.example.kiotz.adapters.IItemFragment;
 import com.example.kiotz.adapters.ItemFragmentManagerAdapter;
 import com.example.kiotz.models.ItemFragment;
+import com.example.kiotz.views.managers.activities.DailyStatistics;
+import com.example.kiotz.views.managers.activities.ProductSold;
+import com.example.kiotz.views.managers.activities.StatisticInvoicesTodayActivity;
 import com.example.kiotz.views.managers.data.App;
 
 import java.util.ArrayList;
@@ -116,6 +120,47 @@ public class StatisticsManagerFragment extends Fragment implements IItemFragment
 
     @Override
     public void onItemClick(int position) {
-
+        // Example: Handle clicks based on which RecyclerView item was clicked
+        if (itemFragmentListToday.contains(itemFragmentListToday.get(position))) {
+            switch (position) {
+                case 0:
+                {
+                    Intent intent = new Intent(getContext(), ProductSold.class);
+                    startActivity(intent);
+                }
+                    break;
+                case 1:
+                {
+                    Intent intent = new Intent(getContext(), StatisticInvoicesTodayActivity.class);
+                    startActivity(intent);
+                }
+                    break;
+            }
+        } else if (itemFragmentListReports.contains(itemFragmentListReports.get(position))) {
+            switch (position) {
+                case 0:
+                {
+                    Intent intent = new Intent(getContext(), DailyStatistics.class);
+                    intent.putExtra(DailyStatistics.STATISTIC_RANGE_KEY,DailyStatistics.Daily_int_value);
+                    startActivity(intent);
+                }
+                    break;
+                case 1:
+                {
+                    Intent intent = new Intent(getContext(), DailyStatistics.class);
+                    intent.putExtra(DailyStatistics.STATISTIC_RANGE_KEY,DailyStatistics.weekly_int_value);
+                    startActivity(intent);
+                }
+                    break;
+                case 2:
+                {
+                    Intent intent = new Intent(getContext(), DailyStatistics.class);
+                    intent.putExtra(DailyStatistics.STATISTIC_RANGE_KEY,DailyStatistics.monthly_int_value);
+                    startActivity(intent);
+                }
+                    break;
+            }
+        }
     }
+
 }
