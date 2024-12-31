@@ -32,7 +32,7 @@
                 />
 
             <TextView
-                android:id="@+id/tv_status_bar_employee_name"
+                android:id="@+id/tvEmployeeSaleUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Trần Vũ Anh Trí"
@@ -43,12 +43,12 @@
                 android:textStyle="bold"
                 />
             <TextView
-                android:id="@+id/tv_status_bar_position"
+                android:id="@+id/tvEmployeeSalePosition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Employee"
-                app:layout_constraintStart_toStartOf="@id/tv_status_bar_employee_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_status_bar_employee_name"
+                app:layout_constraintStart_toStartOf="@id/tvEmployeeSaleUserName"
+                app:layout_constraintTop_toBottomOf="@id/tvEmployeeSaleUserName"
                 android:layout_marginTop="7dp"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -158,7 +158,7 @@
 
                 <ImageView
                     android:id="@+id/imgViewMore"
-                    android:layout_width="30dp"
+                    android:layout_width="50dp"
                     android:layout_height="30dp"
                     android:src="@drawable/viewmore"
                     app:layout_constraintTop_toBottomOf="@id/recycleViewOverviewInvoice"

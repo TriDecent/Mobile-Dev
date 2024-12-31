@@ -14,7 +14,7 @@ public class ReceiptSerializer implements ISerializer<Receipt> {
 
     @Override
     public void serialize(DatabaseReference ref, Receipt receipt) {
-        ref.child("ID").setValue(receipt.ID());
+        ref.child("ID").setValue(ref.push().getKey());
         ref.child("DateTime").setValue(receipt.DateTime().format(formatter));
         ref.child("EmployeeId").setValue(receipt.EmployeeId());
         ref.child("CustomerName").setValue(receipt.CustomerName());

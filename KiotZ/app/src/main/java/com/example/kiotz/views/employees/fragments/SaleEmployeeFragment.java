@@ -1,6 +1,7 @@
 package com.example.kiotz.views.employees.fragments;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
@@ -19,29 +20,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.example.kiotz.adapters.AdapterInvoiceSale;
+import com.example.kiotz.authentication.Authenticator;
 import com.example.kiotz.database.FireBaseService;
 import com.example.kiotz.database.dto.ProductSerializer;
+import com.example.kiotz.database.dto.ReceiptSerializer;
 import com.example.kiotz.inventory.Inventory;
+import com.example.kiotz.models.IIdentifiable;
 import com.example.kiotz.models.Product;
 import com.example.kiotz.models.ProductInvoice;
+import com.example.kiotz.models.Receipt;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import com.example.kiotz.views.dialogs.SaleDialog;
+import com.example.kiotz.views.employees.activities.DetailSaleInvoiceActivity;
+import com.example.kiotz.views.managers.data.App;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.zxing.Result;
 import android.Manifest;
 import com.example.kiotz.R;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
@@ -64,8 +73,10 @@ public class SaleEmployeeFragment extends Fragment {
     CodeScannerView scannerView;
     CodeScanner mCodeScanner;
 
-    ImageView imageViewTurn;
+    ImageView imageViewTurn,imageViewMore;
     private boolean isTurn=false;
+
+    private String idEmployee;
 
     private InventoryViewModel<Product> productViewModel;
 
@@ -76,6 +87,10 @@ public class SaleEmployeeFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private ImageView imgComplete;
+
+    private InventoryViewModel<Receipt> receiptViewModel;
+
+    private TextView tvUsername,tvPosition;
 
 
 
@@ -116,7 +131,8 @@ public class SaleEmployeeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        setupViewModel();
+        setupProductViewModel();
+        setupReceiptViewModel();
         return inflater.inflate(R.layout.fragment_sale_employee, container, false);
     }
 
@@ -132,6 +148,12 @@ public class SaleEmployeeFragment extends Fragment {
         scannerView = view.findViewById(R.id.scanner_view);
         recyclerView=view.findViewById(R.id.recycleViewOverviewInvoice);
         imgComplete=view.findViewById(R.id.imgComplete);
+        imageViewMore=view.findViewById(R.id.imgViewMore);
+        tvUsername=view.findViewById(R.id.tvEmployeeSaleUserName);
+        tvPosition=view.findViewById(R.id.tvEmployeeSalePosition);
+
+        setupStatusBar();
+        getIdEmployee();
 
         products=new ArrayList<>();
         adapter=new AdapterInvoiceSale(products,requireContext());
@@ -158,55 +180,65 @@ public class SaleEmployeeFragment extends Fragment {
         imgComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                List<String> idProduct=new ArrayList<>();
+                final Object lock = new Object();
+                List<CompletableFuture<Void>> futures = new ArrayList<>();
+                double[] totalPrice = {0};
                 for(ProductInvoice p: products){
-                    productViewModel.getById(p.getId())
-                            .thenAccept(product -> {
+                    CompletableFuture<Void> future =productViewModel.getById(p.getId())
+                            .thenCompose(product -> {
+                               Log.d("TotalPrice",String.valueOf(p.getTotalPrice()));
                                int quantityRemain=product.Quantity()-p.getQuantity();
-                               Product updateProduct=new Product(product.ID(),product.Name(),product.Category(),product.Price(),product.Unit(),quantityRemain,product.imageURL());
-                               productViewModel.update(product,updateProduct);
+                               Product updateProduct=new
+                                       Product(product.ID(),product.Name(),product.Category(),product.Price(),product.Unit(),quantityRemain,product.imageURL());
+                               return productViewModel.update(product,updateProduct)
+                                       .thenRun(() -> {
+                                           synchronized (lock) {
+                                               totalPrice[0] += p.getTotalPrice();
+                                               Log.d("TotalPrice lock",String.valueOf(totalPrice[0]));
+                                           }
+                                       });
                             });
+
+                    futures.add(future);
+
+                    if(p.getQuantity()>1){
+                        for(int i=0;i<p.getQuantity();i++){
+                            idProduct.add(p.getId());
+                        }
+                    }
+                    else{
+                        idProduct.add(p.getId());
+                    }
                 }
 
-//                for(AtomicInteger i = new AtomicInteger(); i.get() <products.size();){
-//                    int finalI = i.get();
-//                    productViewModel.getById(products.get(i.get()).getId())
-//                            .thenAccept(product -> {
-//                                int quantityRemain=product.Quantity()-products.get(finalI).getQuantity();
-//                                Product updateProduct=new Product(product.ID(),product.Name(),product.Category(),product.Price(),product.Unit(),quantityRemain,product.imageURL());
-//                                productViewModel.update(product,updateProduct)
-//                                        .thenRun(()->{
-//                                           i.getAndIncrement();
-//                                        });
-//                            });
-//                }
 
-//                AtomicInteger i = new AtomicInteger();
-//                CompletableFuture<Void> chain = CompletableFuture.completedFuture(null);
-//
-//                while (i.get() < products.size()) {
-//                    int finalI = i.get();
-//                    chain = chain.thenCompose(vo ->
-//                            productViewModel.getById(products.get(finalI).getId())
-//                                    .thenCompose(product -> {
-//                                        int quantityRemain = product.Quantity() - products.get(finalI).getQuantity();
-//                                        Product updateProduct = new Product(product.ID(), product.Name(), product.Category(),
-//                                                product.Price(), product.Unit(), quantityRemain, product.imageURL());
-//                                        return productViewModel.update(product, updateProduct);
-//                                    })
-//                                    .thenRun(i::getAndIncrement)
-//                    );
-//                }
-//
-//
-//                chain.thenRun(() -> {
-//                    System.out.println("All updates completed!");
-//                });
+                LocalDateTime localDateTime=LocalDateTime.now();
 
-                Toast.makeText(requireContext(),"Sold complete",Toast.LENGTH_SHORT).show();
-                products.clear();
-                adapter.notifyDataSetChanged();
+                CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                        .thenRun(() -> {
+                            Receipt receipt=new Receipt(null,localDateTime,idEmployee,"Nguyen Van A","0919238232",idProduct,totalPrice[0]);
+                            receiptViewModel.add(receipt).thenRun(()->{
+                                Toast.makeText(requireContext(),"Create Receipt",Toast.LENGTH_SHORT).show();
+                            });
+                            Toast.makeText(requireContext(),"Sold complete",Toast.LENGTH_SHORT).show();
+                            products.clear();
+                            adapter.notifyDataSetChanged();
+                        });
 
 
+
+
+
+            }
+        });
+
+
+        imageViewMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(getContext(), DetailSaleInvoiceActivity.class);
+                startActivity(i);
             }
         });
 
@@ -306,9 +338,14 @@ public class SaleEmployeeFragment extends Fragment {
     }
 
 
-    private void setupViewModel(){
+    private void setupProductViewModel(){
         var productInventory= new Inventory<>(new Repository<>(new FireBaseService<>(new ProductSerializer())));
         productViewModel= InventoryViewModelFactory.getInstance().getViewModel(productInventory,Product.class);
+    }
+
+    private void setupReceiptViewModel(){
+        var receiptInventory=new Inventory<>(new Repository<>(new FireBaseService<>(new ReceiptSerializer())));
+        receiptViewModel=InventoryViewModelFactory.getInstance().getViewModel(receiptInventory, Receipt.class);
     }
 
 
@@ -324,6 +361,17 @@ public class SaleEmployeeFragment extends Fragment {
         }
         products.add(productInvoice);
 
+    }
+
+    private void setupStatusBar(){
+        App app=(App) requireActivity().getApplication();
+        tvUsername.setText(app.getName());
+        tvPosition.setText(app.getPosition());
+    }
+
+    private void getIdEmployee(){
+        Authenticator authenticator=Authenticator.getInstance();
+        idEmployee=authenticator.getCurrentUserId();
     }
 
 
