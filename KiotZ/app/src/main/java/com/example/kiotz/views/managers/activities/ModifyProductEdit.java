@@ -221,34 +221,41 @@ public class ModifyProductEdit extends AppCompatActivity {
             return;
         }
 
-        String productId = id_et.getText().toString();
 
 
 
         showProgressingView();
         LocalDateTime localDateTime = LocalDateTime.now();
 
+        if (image_has_changed)
         productViewModel.uploadImage(local_image_uri, String.valueOf(name_et.getText()) + localDateTime.toString())
                         .thenAccept(remote_uri -> {
-                            Product product = new Product(
-                                    productId,
-                                    name_et.getText().toString(),
-                                    category_et.getText().toString(),
-                                    Double.parseDouble(price_et.getText().toString()),
-                                    unit_et.getText().toString(),
-                                    Integer.parseInt(quantity_et.getText().toString()),
-                                    remote_uri
-                            );
-                            productViewModel.update(productToEdit,product).thenRun(() -> {
-//                                Log.d("SubmitProduct", "SubmitProduct: " + product.toString());
-                                runOnUiThread(() -> Toast.makeText(this, "Product edited", Toast.LENGTH_SHORT).show());
-//                                discardInformation();
-                                hideProgressingView();
-                                finish();
-                            });
+                            UpdateProduct(remote_uri);
                         });
 
+        else
+            UpdateProduct(String.valueOf(local_image_uri));
+    }
 
+    private void UpdateProduct(String img_uro)
+    {
+        String productId = id_et.getText().toString();
+        Product product = new Product(
+                productId,
+                name_et.getText().toString(),
+                category_et.getText().toString(),
+                Double.parseDouble(price_et.getText().toString()),
+                unit_et.getText().toString(),
+                Integer.parseInt(quantity_et.getText().toString()),
+                img_uro
+        );
+        productViewModel.update(productToEdit,product).thenRun(() -> {
+//                                Log.d("SubmitProduct", "SubmitProduct: " + product.toString());
+            runOnUiThread(() -> Toast.makeText(this, "Product edited", Toast.LENGTH_SHORT).show());
+//                                discardInformation();
+            hideProgressingView();
+            finish();
+        });
     }
 
     private boolean containsNumber(String s)

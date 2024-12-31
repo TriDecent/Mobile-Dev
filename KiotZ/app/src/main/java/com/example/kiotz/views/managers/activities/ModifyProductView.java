@@ -19,7 +19,6 @@ import com.example.kiotz.adapters.ProductsAdapterManager;
 import com.example.kiotz.database.FireBaseService;
 import com.example.kiotz.database.dto.ProductSerializer;
 import com.example.kiotz.inventory.Inventory;
-import com.example.kiotz.models.DetailProduct;
 import com.example.kiotz.models.Product;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
@@ -35,6 +34,7 @@ public class ModifyProductView extends AppCompatActivity implements IRecycleMana
     TextView tv_username, tv_position;
     RecyclerView recycleView_rv;
     InventoryViewModel<Product> productViewModel;
+    ProductsAdapterManager productsAdapterManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +50,8 @@ public class ModifyProductView extends AppCompatActivity implements IRecycleMana
         setupViewModel();
         setupStatusBar();
         loadProduct()
-                .thenRun(this::setupRecyclerView);
+                .thenRun(this::setupRecyclerView)
+                .thenRun(this::setupObservers);
     }
 
     private void initVariables()
@@ -88,7 +89,44 @@ public class ModifyProductView extends AppCompatActivity implements IRecycleMana
     private void setupRecyclerView()
     {
         recycleView_rv.setLayoutManager(new LinearLayoutManager(this));
-        ProductsAdapterManager productsAdapterManager = new ProductsAdapterManager(this,productArrayList, this);
+        productsAdapterManager = new ProductsAdapterManager(this,productArrayList, this);
         recycleView_rv.setAdapter(productsAdapterManager);
+    }
+
+    private void setupObservers() {
+        productViewModel.getObservableAddedItem().observe(this, addedProduct -> {
+            if (productArrayList.stream().anyMatch(e -> e.ID().equals(addedProduct.ID()))) {
+                return;
+            }
+
+            productArrayList.add(addedProduct);
+            productsAdapterManager.notifyItemInserted(productArrayList.size() - 1);
+        });
+
+        productViewModel.getObservableDeletedItem().observe(this, pair -> {
+            int position = pair.first;
+            var deletedProduct = pair.second;
+
+            if (productArrayList.stream().noneMatch(e -> e.ID().equals(deletedProduct.ID()))) {
+                return;
+            }
+
+            productArrayList.remove(position);
+            productsAdapterManager.notifyItemRemoved(position);
+        });
+
+        productViewModel.getObservableUpdatedItem().observe(this, pair -> {
+            var position = pair.first;
+            var updatedProduct = pair.second;
+
+            var employeeNeedsToBeUpdated = productArrayList.get(position);
+
+            if (employeeNeedsToBeUpdated.equals(updatedProduct)) {
+                return;
+            }
+
+            productArrayList.set(position, updatedProduct);
+            productsAdapterManager.notifyItemChanged(position);
+        });
     }
 }
