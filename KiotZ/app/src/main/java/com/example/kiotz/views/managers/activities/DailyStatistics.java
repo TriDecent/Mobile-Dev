@@ -67,8 +67,8 @@ public class DailyStatistics extends AppCompatActivity {
         setupSortButton();
         setupStatusBar();
         loadReceipt()
-                .thenRun(this::copyReceiptList)
                 .thenRun(this::AdaptViewToTimeRange)
+                .thenRun(this::copyReceiptList)
                 .thenRun(this::setupRecyclerView)
                 .thenRun(this::calculateTotalIncome)
                 .thenRun(this::displayTotalReceipt)

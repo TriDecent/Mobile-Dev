@@ -109,7 +109,7 @@ public class ProductEmployeeFragment extends Fragment implements IRecycleManager
 
     private void initVariables(View root)
     {
-        search = root.findViewById(R.id.search);
+        search = root.findViewById(R.id.search_view_inventory_sv);
         recycleView_rv = root.findViewById(R.id.recycleView_rv);
         tv_username = root.findViewById(R.id.tv_username);
         tv_position = root.findViewById(R.id.tv_position);
