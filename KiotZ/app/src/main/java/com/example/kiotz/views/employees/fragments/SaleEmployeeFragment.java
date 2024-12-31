@@ -6,6 +6,9 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,6 +95,11 @@ public class SaleEmployeeFragment extends Fragment {
     private InventoryViewModel<Receipt> receiptViewModel;
 
     private TextView tvUsername,tvPosition;
+
+    private ActivityResultLauncher<Intent> detailSaleInvoiceLauncher;
+
+    private String customerName="Nguyen Van A";
+    private String customerPhone="0909129345";
 
 
 
@@ -217,7 +226,7 @@ public class SaleEmployeeFragment extends Fragment {
 
                 CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
                         .thenRun(() -> {
-                            Receipt receipt=new Receipt(null,localDateTime,idEmployee,"Nguyen Van A","0919238232",idProduct,totalPrice[0]);
+                            Receipt receipt=new Receipt(null,localDateTime,idEmployee,customerName,customerName,idProduct,totalPrice[0]);
                             receiptViewModel.add(receipt).thenRun(()->{
                                 Toast.makeText(requireContext(),"Create Receipt",Toast.LENGTH_SHORT).show();
                             });
@@ -234,11 +243,28 @@ public class SaleEmployeeFragment extends Fragment {
         });
 
 
+
+        detailSaleInvoiceLauncher=registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result->{
+                    if(result.getResultCode()==200){
+                        Intent data=result.getData();
+                        if(data!=null){
+                            customerName=data.getStringExtra("name_customer");
+                            customerPhone=data.getStringExtra("phone_customer");
+
+                        }
+
+                    }
+                }
+        );
+
         imageViewMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(getContext(), DetailSaleInvoiceActivity.class);
-                startActivity(i);
+                i.putParcelableArrayListExtra("productList",(ArrayList<ProductInvoice>)products);
+                detailSaleInvoiceLauncher.launch(i);
             }
         });
 
@@ -310,7 +336,6 @@ public class SaleEmployeeFragment extends Fragment {
         super.onResume();
         Log.d("TAG","onResume");
         if (mCodeScanner != null) {
-            //mCodeScanner.startPreview();
             if(isTurn){
                 mCodeScanner.startPreview();
             }

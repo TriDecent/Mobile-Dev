@@ -24,6 +24,7 @@
             android:exported="false" />
         <activity
             android:name=".views.employees.activities.DetailSaleInvoiceActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".views.managers.activities.EmployeeStatisticToday"
