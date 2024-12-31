@@ -21,7 +21,7 @@ public  class DetailProductActivity extends AppCompatActivity {
 
     ImageView imageViewSwap,imageProduct;
     TextView tvID,tvName,tvSelling,tvUnit,tvCategory,tvTotal,tvSold;
-    TextView tvRemaining,tvRevenue,tvProfit,tvUserName,tvPosition;
+    TextView tvRemaining,tvUserName,tvPosition;
     boolean isDisplayImg=true;
     public final static String DETAIL_PRODUCT_ITEM_KEY = "DETAIL_PRODUCT_INTENT_KEY";
 
@@ -59,8 +59,6 @@ public  class DetailProductActivity extends AppCompatActivity {
         tvTotal=findViewById(R.id.tvTotalDetailProduct);
         tvSold=findViewById(R.id.tvSoldDetailProduct);
         tvRemaining=findViewById(R.id.tvRemainingDetailProduct);
-        tvRevenue=findViewById(R.id.tvRevenueDetailProduct);
-        tvProfit=findViewById(R.id.tvProfitDetailProduct);
 
     }
     private void getData(){

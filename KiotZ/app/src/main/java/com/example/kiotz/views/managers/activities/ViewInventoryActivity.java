@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -19,6 +20,7 @@ import com.example.kiotz.database.FireBaseService;
 import com.example.kiotz.database.dto.ProductSerializer;
 import com.example.kiotz.inventory.Inventory;
 import com.example.kiotz.models.Product;
+import com.example.kiotz.models.Receipt;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
@@ -33,9 +35,9 @@ public  class ViewInventoryActivity extends AppCompatActivity implements IRecycl
     RecyclerView recyclerViewProduct;
     ProductsAdapterManager adapterManager;
     List<Product> products;
-
+    List<Product> temp_copy_list;
     TextView tvUserName,tvPosition;
-
+    SearchView search_view_inventory_sv;
     InventoryViewModel<Product> productViewModel;
 
 
@@ -56,17 +58,24 @@ public  class ViewInventoryActivity extends AppCompatActivity implements IRecycl
         setupStatusBar();
         fetchDataProduct()
                 .thenRun(this::setupObservers)
-                .thenRun(this::setupAdapter);
+                .thenRun(this::setupAdapter)
+                .thenRun(this::copyList)
+                .thenRun(this::setupSearchView);
 
 
     }
 
-
+    private void copyList()
+    {
+        temp_copy_list = new ArrayList<>();
+        temp_copy_list.addAll(products);
+    }
 
     private void bindingView(){
         recyclerViewProduct=findViewById(R.id.recycleView_rv);
         tvUserName=findViewById(R.id.tv_username);
         tvPosition=findViewById(R.id.tv_position);
+        search_view_inventory_sv = findViewById(R.id.search_view_inventory_sv);
         recyclerViewProduct.setLayoutManager(new LinearLayoutManager(this));
     }
 
@@ -143,6 +152,56 @@ public  class ViewInventoryActivity extends AppCompatActivity implements IRecycl
 
     }
 
+    private  void setupSearchView()
+    {
+
+        search_view_inventory_sv.clearFocus();
+        search_view_inventory_sv.setIconified(false);
+//        search_view_inventory_sv.requestFocus();
+        search_view_inventory_sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+//                return original data
+                products.clear();
+                products.addAll(temp_copy_list);
+                adapterManager.notifyDataSetChanged();
+                search_view_inventory_sv.clearFocus();
+
+                return true;
+            }
+
+            private void search_filter_text(String text)
+            {
+
+                ArrayList<Product> filtered_list = new ArrayList<Product>();
+                for (Product i : temp_copy_list) {
+                    if (i.ID().toLowerCase().contains(text.toLowerCase()) ||
+                            i.Name().toLowerCase().contains(text.toLowerCase()) ||
+                            String.valueOf(i.Price()).contains(text.toLowerCase()) ||
+                            String.valueOf(i.Price()).contains(text.toLowerCase())
+                    )
+                    {
+                        filtered_list.add(i);
+                    }
+                }
+
+                products.clear();
+                products.addAll(filtered_list);
+                adapterManager.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                search_filter_text(s);
+                return true;
+            }
+        });
+
+
+    }
 
 }
 

@@ -26,15 +26,18 @@ import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import com.example.kiotz.views.managers.data.App;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class ModifyProductView extends AppCompatActivity implements IRecycleManagerDetail {
     ArrayList<Product> productArrayList;
-    SearchView search;
     TextView tv_username, tv_position;
     RecyclerView recycleView_rv;
     InventoryViewModel<Product> productViewModel;
     ProductsAdapterManager productsAdapterManager;
+    List<Product> temp_copy_list;
+
+    SearchView search_view_inventory_sv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,15 +54,17 @@ public class ModifyProductView extends AppCompatActivity implements IRecycleMana
         setupStatusBar();
         loadProduct()
                 .thenRun(this::setupRecyclerView)
-                .thenRun(this::setupObservers);
+                .thenRun(this::copyList)
+                .thenRun(this::setupObservers)
+                .thenRun(this::setupSearchView);
     }
 
     private void initVariables()
     {
-        search = findViewById(R.id.search);
         recycleView_rv = findViewById(R.id.recycleView_rv);
         tv_username = findViewById(R.id.tv_username);
         tv_position = findViewById(R.id.tv_position);
+        search_view_inventory_sv = findViewById(R.id.search_view_inventory_sv);
     }
 
     @Override
@@ -68,6 +73,10 @@ public class ModifyProductView extends AppCompatActivity implements IRecycleMana
         Intent intent = new Intent(this, ModifyProductEdit.class);
         intent.putExtra(ModifyProductEdit.MODIFY_PRODUCT_INTENT_KEY, productArrayList.get(position).ID());
         startActivity(intent);
+
+//        revert back to the original fetched list
+        search_view_inventory_sv.setQuery("",true);
+        search_view_inventory_sv.clearFocus();
     }
 
     @Override
@@ -105,6 +114,7 @@ public class ModifyProductView extends AppCompatActivity implements IRecycleMana
             }
 
             productArrayList.add(addedProduct);
+            temp_copy_list.add(addedProduct);
             productsAdapterManager.notifyItemInserted(productArrayList.size() - 1);
         });
 
@@ -117,6 +127,7 @@ public class ModifyProductView extends AppCompatActivity implements IRecycleMana
             }
 
             productArrayList.remove(position);
+            temp_copy_list.remove(position);
             productsAdapterManager.notifyItemRemoved(position);
         });
 
@@ -131,7 +142,65 @@ public class ModifyProductView extends AppCompatActivity implements IRecycleMana
             }
 
             productArrayList.set(position, updatedProduct);
+            temp_copy_list.set(position,updatedProduct);
             productsAdapterManager.notifyItemChanged(position);
         });
+    }
+
+    private  void setupSearchView()
+    {
+
+        search_view_inventory_sv.clearFocus();
+        search_view_inventory_sv.setIconified(false);
+//        search_view_inventory_sv.requestFocus();
+        search_view_inventory_sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+//                return original data
+                productArrayList.clear();
+                productArrayList.addAll(temp_copy_list);
+                productsAdapterManager.notifyDataSetChanged();
+                search_view_inventory_sv.clearFocus();
+
+                return true;
+            }
+
+            private void search_filter_text(String text)
+            {
+
+                ArrayList<Product> filtered_list = new ArrayList<Product>();
+                for (Product i : temp_copy_list) {
+                    if (i.ID().toLowerCase().contains(text.toLowerCase()) ||
+                            i.Name().toLowerCase().contains(text.toLowerCase()) ||
+                            String.valueOf(i.Price()).contains(text.toLowerCase()) ||
+                            String.valueOf(i.Price()).contains(text.toLowerCase())
+                    )
+                    {
+                        filtered_list.add(i);
+                    }
+                }
+
+                productArrayList.clear();
+                productArrayList.addAll(filtered_list);
+                productsAdapterManager.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                search_filter_text(s);
+                return true;
+            }
+        });
+
+
+    }
+
+    private void copyList()
+    {
+        temp_copy_list = new ArrayList<>();
+        temp_copy_list.addAll(productArrayList);
     }
 }
