@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kiotz.R;
 import com.example.kiotz.adapters.IItemFragment;
@@ -91,7 +92,33 @@ public class StatisticsManagerFragment extends Fragment implements IItemFragment
         createDataForRecycleView();
         recyclerViewToday=view.findViewById(R.id.recycleViewFragmentStatisticToday);
         recyclerViewReports=view.findViewById(R.id.recycleViewFragmentStatisticReports);
-        ItemFragmentManagerAdapter adapterToday=new ItemFragmentManagerAdapter(view.getContext(),itemFragmentListToday,this);
+        ItemFragmentManagerAdapter adapterToday=new ItemFragmentManagerAdapter(view.getContext(), itemFragmentListToday, new IItemFragment() {
+            @Override
+            public void onItemClick(int position) {
+
+                if (itemFragmentListToday.contains(itemFragmentListToday.get(position))) {
+                    switch (position) {
+                        case 0:
+                        {
+                            Intent intent = new Intent(getContext(), ProductSold.class);
+                            startActivity(intent);
+                        }
+                        break;
+                        case 1:
+                        {
+                            Intent intent = new Intent(getContext(), StatisticInvoicesTodayActivity.class);
+                            startActivity(intent);
+                        }
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onLongItemClick(int position) {
+
+            }
+        });
         ItemFragmentManagerAdapter adapterReports=new ItemFragmentManagerAdapter(view.getContext(),itemFragmentListReports,this);
         recyclerViewToday.setAdapter(adapterToday);
         recyclerViewReports.setAdapter(adapterReports);
@@ -121,22 +148,7 @@ public class StatisticsManagerFragment extends Fragment implements IItemFragment
     @Override
     public void onItemClick(int position) {
         // Example: Handle clicks based on which RecyclerView item was clicked
-        if (itemFragmentListToday.contains(itemFragmentListToday.get(position))) {
-            switch (position) {
-                case 0:
-                {
-                    Intent intent = new Intent(getContext(), ProductSold.class);
-                    startActivity(intent);
-                }
-                    break;
-                case 1:
-                {
-                    Intent intent = new Intent(getContext(), StatisticInvoicesTodayActivity.class);
-                    startActivity(intent);
-                }
-                    break;
-            }
-        } else if (itemFragmentListReports.contains(itemFragmentListReports.get(position))) {
+            if (itemFragmentListReports.contains(itemFragmentListReports.get(position))) {
             switch (position) {
                 case 0:
                 {
@@ -164,9 +176,15 @@ public class StatisticsManagerFragment extends Fragment implements IItemFragment
 
     }
 
+
+
+
+
     @Override
     public void onLongItemClick(int position) {
 
     }
+
+
 
 }
