@@ -44,6 +44,7 @@ import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
 import com.example.kiotz.views.dialogs.SaleDialog;
+import com.example.kiotz.views.dialogs.SaleManualDialog;
 import com.example.kiotz.views.employees.activities.DetailSaleInvoiceActivity;
 import com.example.kiotz.views.managers.data.App;
 import com.google.firebase.auth.FirebaseAuth;
@@ -90,13 +91,14 @@ public class SaleEmployeeFragment extends Fragment {
 
     private RecyclerView recyclerView;
 
-    private ImageView imgComplete;
+    private ImageView imgComplete,imgViewEnterManually;
 
     private InventoryViewModel<Receipt> receiptViewModel;
 
     private TextView tvUsername,tvPosition;
 
     private ActivityResultLauncher<Intent> detailSaleInvoiceLauncher;
+
 
     private String customerName="Nguyen Van A";
     private String customerPhone="0909129345";
@@ -160,6 +162,7 @@ public class SaleEmployeeFragment extends Fragment {
         imageViewMore=view.findViewById(R.id.imgViewMore);
         tvUsername=view.findViewById(R.id.tvEmployeeSaleUserName);
         tvPosition=view.findViewById(R.id.tvEmployeeSalePosition);
+        imgViewEnterManually=view.findViewById(R.id.imageViewEnterManually);
 
         setupStatusBar();
         getIdEmployee();
@@ -226,13 +229,15 @@ public class SaleEmployeeFragment extends Fragment {
 
                 CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
                         .thenRun(() -> {
-                            Receipt receipt=new Receipt(null,localDateTime,idEmployee,customerName,customerName,idProduct,totalPrice[0]);
+                            Receipt receipt=new Receipt(null,localDateTime,idEmployee,customerName,customerPhone,idProduct,totalPrice[0]);
                             receiptViewModel.add(receipt).thenRun(()->{
                                 Toast.makeText(requireContext(),"Create Receipt",Toast.LENGTH_SHORT).show();
                             });
                             Toast.makeText(requireContext(),"Sold complete",Toast.LENGTH_SHORT).show();
                             products.clear();
                             adapter.notifyDataSetChanged();
+                            customerName="";
+                            customerPhone="";
                         });
 
 
@@ -252,6 +257,20 @@ public class SaleEmployeeFragment extends Fragment {
                         if(data!=null){
                             customerName=data.getStringExtra("name_customer");
                             customerPhone=data.getStringExtra("phone_customer");
+                            List<ProductInvoice> tmp=data.getParcelableArrayListExtra("list_product_invoice");
+                            if(tmp!=null){
+                                products.clear();
+                                for(int i=0;i<tmp.size();i++){
+                                    products.add(new ProductInvoice(tmp.get(i).getId(),tmp.get(i).getQuantity(),tmp.get(i).getTotalPrice()));
+                                }
+                                adapter.notifyDataSetChanged();
+                                tmp.clear();
+                            }
+
+
+
+
+
 
                         }
 
@@ -264,7 +283,21 @@ public class SaleEmployeeFragment extends Fragment {
             public void onClick(View v) {
                 Intent i=new Intent(getContext(), DetailSaleInvoiceActivity.class);
                 i.putParcelableArrayListExtra("productList",(ArrayList<ProductInvoice>)products);
+                i.putExtra("nameCustomer",customerName);
+                i.putExtra("phoneCustomer",customerPhone);
                 detailSaleInvoiceLauncher.launch(i);
+            }
+        });
+
+        imgViewEnterManually.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaleManualDialog saleManualDialog=new SaleManualDialog(requireContext(),productInvoice -> {
+                    //products.add(productInvoice);
+                    addToProducts(productInvoice);
+                    adapter.notifyDataSetChanged();
+                });
+                saleManualDialog.show();
             }
         });
 

@@ -134,4 +134,9 @@ public class SettingManagerFragment extends Fragment implements IItemFragment {
             startActivity(intent);
         }
     }
+
+    @Override
+    public void onLongItemClick(int position) {
+
+    }
 }

@@ -161,6 +161,12 @@ public class StatisticsManagerFragment extends Fragment implements IItemFragment
                     break;
             }
         }
+
+    }
+
+    @Override
+    public void onLongItemClick(int position) {
+
     }
 
 }

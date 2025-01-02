@@ -25,10 +25,13 @@ public class AdapterDetailSaleInvoiceActivity extends RecyclerView.Adapter<Adapt
 
     private List<Product> productList;
 
-    public AdapterDetailSaleInvoiceActivity(List<ProductInvoice> productInvoiceList, Context context,List<Product> list) {
+    private final IItemFragment iItemFragment;
+
+    public AdapterDetailSaleInvoiceActivity(List<ProductInvoice> productInvoiceList, Context context,List<Product> list,IItemFragment iItemFragment) {
         this.productInvoiceList = productInvoiceList;
         this.context = context;
         this.productList=list;
+        this.iItemFragment=iItemFragment;
 
 
     }
@@ -38,7 +41,7 @@ public class AdapterDetailSaleInvoiceActivity extends RecyclerView.Adapter<Adapt
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater=LayoutInflater.from(context);
         View view=layoutInflater.inflate(R.layout.item_form7,parent,false);
-        return new MyViewHolder(view);
+        return new MyViewHolder(view,iItemFragment);
     }
 
     @Override
@@ -68,17 +71,47 @@ public class AdapterDetailSaleInvoiceActivity extends RecyclerView.Adapter<Adapt
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        return productInvoiceList.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView imageView;
         private TextView tvName,tvQuantity,tvID,tvTotalPrice;
-        public MyViewHolder(@NonNull View itemView) {
+
+
+        public MyViewHolder(@NonNull View itemView, IItemFragment iItemFragment) {
             super(itemView);
 
             bindingViews(itemView);
+
+           itemView.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   if(iItemFragment!=null){
+                       int position=getAdapterPosition();
+                       if(position!=RecyclerView.NO_POSITION){
+                           iItemFragment.onItemClick(position);
+                       }
+                   }
+               }
+           });
+
+           itemView.setOnLongClickListener(new View.OnLongClickListener() {
+               @Override
+               public boolean onLongClick(View v) {
+                   if(iItemFragment!=null){
+                       int position=getAdapterPosition();
+                       if(position!=RecyclerView.NO_POSITION){
+                           iItemFragment.onLongItemClick(position);
+                       }
+
+                       return true;
+                   }
+                   return false;
+
+               }
+           });
         }
 
         private void bindingViews(View view){

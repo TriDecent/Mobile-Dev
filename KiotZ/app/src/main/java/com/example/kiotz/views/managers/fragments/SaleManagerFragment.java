@@ -157,4 +157,9 @@ public class SaleManagerFragment extends Fragment implements IItemFragment {
        }
 
     }
+
+    @Override
+    public void onLongItemClick(int position) {
+
+    }
 }
