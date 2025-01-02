@@ -118,4 +118,9 @@ public class StatisticsManagerFragment extends Fragment implements IItemFragment
     public void onItemClick(int position) {
 
     }
+
+    @Override
+    public void onLongItemClick(int position) {
+
+    }
 }

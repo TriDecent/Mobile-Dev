@@ -2,6 +2,7 @@ package com.example.kiotz.views.employees.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kiotz.R;
 import com.example.kiotz.adapters.AdapterDetailSaleInvoiceActivity;
+import com.example.kiotz.adapters.IItemFragment;
 import com.example.kiotz.database.FireBaseService;
 import com.example.kiotz.database.dto.ProductSerializer;
 import com.example.kiotz.inventory.Inventory;
@@ -27,12 +30,13 @@ import com.example.kiotz.models.ProductInvoice;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
+import com.example.kiotz.views.dialogs.SaleDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class DetailSaleInvoiceActivity extends AppCompatActivity {
+public class DetailSaleInvoiceActivity extends AppCompatActivity implements IItemFragment {
 
     private Button buttonConfirm;
     private EditText editTextNameCustomer,editTextPhoneCustomer;
@@ -44,6 +48,13 @@ public class DetailSaleInvoiceActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     private AdapterDetailSaleInvoiceActivity adapter;
+
+    private boolean isChange=false;
+
+    private List<ProductInvoice> backupProductInvoiceList;
+
+
+
 
 
     @Override
@@ -85,6 +96,22 @@ public class DetailSaleInvoiceActivity extends AppCompatActivity {
                 Intent intentResult=new Intent();
                 intentResult.putExtra("name_customer",nameCustomer);
                 intentResult.putExtra("phone_customer",phoneCustomer);
+
+                if(backupProductInvoiceList.size()!=productInvoiceList.size()){
+                    isChange=true;
+                }
+                else{
+                    for(int i=0;i<productInvoiceList.size();i++){
+                        if(productInvoiceList.get(i).getQuantity()!=backupProductInvoiceList.get(i).getQuantity()){
+                            isChange=true;
+                        }
+                    }
+                }
+
+                if(isChange){
+                    intentResult.putParcelableArrayListExtra("list_product_invoice",(ArrayList<ProductInvoice>) productInvoiceList);
+                }
+
                 setResult(200,intentResult);
                 finish();
             }
@@ -92,8 +119,23 @@ public class DetailSaleInvoiceActivity extends AppCompatActivity {
     }
 
     private CompletableFuture<Void> getData(){
+        backupProductInvoiceList=new ArrayList<>();
         Intent intent = getIntent();
         productInvoiceList = intent.getParcelableArrayListExtra("productList");
+        String name=intent.getStringExtra("nameCustomer");
+        String phone=intent.getStringExtra("phoneCustomer");
+        if(name!=null){
+            editTextNameCustomer.setText(name);
+        }
+        if(phone!=null){
+            editTextPhoneCustomer.setText(phone);
+        }
+        if(productInvoiceList!=null){
+            for(ProductInvoice p: productInvoiceList){
+                backupProductInvoiceList.add(new ProductInvoice(p.getId(),p.getQuantity(),p.getTotalPrice()));
+            }
+        }
+
         productList=new ArrayList<>();
         List<CompletableFuture<Void>> futures=new ArrayList<>();
         if(productInvoiceList!=null){
@@ -121,8 +163,53 @@ public class DetailSaleInvoiceActivity extends AppCompatActivity {
 
     private void setupAdapter(){
         Toast.makeText(this,String.valueOf(productList.size()),Toast.LENGTH_SHORT).show();
-        adapter=new AdapterDetailSaleInvoiceActivity(productInvoiceList,this,productList);
+        adapter=new AdapterDetailSaleInvoiceActivity(productInvoiceList,this,productList,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        ProductInvoice productInvoiceClicked=productInvoiceList.get(position);
+        Product currentProduct=null;
+        for(Product p:productList){
+            if(p.ID().equals(productInvoiceClicked.getId())){
+                currentProduct=p;
+            }
+        }
+        if(currentProduct!=null){
+            SaleDialog saleDialog=new SaleDialog(this,currentProduct,productInvoice -> {
+                for(ProductInvoice p1: productInvoiceList){
+                    if(p1.getId().equals(productInvoice.getId())){
+                        p1.setQuantity(productInvoice.getQuantity());
+                        p1.setTotalPrice(productInvoice.getTotalPrice());
+                        adapter.notifyItemChanged(position);
+
+                    }
+                }
+            });
+            saleDialog.show();
+        }
+        else{
+            Log.d("NULL","currentProduct null");
+        }
+
+
+
+    }
+
+    @Override
+    public void onLongItemClick(int position) {
+        new AlertDialog.Builder(this)
+                .setTitle("Confirm Deletion")
+                .setMessage("Are you sure you want to delete this item?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    productInvoiceList.remove(position);
+                    adapter.notifyItemRemoved(position);
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .show();
     }
 }

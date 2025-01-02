@@ -136,4 +136,9 @@ public class EmployeeManagerFragment extends Fragment implements IItemFragment {
             startActivity(i);
         }
     }
+
+    @Override
+    public void onLongItemClick(int position) {
+
+    }
 }

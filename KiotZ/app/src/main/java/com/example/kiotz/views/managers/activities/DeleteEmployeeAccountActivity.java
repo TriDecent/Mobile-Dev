@@ -193,4 +193,9 @@ public class DeleteEmployeeAccountActivity extends AppCompatActivity implements 
 
     }
 
+    @Override
+    public void onLongItemClick(int position) {
+
+    }
+
 }

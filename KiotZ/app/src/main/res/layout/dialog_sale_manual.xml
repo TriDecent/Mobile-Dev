@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="5dp"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    
+
     <TextView
-        android:id="@+id/tvConfirmDialog"
+        android:id="@+id/tvManualDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Confirm Product"
+        android:text="Enter Product"
         android:textSize="28sp"
         android:textStyle="bold|italic"
         android:textAlignment="center"
@@ -25,14 +24,15 @@
         android:id="@+id/linear1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvConfirmDialog"
+        app:layout_constraintTop_toBottomOf="@id/tvManualDialog"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="horizontal"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
         >
         <TextView
-            android:id="@+id/tvIDConfirmDialog"
+            android:id="@+id/tv1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="ID: "
@@ -41,23 +41,20 @@
             android:layout_weight="1"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-
             />
 
-        <TextView
-            android:id="@+id/tvIDConfirmDialogContent"
+        <EditText
+            android:id="@+id/editTextIDManual"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="MG001"
-            android:textSize="18sp"
             android:layout_weight="2"
+            android:textSize="18sp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
 
             />
 
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/linear2"
@@ -70,7 +67,7 @@
         android:layout_marginTop="10dp"
         >
         <TextView
-            android:id="@+id/tvNameConfirmDialog"
+            android:id="@+id/tv2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Name: "
@@ -83,10 +80,10 @@
             />
 
         <TextView
-            android:id="@+id/tvNameConfirmDialogContent"
+            android:id="@+id/tvNameManual"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Hao Hao noodles"
+            android:text=""
             android:textSize="18sp"
             android:layout_weight="2"
             android:layout_marginStart="20dp"
@@ -107,7 +104,7 @@
         android:layout_marginTop="10dp"
         >
         <TextView
-            android:id="@+id/tvUnitConfirmDialog"
+            android:id="@+id/tv3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Unit: "
@@ -119,10 +116,10 @@
             />
 
         <TextView
-            android:id="@+id/tvUnitConfirmDialogContent"
+            android:id="@+id/tvUnitManual"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Pack"
+            android:text=""
             android:textSize="18sp"
             android:layout_weight="2"
             android:layout_marginStart="20dp"
@@ -143,7 +140,7 @@
         android:layout_marginTop="10dp"
         >
         <TextView
-            android:id="@+id/tvPriceConfirmDialog"
+            android:id="@+id/tv4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Price: "
@@ -155,10 +152,10 @@
             />
 
         <TextView
-            android:id="@+id/tvPriceConfirmDialogContent"
+            android:id="@+id/tvPriceManual"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="3000 VND"
+            android:text=""
             android:textSize="18sp"
             android:layout_weight="2"
             android:layout_marginStart="20dp"
@@ -166,7 +163,6 @@
             />
 
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/linear5"
@@ -179,7 +175,7 @@
         android:layout_marginTop="10dp"
         >
         <TextView
-            android:id="@+id/tvQuantityConfirmDialog"
+            android:id="@+id/tv5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Quantity: "
@@ -191,7 +187,7 @@
             />
 
         <EditText
-            android:id="@+id/editTextQuantityConfirmDialog"
+            android:id="@+id/editTextQuantityManual"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -200,11 +196,7 @@
             android:textSize="18sp"
             />
 
-
-
     </LinearLayout>
-
-
 
     <LinearLayout
         android:id="@+id/linear6"
@@ -217,7 +209,7 @@
         android:layout_marginTop="10dp"
         >
         <TextView
-            android:id="@+id/tvTotalPriceConfirmDialog"
+            android:id="@+id/tv6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Total price: "
@@ -229,18 +221,15 @@
             />
 
         <TextView
-            android:id="@+id/tvTotalPriceConfirmDialogContent"
+            android:id="@+id/tvTotalPriceManual"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="0 VND"
+            android:text=""
             android:textSize="18sp"
             android:layout_weight="2"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             />
-
-
-
 
     </LinearLayout>
 
@@ -256,7 +245,7 @@
         >
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonCancelConfirmDialog"
+            android:id="@+id/buttonCancelManual"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bginfor"
@@ -270,11 +259,11 @@
             />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonConfirmDialog"
+            android:id="@+id/buttonSearchManual"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bginfor"
-            android:text="Confirm"
+            android:text="Search"
             android:textAllCaps="false"
             android:textStyle="bold"
             android:textSize="18sp"
@@ -285,15 +274,6 @@
 
 
     </LinearLayout>
-
-
-
-
-
-
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
