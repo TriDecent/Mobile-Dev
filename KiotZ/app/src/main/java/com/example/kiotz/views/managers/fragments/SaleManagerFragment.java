@@ -20,6 +20,7 @@ import com.example.kiotz.adapters.ItemFragmentManagerAdapter;
 import com.example.kiotz.models.ItemFragment;
 import com.example.kiotz.views.general.activities.CreateProductActivity;
 import com.example.kiotz.views.managers.activities.DeleteProduct;
+import com.example.kiotz.views.managers.activities.ModifyProductView;
 import com.example.kiotz.views.managers.activities.ViewInformationEmployeeActivity;
 import com.example.kiotz.views.managers.activities.ViewInventoryActivity;
 import com.example.kiotz.views.managers.data.App;
@@ -143,6 +144,13 @@ public class SaleManagerFragment extends Fragment implements IItemFragment {
            case 2:
            {
                Intent intent=new Intent(getContext(), ViewInventoryActivity.class);
+               startActivity(intent);
+           }
+           break;
+
+           case 3:
+           {
+               Intent intent = new Intent(getContext(), ModifyProductView.class);
                startActivity(intent);
            }
            break;

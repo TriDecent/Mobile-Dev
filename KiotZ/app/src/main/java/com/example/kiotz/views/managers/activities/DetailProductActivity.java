@@ -20,8 +20,8 @@ import com.example.kiotz.views.managers.data.App;
 public  class DetailProductActivity extends AppCompatActivity {
 
     ImageView imageViewSwap,imageProduct;
-    TextView tvID,tvName,tvSelling,tvUnit,tvCategory,tvTotal,tvSold;
-    TextView tvRemaining,tvUserName,tvPosition;
+    TextView tvID,tvName,tvSelling,tvUnit,tvCategory,tvTotal;
+    TextView tvUserName,tvPosition;
     boolean isDisplayImg=true;
     public final static String DETAIL_PRODUCT_ITEM_KEY = "DETAIL_PRODUCT_INTENT_KEY";
 
@@ -57,8 +57,6 @@ public  class DetailProductActivity extends AppCompatActivity {
         tvUnit=findViewById(R.id.tvUnitDetailProduct);
         tvCategory=findViewById(R.id.tvCategoryDetailProduct);
         tvTotal=findViewById(R.id.tvTotalDetailProduct);
-        tvSold=findViewById(R.id.tvSoldDetailProduct);
-        tvRemaining=findViewById(R.id.tvRemainingDetailProduct);
 
     }
     private void getData(){
