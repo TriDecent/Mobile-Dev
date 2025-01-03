@@ -55,6 +55,7 @@ public class SaleManualDialog {
         bindingViews(dialogView);
         AlertDialog dialog=builder.create();
         setOnClickSearch(dialog);
+        setOnClickButtonCancel(dialog);
         addTextChangeForEditText();
 
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -69,6 +70,7 @@ public class SaleManualDialog {
         tvTotalPrice=dialogView.findViewById(R.id.tvTotalPriceManual);
         buttonSearch=dialogView.findViewById(R.id.buttonSearchManual);
         tvPrice=dialogView.findViewById(R.id.tvPriceManual);
+        buttonCancel=dialogView.findViewById(R.id.buttonCancelManual);
 
     }
 
@@ -107,6 +109,10 @@ public class SaleManualDialog {
                         String numericValue = String.valueOf(tvTotalPrice.getText()).replaceAll("[^\\d.]", "");
                         double totalPrice= Double.parseDouble(numericValue);
                         int quantity=Integer.parseInt(editTextQuantity.getText().toString());
+                        if(quantity>myProduct.Quantity()){
+                            Toast.makeText(context,"Invalid product quantity",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         ProductInvoice productInvoice=new ProductInvoice(myProduct.ID(),quantity,totalPrice);
                         listener.onProductInvoiceAdd(productInvoice);
                         dialog.dismiss();
@@ -156,6 +162,17 @@ public class SaleManualDialog {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+    }
+
+
+    private void setOnClickButtonCancel(AlertDialog dialog){
+
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
             }
         });
     }

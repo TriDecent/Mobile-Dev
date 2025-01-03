@@ -24,6 +24,7 @@ import com.example.kiotz.views.managers.activities.ProductSold;
 import com.example.kiotz.views.managers.activities.StatisticInvoicesTodayActivity;
 import com.example.kiotz.views.managers.data.App;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +48,8 @@ public class StatisticsManagerFragment extends Fragment implements IItemFragment
     private RecyclerView recyclerViewReports;
     private List<ItemFragment> itemFragmentListToday;
     private List<ItemFragment> itemFragmentListReports;
+
+    private TextView tvDate;
     public StatisticsManagerFragment() {
         // Required empty public constructor
     }
@@ -92,6 +95,9 @@ public class StatisticsManagerFragment extends Fragment implements IItemFragment
         createDataForRecycleView();
         recyclerViewToday=view.findViewById(R.id.recycleViewFragmentStatisticToday);
         recyclerViewReports=view.findViewById(R.id.recycleViewFragmentStatisticReports);
+        tvDate=view.findViewById(R.id.tvDateStatisticFragment);
+        LocalDate date=LocalDate.now();
+        tvDate.setText(String.valueOf(String.valueOf(date.getDayOfMonth())+"/"+String.valueOf(date.getMonthValue())+"/"+String.valueOf(date.getYear())));
         ItemFragmentManagerAdapter adapterToday=new ItemFragmentManagerAdapter(view.getContext(), itemFragmentListToday, new IItemFragment() {
             @Override
             public void onItemClick(int position) {

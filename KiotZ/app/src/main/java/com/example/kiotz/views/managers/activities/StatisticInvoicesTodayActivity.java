@@ -193,40 +193,40 @@ public class StatisticInvoicesTodayActivity extends AppCompatActivity {
 
 
 
-//    private void setupObservers(){
-//        receiptViewModel.getObservableAddedItem().observe(this,addedReceipt->{
-//            if(receiptList.stream().anyMatch(r -> r.ID().equals(addedReceipt.ID()))){
-//                return;
-//            }
-//            receiptList.add(addedReceipt);
-//            adapter.notifyItemChanged(receiptList.size()-1);
-//
-//        });
-//
-//        receiptViewModel.getObservableUpdatedItem().observe(this,pair->{
-//            int position =pair.first;
-//            var updatedReceipt=pair.second;
-//            var receiptNeedsToBeUpdated=receiptList.get(position);
-//            if(updatedReceipt.equals(receiptNeedsToBeUpdated)){
-//                return;
-//            }
-//
-//            receiptList.set(position,updatedReceipt);
-//            adapter.notifyItemChanged(position);
-//
-//        });
-//
-//        receiptViewModel.getObservableDeletedItem().observe(this,pair->{
-//            int position=pair.first;
-//            var deletedReceipt=pair.second;
-//            if(receiptList.stream().noneMatch(r ->r.ID().equals(deletedReceipt.ID()))){
-//                return;
-//            }
-//
-//            receiptList.remove(position);
-//            adapter.notifyItemRemoved(position);
-//        });
-//    }
+    private void setupObservers(){
+        receiptViewModel.getObservableAddedItem().observe(this,addedReceipt->{
+            if(receiptList.stream().anyMatch(r -> r.ID().equals(addedReceipt.ID()))){
+                return;
+            }
+            receiptList.add(addedReceipt);
+            adapter.notifyItemChanged(receiptList.size()-1);
+
+        });
+
+        receiptViewModel.getObservableUpdatedItem().observe(this,pair->{
+            int position =pair.first;
+            var updatedReceipt=pair.second;
+            var receiptNeedsToBeUpdated=receiptList.get(position);
+            if(updatedReceipt.equals(receiptNeedsToBeUpdated)){
+                return;
+            }
+
+            receiptList.set(position,updatedReceipt);
+            adapter.notifyItemChanged(position);
+
+        });
+
+        receiptViewModel.getObservableDeletedItem().observe(this,pair->{
+            int position=pair.first;
+            var deletedReceipt=pair.second;
+            if(receiptList.stream().noneMatch(r ->r.ID().equals(deletedReceipt.ID()))){
+                return;
+            }
+
+            receiptList.remove(position);
+            adapter.notifyItemRemoved(position);
+        });
+    }
 
 
     private void setupAdapter(){

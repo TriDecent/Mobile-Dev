@@ -2,6 +2,8 @@ package com.example.kiotz.views.employees.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -51,6 +53,7 @@ public class ReceiptFragmentEmployee extends Fragment {
     private InventoryViewModel<Receipt> receiptViewModel;
     private InventoryViewModel<Employee> employeeInventoryViewModel;
 
+    private String idEmployee;
     private RecyclerView recyclerView;
 
     private ReceiptAdapter adapter;
@@ -110,6 +113,7 @@ public class ReceiptFragmentEmployee extends Fragment {
         bindingViews(root);
         setupViewModel();
         setupStatusBar();
+        getIdEmployee();
 
         loadReceipt()
                 .thenCompose(aVoid -> loadEmployee())
@@ -122,6 +126,7 @@ public class ReceiptFragmentEmployee extends Fragment {
 
         return root;
     }
+
 
     private void setupWindowInsets(View root){
         ViewCompat.setOnApplyWindowInsetsListener(root.findViewById(R.id.main), (v, insets) -> {
@@ -259,6 +264,10 @@ public class ReceiptFragmentEmployee extends Fragment {
             }
             receiptList.add(addedReceipt);
             adapter.notifyItemChanged(receiptList.size()-1);
+            if(addedReceipt.EmployeeId().equals(idEmployee)){
+                receiptListToday.add(addedReceipt);
+                adapter.notifyDataSetChanged();
+            }
 
         });
 
@@ -371,5 +380,10 @@ public class ReceiptFragmentEmployee extends Fragment {
         return filter_list;
 
 
+    }
+
+    private void getIdEmployee(){
+        Authenticator authenticator=Authenticator.getInstance();
+        idEmployee=authenticator.getCurrentUserId();
     }
 }

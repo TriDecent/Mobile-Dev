@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -106,7 +107,7 @@
         app:layout_constraintLeft_toRightOf="@id/daily_employee_count_tv"
         app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
         app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
-        android:text="hóa đơn"
+        android:text="receipt"
         android:textColor="@color/md_theme_scrim"
         android:textStyle="bold"
         android:textSize="16sp"
@@ -124,7 +125,7 @@
         app:layout_constraintLeft_toLeftOf="@id/high_ligh_bar_form16"
         app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
         app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
-        android:text="Tổng doanh thu trong ngày"
+        android:text="Total daily income"
         android:textColor="@color/md_theme_primary"
         android:textStyle="bold"
         android:textSize="16sp"
@@ -138,16 +139,12 @@
         android:id="@+id/receipt_sold_value_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/product_sold_tv_header"
-        app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
-        app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
         android:text="200.000.000₫"
         android:textColor="@color/md_theme_tertiary"
-        android:textStyle="bold"
         android:textSize="16sp"
-        android:layout_marginTop="25dp"
-        android:layout_marginStart="30dp"
-        >
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/sort_tv_form16"
+        app:layout_constraintTop_toBottomOf="@+id/sort_tv_form16">
 
     </TextView>
 
@@ -156,14 +153,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="140dp"
-        android:text="Sắp xếp theo"
+        android:text="Sort by"
         android:textColor="@color/md_theme_scrim"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
         app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
         app:layout_constraintRight_toLeftOf="@id/sort_by_tv_form16"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
         >
 
@@ -174,13 +171,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:text="cũ nhất"
+        android:text="oldest"
         app:layout_constraintTop_toTopOf="@id/high_ligh_bar_form16"
         app:layout_constraintRight_toRightOf="@id/high_ligh_bar_form16"
         app:layout_constraintBottom_toBottomOf="@id/high_ligh_bar_form16"
         android:textStyle="bold"
         android:textColor="@color/md_theme_primary"
-        android:layout_marginEnd="35dp"
+        android:layout_marginEnd="70dp"
         android:layout_marginBottom="20dp"
         >
 

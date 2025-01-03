@@ -110,7 +110,7 @@ public class DailyStatistics extends AppCompatActivity {
             case weekly_int_value:
             {
                 statistic_title_tv.setText("Weekly Statistics");
-                daily_sum_money_tv_from15.setText("Tổng doanh thu trong tuần");
+                daily_sum_money_tv_from15.setText("Weekly total income");
 //              TODO: filter current week
 
                 //find start of week
@@ -136,7 +136,7 @@ public class DailyStatistics extends AppCompatActivity {
             case monthly_int_value:
             {
                 statistic_title_tv.setText("Monthly Statistics");
-                daily_sum_money_tv_from15.setText("Tổng doanh thu trong tháng");
+                daily_sum_money_tv_from15.setText("Monthly total income");
 
                 for (Receipt i: receiptList) {
                     if (
@@ -199,21 +199,21 @@ public class DailyStatistics extends AppCompatActivity {
                 {
                     case 0:
                     {
-                        sort_by_tv_form16.setText("cũ nhất");
+                        sort_by_tv_form16.setText("oldest");
                         receiptList.sort(new ReceiptSortByDateOld());
                         receiptAdapter.notifyDataSetChanged();
                     }
                         break;
                     case 1:
                     {
-                        sort_by_tv_form16.setText("mới nhất");
+                        sort_by_tv_form16.setText("newest");
                         receiptList.sort(new ReceiptSortByDateNew());
                         receiptAdapter.notifyDataSetChanged();
                     }
                         break;
                     case 2:
                     {
-                        sort_by_tv_form16.setText("số tiền");
+                        sort_by_tv_form16.setText("total");
                         receiptList.sort(new ReceiptSortByPrice());
                         receiptAdapter.notifyDataSetChanged();
 

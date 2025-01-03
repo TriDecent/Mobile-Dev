@@ -105,8 +105,8 @@ public class SettingManagerFragment extends Fragment implements IItemFragment {
         String[] title=getResources().getStringArray(R.array.name_item_fragment_settings);
         itemFragmentList=new ArrayList<>();
         itemFragmentList.add(new ItemFragment(title[0],R.drawable.viewaccount));
-        itemFragmentList.add(new ItemFragment(title[1],R.drawable.deleteaccount));
-        itemFragmentList.add(new ItemFragment(title[2],R.drawable.info));
+//        itemFragmentList.add(new ItemFragment(title[1],R.drawable.deleteaccount));
+//        itemFragmentList.add(new ItemFragment(title[2],R.drawable.info));
         itemFragmentList.add(new ItemFragment(title[3],R.drawable.logout));
 
     }
@@ -121,7 +121,7 @@ public class SettingManagerFragment extends Fragment implements IItemFragment {
 
     @Override
     public void onItemClick(int position) {
-        if(position==3){
+        if(position==1){
             authenticator=Authenticator.getInstance();
             authenticator.signOut(getContext());
             Toast.makeText(getActivity(), "Signed out successfully", Toast.LENGTH_SHORT).show();

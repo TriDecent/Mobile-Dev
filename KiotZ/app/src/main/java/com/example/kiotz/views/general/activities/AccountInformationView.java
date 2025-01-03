@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -23,6 +24,7 @@ import com.example.kiotz.models.Employee;
 import com.example.kiotz.repositories.Repository;
 import com.example.kiotz.viewmodels.InventoryViewModel;
 import com.example.kiotz.viewmodels.InventoryViewModelFactory;
+import com.example.kiotz.views.managers.data.App;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
@@ -34,6 +36,19 @@ public class AccountInformationView extends AppCompatActivity {
     EditText et_email, et_password, et_employee_name, et_employee_date;
     RadioButton rb_account_male, rb_account_female, rb_account_manager, rb_account_employee;
     Button btn_change_password;
+    TextView tv_status_bar_account_creation_employee_name, tv_status_bar_account_creation_employee_position;
+
+//    private void getInformationCurrentUser() {
+//        var authenticator = Authenticator.getInstance();
+//        var userId = authenticator.getCurrentUserId();
+//
+//        current_employee = employees.stream()
+//                .filter(e -> e.ID().equals(userId))
+//                .findFirst()
+//                .orElse(null);
+//
+//        assert current_employee != null;
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,21 +63,11 @@ public class AccountInformationView extends AppCompatActivity {
         initVariable();
         setupViewModel();
         loadEmployees()
-                .thenRun(this::getInformationCurrentUser)
+//                .thenRun(this::getInformationCurrentUser
+//                )
+                .thenRun(this::setupStatusBar)
                 .thenRun(this::adaptViewsToFetchedData)
                 .thenRun(this::setUpChangePasswordButton);
-    }
-
-    private void getInformationCurrentUser() {
-        var authenticator = Authenticator.getInstance();
-        var userId = authenticator.getCurrentUserId();
-
-        current_employee = employees.stream()
-                .filter(e -> e.ID().equals(userId))
-                .findFirst()
-                .orElse(null);
-
-        assert current_employee != null;
     }
 
     private void setupViewModel() {
@@ -85,6 +90,8 @@ public class AccountInformationView extends AppCompatActivity {
         rb_account_manager = findViewById(R.id.rb_account_manager);
         rb_account_employee = findViewById(R.id.rb_account_employee);
         btn_change_password = findViewById(R.id.btn_change_password);
+        tv_status_bar_account_creation_employee_name = findViewById(R.id.tv_status_bar_account_creation_employee_name);
+        tv_status_bar_account_creation_employee_position = findViewById(R.id.tv_status_bar_account_creation_employee_position);
     }
 
     private void adaptViewsToFetchedData() {
@@ -107,6 +114,12 @@ public class AccountInformationView extends AppCompatActivity {
 
     private void setUpChangePasswordButton() {
         btn_change_password.setOnClickListener(v -> showChangePasswordDialog());
+    }
+
+    private void setupStatusBar(){
+        App app=(App) getApplication();
+        tv_status_bar_account_creation_employee_name.setText(app.getName());
+        tv_status_bar_account_creation_employee_position.setText(app.getPosition());
     }
 
     private void showChangePasswordDialog() {

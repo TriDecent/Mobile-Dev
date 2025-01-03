@@ -145,6 +145,10 @@ public class SaleDialog {
                 String numericValue = String.valueOf(tvTotalPrice.getText()).replaceAll("[^\\d.]", "");
                 double totalPrice= Double.parseDouble(numericValue);
                 int quantity=Integer.parseInt(editTextQuantity.getText().toString());
+                if(quantity>product.Quantity()){
+                    Toast.makeText(context,"Invalid product quantity",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 ProductInvoice productInvoice=new ProductInvoice(product.ID(),quantity,totalPrice);
                 if(listener!=null){
                     listener.onProductInvoiceAdd(productInvoice);
